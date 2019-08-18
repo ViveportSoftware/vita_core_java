@@ -1,0 +1,9 @@
+# folders
+.gradle/
+.idea/
+dist/
+packages/
+temp/
+
+# files
+*.log
