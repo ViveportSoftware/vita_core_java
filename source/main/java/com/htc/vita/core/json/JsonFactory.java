@@ -29,6 +29,18 @@ public abstract class JsonFactory {
         return instance;
     }
 
+    public static <T extends JsonFactory> JsonFactory getInstance(Class<T> clazz) {
+        JsonFactory instance;
+        try {
+            instance = doGetInstance(clazz);
+        } catch (Exception e) {
+            Logger.getInstance(JsonFactory.class.getSimpleName()).fatal("Instance initialization error: " + e);
+            Logger.getInstance(JsonFactory.class.getSimpleName()).info("Initializing " + DummyJsonFactory.class.getName() + "...");
+            instance = new DummyJsonFactory();
+        }
+        return instance;
+    }
+
     private static <T extends JsonFactory> JsonFactory doGetInstance(Class<T> clazz) {
         if (clazz == null) {
             throw new IllegalArgumentException(String.format("Invalid argument to get %s instance", JsonFactory.class.getName()));
