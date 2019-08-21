@@ -18,12 +18,12 @@ if (ext.buildMavenServerUrl == null) {
     ext.buildMavenServerUrl = 'NOTSET'
 }
 
-ext.buildMavenCredentialUsername = System.getenv('BUILD_MAVEN_CRDENTIAL_USERNAME')
+ext.buildMavenCredentialUsername = System.getenv('BUILD_MAVEN_CREDENTIAL_USERNAME')
 if (ext.buildMavenCredentialUsername == null) {
     ext.buildMavenCredentialUsername = 'NOTSET'
 }
 
-ext.buildMavenCredentialPassword = System.getenv('BUILD_MAVEN_CRDENTIAL_PASSWORD')
+ext.buildMavenCredentialPassword = System.getenv('BUILD_MAVEN_CREDENTIAL_PASSWORD')
 if (ext.buildMavenCredentialPassword == null) {
     ext.buildMavenCredentialPassword = 'NOTSET'
 }
