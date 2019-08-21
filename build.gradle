@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 ext.buildType = System.getenv('BUILD_TYPE')
@@ -10,6 +11,21 @@ if (ext.buildType == null) {
 ext.buildNumber = System.getenv('BUILD_NUMBER')
 if (ext.buildNumber == null) {
     ext.buildNumber = '9999'
+}
+
+ext.buildMavenServerUrl = System.getenv('BUILD_MAVEN_SERVER_URL')
+if (ext.buildMavenServerUrl == null) {
+    ext.buildMavenServerUrl = 'NOTSET'
+}
+
+ext.buildMavenCredentialUsername = System.getenv('BUILD_MAVEN_CRDENTIAL_USERNAME')
+if (ext.buildMavenCredentialUsername == null) {
+    ext.buildMavenCredentialUsername = 'NOTSET'
+}
+
+ext.buildMavenCredentialPassword = System.getenv('BUILD_MAVEN_CRDENTIAL_PASSWORD')
+if (ext.buildMavenCredentialPassword == null) {
+    ext.buildMavenCredentialPassword = 'NOTSET'
 }
 
 ext.revision = '-SNAPSHOT'
@@ -48,6 +64,45 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+publish {
+    dependsOn assemble
+}
+
+// from plugin 'maven-publish'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'core'
+            from components.java
+
+            pom {
+                licenses {
+                    license {
+                        name = 'The MIT License (MIT)'
+                        url = 'https://github.com/ViveportSoftware/vita_core_java/blob/master/LICENSE.md'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/ViveportSoftware/vita_core_java'
+                }
+            }
+        }
+    }
+    repositories {
+        if (!'NOTSET'.equals(project.ext.buildMavenServerUrl)
+                && !'NOTSET'.equals(project.ext.buildMavenCredentialUsername)
+                && !'NOTSET'.equals(project.ext.buildMavenCredentialPassword)) {
+            maven {
+                credentials {
+                    username project.ext.buildMavenCredentialUsername
+                    password project.ext.buildMavenCredentialPassword
+                }
+                url project.ext.buildMavenServerUrl
+            }
+        }
+    }
 }
 
 task clearJar(type: Delete) {
