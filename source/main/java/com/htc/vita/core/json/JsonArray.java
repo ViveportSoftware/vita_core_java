@@ -170,7 +170,7 @@ public abstract class JsonArray {
     public boolean parseBoolean(int index, boolean defaultValue) {
         boolean result = defaultValue;
         try {
-            result = OnParseBoolean(index, defaultValue);
+            result = onParseBoolean(index, defaultValue);
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
@@ -240,7 +240,7 @@ public abstract class JsonArray {
     public String parseString(int index, String defaultValue) {
         String result = defaultValue;
         try {
-            result = OnParseString(index, defaultValue);
+            result = onParseString(index, defaultValue);
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
@@ -311,12 +311,12 @@ public abstract class JsonArray {
     protected abstract JsonArray onInsertString(int index, String value);
     protected abstract JsonArray onInsertJsonArray(int index, JsonArray value);
     protected abstract JsonArray onInsertJsonObject(int index, JsonObject value);
-    protected abstract boolean OnParseBoolean(int index, boolean defaultValue);
+    protected abstract boolean onParseBoolean(int index, boolean defaultValue);
     protected abstract double onParseDouble(int index, double defaultValue);
     protected abstract float onParseFloat(int index, float defaultValue);
     protected abstract int onParseInt(int index, int defaultValue);
     protected abstract long onParseLong(int index, long defaultValue);
-    protected abstract String OnParseString(int index, String defaultValue);
+    protected abstract String onParseString(int index, String defaultValue);
     protected abstract JsonArray onParseJsonArray(int index);
     protected abstract JsonObject onParseJsonObject(int index);
     protected abstract int onSize();

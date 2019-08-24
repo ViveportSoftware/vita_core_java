@@ -82,7 +82,7 @@ public class DummyJsonArray extends JsonArray {
     }
 
     @Override
-    protected boolean OnParseBoolean(int index, boolean defaultValue) {
+    protected boolean onParseBoolean(int index, boolean defaultValue) {
         return defaultValue;
     }
 
@@ -107,7 +107,7 @@ public class DummyJsonArray extends JsonArray {
     }
 
     @Override
-    protected String OnParseString(int index, String defaultValue) {
+    protected String onParseString(int index, String defaultValue) {
         return defaultValue;
     }
 
