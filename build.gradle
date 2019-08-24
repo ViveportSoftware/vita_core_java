@@ -91,7 +91,7 @@ publishing {
         }
     }
     repositories {
-        if (!'NOTSET'.equals(project.ext.buildMavenServerUrl)
+        if ('NOTSET' != project.ext.buildMavenServerUrl
                 && 'NOTSET' != project.ext.buildMavenCredentialUsername
                 && 'NOTSET' != project.ext.buildMavenCredentialPassword) {
             maven {
