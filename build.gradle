@@ -29,7 +29,7 @@ if (ext.buildMavenCredentialPassword == null) {
 }
 
 ext.revision = '-SNAPSHOT'
-if ('release'.equals(ext.buildType)) {
+if ('release' == ext.buildType) {
     ext.revision = '.' + ext.buildNumber
 }
 
@@ -92,8 +92,8 @@ publishing {
     }
     repositories {
         if (!'NOTSET'.equals(project.ext.buildMavenServerUrl)
-                && !'NOTSET'.equals(project.ext.buildMavenCredentialUsername)
-                && !'NOTSET'.equals(project.ext.buildMavenCredentialPassword)) {
+                && 'NOTSET' != project.ext.buildMavenCredentialUsername
+                && 'NOTSET' != project.ext.buildMavenCredentialPassword) {
             maven {
                 credentials {
                     username project.ext.buildMavenCredentialUsername
