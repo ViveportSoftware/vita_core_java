@@ -77,6 +77,23 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
     }
 
     @Override
+    protected void finalize() throws Throwable {
+        if (mHttpUrlConnection != null) {
+            OutputStream outputStream = mHttpUrlConnection.getOutputStream();
+            if (outputStream != null) {
+                outputStream.close();
+            }
+            InputStream inputStream = mHttpUrlConnection.getInputStream();
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            mHttpUrlConnection.disconnect();
+            mHttpUrlConnection = null;
+        }
+        super.finalize();
+    }
+
+    @Override
     protected InputStream onGetInputStream() throws IOException {
         boolean isConnectionAvailable = checkHttpUrlConnection();
         if (!isConnectionAvailable) {
