@@ -3,13 +3,14 @@ package com.htc.vita.core.net;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Proxy;
 import java.net.URL;
 
-public abstract class HttpWebRequest {
+public abstract class HttpWebRequest implements Closeable {
     private URL mUrl = null;
 
     public HttpWebRequest(URL url) {

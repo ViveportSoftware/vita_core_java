@@ -35,6 +35,7 @@ public class WebRequestFactoryTest {
         }
         String input = buffer.toString();
         bufferedReader.close();
+        httpWebRequest.close();
         Assert.assertFalse(StringUtils.isNullOrWhiteSpace(input));
         // Logger.getInstance().error("input: " + input);
     }
