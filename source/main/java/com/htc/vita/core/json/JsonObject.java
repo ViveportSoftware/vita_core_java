@@ -1,6 +1,7 @@
 package com.htc.vita.core.json;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -214,7 +215,60 @@ public abstract class JsonObject {
         return result;
     }
 
-    public String ToPrettyString() {
+    public JsonObject putIfNotNull(String key, String value) {
+        if (value == null) {
+            return this;
+        }
+        return put(key, value);
+    }
+
+    public JsonObject putIfNotNull(String key, JsonArray value) {
+        if (value == null) {
+            return this;
+        }
+        return put(key, value);
+    }
+
+    public JsonObject putIfNotNull(String key, JsonObject value) {
+        if (value == null) {
+            return this;
+        }
+        return put(key, value);
+    }
+
+    public JsonObject putIfNotNullAndNotWhiteSpace(String key, String value) {
+        if (StringUtils.isNullOrWhiteSpace(value)) {
+            return this;
+        }
+        return put(key, value);
+    }
+
+    public JsonObject putIfNotNullAndNotEmpty(String key, JsonArray value) {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.size() <= 0)
+        {
+            return this;
+        }
+        return put(key, value);
+    }
+
+    public JsonObject putIfNotNullAndNotEmpty(String key, JsonObject value)
+    {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.allKeys().size() <= 0)
+        {
+            return this;
+        }
+        return put(key, value);
+    }
+
+    public String toPrettyString() {
         String result = "";
         try {
             result = onToPrettyString();
