@@ -1,6 +1,7 @@
 package com.htc.vita.core.json;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 
 public abstract class JsonArray {
     public JsonArray append(boolean value) {
@@ -83,6 +84,59 @@ public abstract class JsonArray {
         return result;
     }
 
+    public JsonArray appendIfNotNull(String value) {
+        if (value == null) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNull(JsonArray value) {
+        if (value == null) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNull(JsonObject value) {
+        if (value == null) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNullAndNotWhiteSpace(String value) {
+        if (StringUtils.isNullOrWhiteSpace(value)) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNullAndNotEmpty(JsonArray value) {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.size() <= 0)
+        {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNullAndNotEmpty(JsonObject value)
+    {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.allKeys().size() <= 0)
+        {
+            return this;
+        }
+        return append(value);
+    }
+
     public JsonArray insert(int index, boolean value) {
         JsonArray result = this;
         try {
@@ -161,6 +215,62 @@ public abstract class JsonArray {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
         return result;
+    }
+
+    public JsonArray insertIfNotNull(int index, String value) {
+        if (value == null) {
+            return this;
+        }
+        return insert(index, value);
+    }
+
+    public JsonArray insertIfNotNull(int index, JsonArray value) {
+        if (value == null) {
+            return this;
+        }
+        return insert(index, value);
+    }
+
+    public JsonArray insertIfNotNull(int index, JsonObject value) {
+        if (value == null) {
+            return this;
+        }
+        return insert(index, value);
+    }
+
+    public JsonArray insertIfNotNullAndNotWhiteSpace(int index, String value)
+    {
+        if (StringUtils.isNullOrWhiteSpace(value))
+        {
+            return this;
+        }
+        return insert(index, value);
+    }
+
+    public JsonArray insertIfNotNullAndNotEmpty(int index, JsonArray value)
+    {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.size() <= 0)
+        {
+            return this;
+        }
+        return insert(index, value);
+    }
+
+    public JsonArray insertIfNotNullAndNotEmpty(int index, JsonObject value)
+    {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.allKeys().size() <= 0)
+        {
+            return this;
+        }
+        return insert(index, value);
     }
 
     public boolean parseBoolean(int index) {
