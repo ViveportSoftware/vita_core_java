@@ -1,6 +1,7 @@
 package com.htc.vita.core.json;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 
 public abstract class JsonArray {
     public JsonArray append(boolean value) {
@@ -83,94 +84,281 @@ public abstract class JsonArray {
         return result;
     }
 
-    public JsonArray insert(int index, boolean value) {
+    public JsonArray appendIfNotNull(String value) {
+        if (value == null) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNull(JsonArray value) {
+        if (value == null) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNull(JsonObject value) {
+        if (value == null) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNullAndNotWhiteSpace(String value) {
+        if (StringUtils.isNullOrWhiteSpace(value)) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNullAndNotEmpty(JsonArray value) {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.size() <= 0)
+        {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNullAndNotEmpty(JsonObject value)
+    {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.allKeys().size() <= 0)
+        {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray insert(
+            int index,
+            boolean value) {
         JsonArray result = this;
         try {
-            result = onInsertBoolean(index, value);
+            result = onInsertBoolean(
+                    index,
+                    value
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public JsonArray insert(int index, double value) {
+    public JsonArray insert(
+            int index,
+            double value) {
         JsonArray result = this;
         try {
-            result = onInsertDouble(index, value);
+            result = onInsertDouble(
+                    index,
+                    value
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public JsonArray insert(int index, float value) {
+    public JsonArray insert(
+            int index,
+            float value) {
         JsonArray result = this;
         try {
-            result = onInsertFloat(index, value);
+            result = onInsertFloat(
+                    index,
+                    value
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public JsonArray insert(int index, int value) {
+    public JsonArray insert(
+            int index,
+            int value) {
         JsonArray result = this;
         try {
-            result = onInsertInt(index, value);
+            result = onInsertInt(
+                    index,
+                    value
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public JsonArray insert(int index, long value) {
+    public JsonArray insert(
+            int index,
+            long value) {
         JsonArray result = this;
         try {
-            result = onInsertLong(index, value);
+            result = onInsertLong(
+                    index,
+                    value
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public JsonArray insert(int index, String value) {
+    public JsonArray insert(
+            int index,
+            String value) {
         JsonArray result = this;
         try {
-            result = onInsertString(index, value);
+            result = onInsertString(
+                    index,
+                    value
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public JsonArray insert(int index, JsonArray value) {
+    public JsonArray insert(
+            int index,
+            JsonArray value) {
         JsonArray result = this;
         try {
-            result = onInsertJsonArray(index, value);
+            result = onInsertJsonArray(
+                    index,
+                    value
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public JsonArray insert(int index, JsonObject value) {
+    public JsonArray insert(
+            int index,
+            JsonObject value) {
         JsonArray result = this;
         try {
-            result = onInsertJsonObject(index, value);
+            result = onInsertJsonObject(
+                    index,
+                    value
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
         return result;
+    }
+
+    public JsonArray insertIfNotNull(
+            int index,
+            String value) {
+        if (value == null) {
+            return this;
+        }
+        return insert(
+                index,
+                value
+        );
+    }
+
+    public JsonArray insertIfNotNull(
+            int index,
+            JsonArray value) {
+        if (value == null) {
+            return this;
+        }
+        return insert(
+                index,
+                value
+        );
+    }
+
+    public JsonArray insertIfNotNull(
+            int index,
+            JsonObject value) {
+        if (value == null) {
+            return this;
+        }
+        return insert(
+                index,
+                value
+        );
+    }
+
+    public JsonArray insertIfNotNullAndNotWhiteSpace(
+            int index,
+            String value)
+    {
+        if (StringUtils.isNullOrWhiteSpace(value))
+        {
+            return this;
+        }
+        return insert(
+                index,
+                value
+        );
+    }
+
+    public JsonArray insertIfNotNullAndNotEmpty(
+            int index,
+            JsonArray value)
+    {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.size() <= 0)
+        {
+            return this;
+        }
+        return insert(
+                index,
+                value
+        );
+    }
+
+    public JsonArray insertIfNotNullAndNotEmpty(
+            int index,
+            JsonObject value)
+    {
+        if (value == null)
+        {
+            return this;
+        }
+        if (value.allKeys().size() <= 0)
+        {
+            return this;
+        }
+        return insert(
+                index,
+                value
+        );
     }
 
     public boolean parseBoolean(int index) {
-        return parseBoolean(index, false);
+        return parseBoolean(
+                index,
+                false
+        );
     }
 
-    public boolean parseBoolean(int index, boolean defaultValue) {
+    public boolean parseBoolean(
+            int index,
+            boolean defaultValue) {
         boolean result = defaultValue;
         try {
-            result = onParseBoolean(index, defaultValue);
+            result = onParseBoolean(
+                    index,
+                    defaultValue
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
@@ -178,13 +366,21 @@ public abstract class JsonArray {
     }
 
     public double parseDouble(int index) {
-        return parseDouble(index, 0.0D);
+        return parseDouble(
+                index,
+                0.0D
+        );
     }
 
-    public double parseDouble(int index, double defaultValue) {
+    public double parseDouble(
+            int index,
+            double defaultValue) {
         double result = defaultValue;
         try {
-            result = onParseDouble(index, defaultValue);
+            result = onParseDouble(
+                    index,
+                    defaultValue
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
@@ -192,13 +388,21 @@ public abstract class JsonArray {
     }
 
     public float parseFloat(int index) {
-        return parseFloat(index, 0.0F);
+        return parseFloat(
+                index,
+                0.0F
+        );
     }
 
-    public float parseFloat(int index, float defaultValue) {
+    public float parseFloat(
+            int index,
+            float defaultValue) {
         float result = defaultValue;
         try {
-            result = onParseFloat(index, defaultValue);
+            result = onParseFloat(
+                    index,
+                    defaultValue
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
@@ -206,13 +410,21 @@ public abstract class JsonArray {
     }
 
     public int parseInt(int index) {
-        return parseInt(index, 0);
+        return parseInt(
+                index,
+                0
+        );
     }
 
-    public int parseInt(int index, int defaultValue) {
+    public int parseInt(
+            int index,
+            int defaultValue) {
         int result = defaultValue;
         try {
-            result = onParseInt(index, defaultValue);
+            result = onParseInt(
+                    index,
+                    defaultValue
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
@@ -220,13 +432,21 @@ public abstract class JsonArray {
     }
 
     public long parseLong(int index) {
-        return parseLong(index, 0L);
+        return parseLong(
+                index,
+                0L
+        );
     }
 
-    public long parseLong(int index, long defaultValue) {
+    public long parseLong(
+            int index,
+            long defaultValue) {
         long result = defaultValue;
         try {
-            result = onParseLong(index, defaultValue);
+            result = onParseLong(
+                    index,
+                    defaultValue
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
@@ -234,13 +454,21 @@ public abstract class JsonArray {
     }
 
     public String parseString(int index) {
-        return parseString(index, null);
+        return parseString(
+                index,
+                null
+        );
     }
 
-    public String parseString(int index, String defaultValue) {
+    public String parseString(
+            int index,
+            String defaultValue) {
         String result = defaultValue;
         try {
-            result = onParseString(index, defaultValue);
+            result = onParseString(
+                    index,
+                    defaultValue
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
         }
@@ -303,20 +531,62 @@ public abstract class JsonArray {
     protected abstract JsonArray onAppendString(String value);
     protected abstract JsonArray onAppendJsonArray(JsonArray value);
     protected abstract JsonArray onAppendJsonObject(JsonObject value);
-    protected abstract JsonArray onInsertBoolean(int index, boolean value);
-    protected abstract JsonArray onInsertDouble(int index, double value);
-    protected abstract JsonArray onInsertFloat(int index, float value);
-    protected abstract JsonArray onInsertInt(int index, int value);
-    protected abstract JsonArray onInsertLong(int index, long value);
-    protected abstract JsonArray onInsertString(int index, String value);
-    protected abstract JsonArray onInsertJsonArray(int index, JsonArray value);
-    protected abstract JsonArray onInsertJsonObject(int index, JsonObject value);
-    protected abstract boolean onParseBoolean(int index, boolean defaultValue);
-    protected abstract double onParseDouble(int index, double defaultValue);
-    protected abstract float onParseFloat(int index, float defaultValue);
-    protected abstract int onParseInt(int index, int defaultValue);
-    protected abstract long onParseLong(int index, long defaultValue);
-    protected abstract String onParseString(int index, String defaultValue);
+    protected abstract JsonArray onInsertBoolean(
+            int index,
+            boolean value
+    );
+    protected abstract JsonArray onInsertDouble(
+            int index,
+            double value
+    );
+    protected abstract JsonArray onInsertFloat(
+            int index,
+            float value
+    );
+    protected abstract JsonArray onInsertInt(
+            int index,
+            int value
+    );
+    protected abstract JsonArray onInsertLong(
+            int index,
+            long value
+    );
+    protected abstract JsonArray onInsertString(
+            int index,
+            String value
+    );
+    protected abstract JsonArray onInsertJsonArray(
+            int index,
+            JsonArray value
+    );
+    protected abstract JsonArray onInsertJsonObject(
+            int index,
+            JsonObject value
+    );
+    protected abstract boolean onParseBoolean(
+            int index,
+            boolean defaultValue
+    );
+    protected abstract double onParseDouble(
+            int index,
+            double defaultValue
+    );
+    protected abstract float onParseFloat(
+            int index,
+            float defaultValue
+    );
+    protected abstract int onParseInt(
+            int index,
+            int defaultValue
+    );
+    protected abstract long onParseLong(
+            int index,
+            long defaultValue
+    );
+    protected abstract String onParseString(
+            int index,
+            String defaultValue
+    );
     protected abstract JsonArray onParseJsonArray(int index);
     protected abstract JsonObject onParseJsonObject(int index);
     protected abstract int onSize();
