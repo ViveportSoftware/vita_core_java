@@ -46,7 +46,7 @@ public class EnumUtils {
     public static <T extends Enum<T>> T parseTypeByToString(
             Class<T> enumClass,
             String data)
-            throws IllegalArgumentException {
+                    throws IllegalArgumentException {
         T[] enumConstantArray = getEnumConstantArrayOrThrow(enumClass);
         T defaultValue = enumConstantArray[0];
 

@@ -32,18 +32,29 @@ public abstract class Logger {
         Logger instance;
         try
         {
-            instance = doGetInstance(sDefaultClass, name);
+            instance = doGetInstance(
+                    sDefaultClass,
+                    name
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.getInstance(name)] " + e);
-            System.err.println("Initializing " + ConsoleLogger.class.getName() + "...");
+            System.err.printf(
+                    "[Fatal][Logger.getInstance(name)] %s%n",
+                    e
+            );
+            System.err.printf(
+                    "Initializing %s...%n",
+                    ConsoleLogger.class.getName()
+            );
             instance = new ConsoleLogger(name);
         }
         return instance;
     }
 
-    public static <T extends Logger> Logger getInstance(Class<T> clazz, Class type) {
+    public static <T extends Logger> Logger getInstance(
+            Class<T> clazz,
+            Class type) {
         String name = "";
         if (type != null)
         {
@@ -53,34 +64,57 @@ public abstract class Logger {
     }
 
     public static <T extends Logger> Logger getInstance(Class<T> clazz) {
-        return getInstance(clazz, "");
+        return getInstance(
+                clazz,
+                ""
+        );
     }
 
-    public static <T extends Logger> Logger getInstance(Class<T> clazz, String name) {
+    public static <T extends Logger> Logger getInstance(
+            Class<T> clazz,
+            String name) {
         Logger instance;
         try
         {
-            instance = doGetInstance(clazz, name);
+            instance = doGetInstance(
+                    clazz,
+                    name
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.getInstance(clazz, name))] " + e);
-            System.err.println("Initializing " + ConsoleLogger.class.getName() + "...");
+            System.err.printf(
+                    "[Fatal][Logger.getInstance(clazz, name))] %s%n",
+                    e
+            );
+            System.err.printf(
+                    "Initializing %s...%n",
+                    ConsoleLogger.class.getName()
+            );
             instance = new ConsoleLogger(name);
         }
         return instance;
     }
 
-    private static <T extends Logger> Logger doGetInstance(Class<T> type, String name) throws IllegalArgumentException {
+    private static <T extends Logger> Logger doGetInstance(
+            Class<T> type,
+            String name)
+                    throws IllegalArgumentException {
         if (type == null || name == null)
         {
-            throw new IllegalArgumentException(String.format(
-                    "Invalid argument to get %s instance",
-                    Logger.class.getName())
+            throw new IllegalArgumentException(
+                    String.format(
+                            "Invalid argument to get %s instance",
+                            Logger.class.getName()
+                    )
             );
         }
 
-        String key = type.getName() + "_" + name;
+        String key = String.format(
+                "%s_%s",
+                type.getName(),
+                name
+        );
         Logger instance = null;
         if (sInstances.containsKey(key))
         {
@@ -88,7 +122,10 @@ public abstract class Logger {
         }
         if (instance == null)
         {
-            System.err.println("Initializing " + key + "...");
+            System.err.printf(
+                    "Initializing %s...%n",
+                    key
+            );
             try {
                 Constructor constructor = type.getConstructor(new Class[] { String.class });
                 if (constructor != null) {
@@ -111,7 +148,10 @@ public abstract class Logger {
         {
             if (!sInstances.containsKey(key))
             {
-                sInstances.put(key, instance);
+                sInstances.put(
+                        key,
+                        instance
+                );
             }
         }
         return instance;
@@ -125,92 +165,173 @@ public abstract class Logger {
     }
 
     public void debug(String message) {
-        debug(getMethodName(), message);
+        debug(
+                getMethodName(),
+                message
+        );
     }
 
-    public void debug(String tag, String message) {
+    public void debug(
+            String tag,
+            String message) {
         try
         {
-            onDebug(tag, message);
+            onDebug(
+                    tag,
+                    message
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.debug(tag, message)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.debug(tag, message)] %s%n",
+                    e
+            );
         }
     }
 
-    public void debug(String message, Exception exception) {
-        debug(getMethodName(), message, exception);
+    public void debug(
+            String message,
+            Exception exception) {
+        debug(
+                getMethodName(),
+                message,
+                exception
+        );
     }
 
-    public void debug(String tag, String message, Exception exception) {
+    public void debug(
+            String tag,
+            String message,
+            Exception exception) {
         try
         {
-            onDebug(tag, message, exception);
+            onDebug(
+                    tag,
+                    message,
+                    exception
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.debug(tag, message, exception)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.debug(tag, message, exception)] %s%n",
+                    e
+            );
         }
     }
 
     public void error(String message) {
-        error(getMethodName(), message);
+        error(
+                getMethodName(),
+                message
+        );
     }
 
-    public void error(String tag, String message) {
+    public void error(
+            String tag,
+            String message) {
         try
         {
-            onError(tag, message);
+            onError(
+                    tag,
+                    message
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.error(tag, message)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.error(tag, message)] %s%n",
+                    e
+            );
         }
     }
 
-    public void error(String message, Exception exception) {
-        error(getMethodName(), message, exception);
+    public void error(
+            String message,
+            Exception exception) {
+        error(
+                getMethodName(),
+                message,
+                exception
+        );
     }
 
-    public void error(String tag, String message, Exception exception) {
+    public void error(
+            String tag,
+            String message,
+            Exception exception) {
         try
         {
-            onError(tag, message, exception);
+            onError(
+                    tag,
+                    message,
+                    exception
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.error(tag, message, exception)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.error(tag, message, exception)] %s%n",
+                    e
+            );
         }
     }
 
     public void fatal(String message) {
-        fatal(getMethodName(), message);
+        fatal(
+                getMethodName(),
+                message
+        );
     }
 
-    public void fatal(String tag, String message) {
+    public void fatal(
+            String tag,
+            String message) {
         try
         {
-            onFatal(tag, message);
+            onFatal(
+                    tag,
+                    message
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.fatal(tag, message)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.fatal(tag, message)] %s%n",
+                    e
+            );
         }
     }
 
-    public void fatal(String message, Exception exception) {
-        fatal(getMethodName(), message, exception);
+    public void fatal(
+            String message,
+            Exception exception) {
+        fatal(
+                getMethodName(),
+                message,
+                exception
+        );
     }
 
-    public void fatal(String tag, String message, Exception exception) {
+    public void fatal(
+            String tag,
+            String message,
+            Exception exception) {
         try
         {
-            onFatal(tag, message, exception);
+            onFatal(
+                    tag,
+                    message,
+                    exception
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.fatal(tag, message, exception)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.fatal(tag, message, exception)] %s%n",
+                    e
+            );
         }
     }
 
@@ -231,32 +352,59 @@ public abstract class Logger {
     }
 
     public void info(String message) {
-        info(getMethodName(), message);
+        info(
+                getMethodName(),
+                message
+        );
     }
 
-    public void info(String tag, String message) {
+    public void info(
+            String tag,
+            String message) {
         try
         {
-            onInfo(tag, message);
+            onInfo(
+                    tag,
+                    message
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.info(tag, message)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.info(tag, message)] %s%n",
+                    e
+            );
         }
     }
 
-    public void info(String message, Exception exception) {
-        info(getMethodName(), message, exception);
+    public void info(
+            String message,
+            Exception exception) {
+        info(
+                getMethodName(),
+                message,
+                exception
+        );
     }
 
-    public void info(String tag, String message, Exception exception) {
+    public void info(
+            String tag,
+            String message,
+            Exception exception) {
         try
         {
-            onInfo(tag, message, exception);
+            onInfo(
+                    tag,
+                    message,
+                    exception
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.info(tag, message, exception)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.info(tag, message, exception)] %s%n",
+                    e
+            );
         }
     }
 
@@ -267,81 +415,180 @@ public abstract class Logger {
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.shutdown] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.shutdown] %s%n",
+                    e
+            );
         }
     }
 
     public void trace(String message) {
-        trace(getMethodName(), message);
+        trace(
+                getMethodName(),
+                message
+        );
     }
 
-    public void trace(String tag, String message) {
+    public void trace(
+            String tag,
+            String message) {
         try
         {
-            onTrace(tag, message);
+            onTrace(
+                    tag,
+                    message
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.trace(tag, message)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.trace(tag, message)] %s%n",
+                    e
+            );
         }
     }
 
-    public void trace(String message, Exception exception) {
-        trace(getMethodName(), message, exception);
+    public void trace(
+            String message,
+            Exception exception) {
+        trace(
+                getMethodName(),
+                message,
+                exception
+        );
     }
 
-    public void trace(String tag, String message, Exception exception) {
+    public void trace(
+            String tag,
+            String message,
+            Exception exception) {
         try
         {
-            onTrace(tag, message, exception);
+            onTrace(
+                    tag,
+                    message,
+                    exception
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.trace(tag, message, exception)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.trace(tag, message, exception)] %s%n",
+                    e
+            );
         }
     }
 
     public void warn(String message) {
-        warn(getMethodName(), message);
+        warn(
+                getMethodName(),
+                message
+        );
     }
 
-    public void warn(String tag, String message) {
+    public void warn(
+            String tag,
+            String message) {
         try
         {
-            onWarn(tag, message);
+            onWarn(
+                    tag,
+                    message
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.warn(tag, message)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.warn(tag, message)] %s%n",
+                    e
+            );
         }
     }
 
-    public void warn(String message, Exception exception) {
-        warn(getMethodName(), message, exception);
+    public void warn(
+            String message,
+            Exception exception) {
+        warn(
+                getMethodName(),
+                message,
+                exception
+        );
     }
 
-    public void warn(String tag, String message, Exception exception) {
+    public void warn(
+            String tag,
+            String message,
+            Exception exception) {
         try
         {
-            onWarn(tag, message, exception);
+            onWarn(
+                    tag,
+                    message,
+                    exception
+            );
         }
         catch (Exception e)
         {
-            System.err.println("[Fatal][Logger.warn(tag, message, exception)] " + e);
+            System.err.printf(
+                    "[Fatal][Logger.warn(tag, message, exception)] %s%n",
+                    e
+            );
         }
     }
 
-    protected abstract void onDebug(String tag, String message);
-    protected abstract void onDebug(String tag, String message, Exception exception);
-    protected abstract void onError(String tag, String message);
-    protected abstract void onError(String tag, String message, Exception exception);
-    protected abstract void onFatal(String tag, String message);
-    protected abstract void onFatal(String tag, String message, Exception exception);
-    protected abstract void onInfo(String tag, String message);
-    protected abstract void onInfo(String tag, String message, Exception exception);
+    protected abstract void onDebug(
+            String tag,
+            String message
+    );
+    protected abstract void onDebug(
+            String tag,
+            String message,
+            Exception exception
+    );
+    protected abstract void onError(
+            String tag,
+            String message
+    );
+    protected abstract void onError(
+            String tag,
+            String message,
+            Exception exception
+    );
+    protected abstract void onFatal(
+            String tag,
+            String message
+    );
+    protected abstract void onFatal(
+            String tag,
+            String message,
+            Exception exception
+    );
+    protected abstract void onInfo(
+            String tag,
+            String message
+    );
+    protected abstract void onInfo(
+            String tag,
+            String message,
+            Exception exception
+    );
     protected abstract void onShutdown();
-    protected abstract void onTrace(String tag, String message);
-    protected abstract void onTrace(String tag, String message, Exception exception);
-    protected abstract void onWarn(String tag, String message);
-    protected abstract void onWarn(String tag, String message, Exception exception);
+    protected abstract void onTrace(
+            String tag,
+            String message
+    );
+    protected abstract void onTrace(
+            String tag,
+            String message,
+            Exception exception
+    );
+    protected abstract void onWarn(
+            String tag,
+            String message
+    );
+    protected abstract void onWarn(
+            String tag,
+            String message,
+            Exception exception
+    );
 }
