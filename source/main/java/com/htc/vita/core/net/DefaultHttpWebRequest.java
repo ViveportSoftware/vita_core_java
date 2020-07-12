@@ -16,8 +16,9 @@ import java.util.zip.InflaterInputStream;
 
 public class DefaultHttpWebRequest extends HttpWebRequest {
 
+    private final Map<String, String> mHeaderMap = new HashMap<String, String>();
+
     private int mConnectTimeoutInMilli = -1;
-    private Map<String, String> mHeaderMap = new HashMap<String, String>();
     private HttpURLConnection mHttpUrlConnection = null;
     private HttpWebRequestMethod mHttpWebRequestMethod = HttpWebRequestMethod.Get;
     private Proxy mProxy = null;
@@ -50,7 +51,10 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
         mHttpUrlConnection = (HttpURLConnection)urlConnection;
 
         // TODO configurable
-        mHttpUrlConnection.setRequestProperty("Accept-Encoding", "gzip, deflate");
+        mHttpUrlConnection.setRequestProperty(
+                "Accept-Encoding",
+                "gzip, deflate"
+        );
 
         for (String headerKey : mHeaderMap.keySet()) {
             if (StringUtils.isNullOrWhiteSpace(headerKey)) {
@@ -135,7 +139,10 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
 
     @Override
     protected HttpWebRequest onSetAccept(String accept) {
-        mHeaderMap.put("Accept", accept);
+        mHeaderMap.put(
+                "Accept",
+                accept
+        );
         return this;
     }
 
@@ -147,7 +154,10 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
 
     @Override
     protected HttpWebRequest onSetContentType(String contentType) {
-        mHeaderMap.put("Content-Type", contentType);
+        mHeaderMap.put(
+                "Content-Type",
+                contentType
+        );
         return this;
     }
 
@@ -171,7 +181,10 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
 
     @Override
     protected HttpWebRequest onSetUserAgent(String userAgent) {
-        mHeaderMap.put("User-Agent", userAgent);
+        mHeaderMap.put(
+                "User-Agent",
+                userAgent
+        );
         return this;
     }
 }

@@ -6,7 +6,6 @@ import com.htc.vita.core.util.StringUtils;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public abstract class Sha1 {
@@ -49,7 +48,7 @@ public abstract class Sha1 {
         if (clazz == null) {
             throw new IllegalArgumentException(String.format(
                     "Invalid argument to get %s instance",
-                    Sha1.class.getName()
+                    Sha1.class.getSimpleName()
             ));
         }
 
@@ -126,7 +125,7 @@ public abstract class Sha1 {
 
         boolean result = false;
         try {
-            result = checksum.toLowerCase(Locale.ENGLISH).equals(onGenerateInHex(file));
+            result = checksum.equalsIgnoreCase(onGenerateInHex(file));
         } catch (Exception e) {
             Logger.getInstance(Sha1.class.getSimpleName()).error(e.toString());
         }
@@ -140,7 +139,7 @@ public abstract class Sha1 {
 
         boolean result = false;
         try {
-            result = checksum.toLowerCase(Locale.ENGLISH).equals(onGenerateInHex(content));
+            result = checksum.equalsIgnoreCase(onGenerateInHex(content));
         } catch (Exception e) {
             Logger.getInstance(Sha1.class.getSimpleName()).error(e.toString());
         }

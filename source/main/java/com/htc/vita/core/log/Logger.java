@@ -19,7 +19,7 @@ public abstract class Logger {
         sDefaultClass = clazz;
         System.err.printf(
                 "Registered default %s type to %s%n",
-                Logger.class.getName(),
+                Logger.class.getSimpleName(),
                 sDefaultClass.getName()
         );
     }
@@ -60,7 +60,10 @@ public abstract class Logger {
         {
             name = type.getName();
         }
-        return getInstance(clazz, name);
+        return getInstance(
+                clazz,
+                name
+        );
     }
 
     public static <T extends Logger> Logger getInstance(Class<T> clazz) {
@@ -105,7 +108,7 @@ public abstract class Logger {
             throw new IllegalArgumentException(
                     String.format(
                             "Invalid argument to get %s instance",
-                            Logger.class.getName()
+                            Logger.class.getSimpleName()
                     )
             );
         }
@@ -127,10 +130,8 @@ public abstract class Logger {
                     key
             );
             try {
-                Constructor constructor = type.getConstructor(new Class[] { String.class });
-                if (constructor != null) {
-                    instance = (Logger) constructor.newInstance(new Object[] { name });
-                }
+                Constructor<T> constructor = type.getConstructor(String.class);
+                instance = constructor.newInstance(name);
             } catch (Exception e) {
                 // Skip
             }
@@ -341,7 +342,7 @@ public abstract class Logger {
             return result;
         }
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        if (stackTraceElements != null && stackTraceElements.length >= 4) {
+        if (stackTraceElements.length >= 4) {
             result = stackTraceElements[3].getMethodName();
         }
         return result;

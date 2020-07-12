@@ -21,19 +21,15 @@ public abstract class WebProxyFactory {
 
     public static <T extends WebProxyFactory> void register(Class<T> clazz) {
         sDefaultClass = clazz;
-        System.err.println("Registered default " + WebProxyFactory.class.getName() + " type to " + sDefaultClass.getName());
+        System.err.printf(
+                "Registered default %s type to %s%n",
+                WebProxyFactory.class.getSimpleName(),
+                sDefaultClass.getName()
+        );
     }
 
     public static WebProxyFactory getInstance() {
-        WebProxyFactory instance;
-        try {
-            instance = doGetInstance(sDefaultClass);
-        } catch (Exception e) {
-            Logger.getInstance(WebProxyFactory.class.getSimpleName()).fatal("Instance initialization error: " + e);
-            Logger.getInstance(WebProxyFactory.class.getSimpleName()).info("Initializing " + DefaultWebProxyFactory.class.getName() + "...");
-            instance = new DefaultWebProxyFactory();
-        }
-        return instance;
+        return getInstance(sDefaultClass);
     }
 
     public static <T extends WebProxyFactory> WebProxyFactory getInstance(Class<T> clazz) {
@@ -41,8 +37,14 @@ public abstract class WebProxyFactory {
         try {
             instance = doGetInstance(clazz);
         } catch (Exception e) {
-            Logger.getInstance(WebProxyFactory.class.getSimpleName()).fatal("Instance initialization error: " + e);
-            Logger.getInstance(WebProxyFactory.class.getSimpleName()).info("Initializing " + DefaultWebProxyFactory.class.getName() + "...");
+            Logger.getInstance(WebProxyFactory.class.getSimpleName()).fatal(String.format(
+                    "Instance initialization error: %s",
+                    e
+            ));
+            Logger.getInstance(WebProxyFactory.class.getSimpleName()).info(String.format(
+                    "Initializing %s...",
+                    DefaultWebProxyFactory.class.getName()
+            ));
             instance = new DefaultWebProxyFactory();
         }
         return instance;
@@ -50,32 +52,45 @@ public abstract class WebProxyFactory {
 
     private static <T extends WebProxyFactory> WebProxyFactory doGetInstance(Class<T> clazz) {
         if (clazz == null) {
-            throw new IllegalArgumentException(String.format("Invalid argument to get %s instance", WebProxyFactory.class.getName()));
+            throw new IllegalArgumentException(String.format(
+                    "Invalid argument to get %s instance",
+                    WebProxyFactory.class.getSimpleName()
+            ));
         }
 
-        String key = clazz.getName() + "_";
+        String key = String.format(
+                "%s_",
+                clazz.getName()
+        );
         WebProxyFactory instance = null;
         if (sInstances.containsKey(key)) {
             instance = sInstances.get(key);
         }
         if (instance == null) {
-            Logger.getInstance(WebProxyFactory.class.getSimpleName()).info("Initializing " + key + "...");
+            Logger.getInstance(WebProxyFactory.class.getSimpleName()).info(String.format(
+                    "Initializing %s...",
+                    key
+            ));
             try {
-                Constructor constructor = clazz.getConstructor();
-                if (constructor != null) {
-                    instance = (WebProxyFactory) constructor.newInstance();
-                }
+                Constructor<T> constructor = clazz.getConstructor();
+                instance = constructor.newInstance();
             } catch (Exception e) {
                 // Skip
             }
         }
         if (instance == null) {
-            Logger.getInstance(WebProxyFactory.class.getSimpleName()).info("Initializing " + DefaultWebProxyFactory.class.getName() + "...");
+            Logger.getInstance(WebProxyFactory.class.getSimpleName()).info(String.format(
+                    "Initializing %s...",
+                    DefaultWebProxyFactory.class.getName()
+            ));
             instance = new DefaultWebProxyFactory();
         }
         synchronized (sInstancesLock) {
             if (!sInstances.containsKey(key)) {
-                sInstances.put(key, instance);
+                sInstances.put(
+                        key,
+                        instance
+                );
             }
         }
         return instance;
@@ -86,7 +101,7 @@ public abstract class WebProxyFactory {
         try {
             result = onGetWebProxy();
         } catch (Exception e) {
-            Logger.getInstance(WebProxyFactory.class.getSimpleName()).fatal("Getting web proxy error: " + e);
+            Logger.getInstance(WebProxyFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
@@ -100,7 +115,7 @@ public abstract class WebProxyFactory {
         try {
             result = onGetWebProxyStatus(proxy);
         } catch (Exception e) {
-            Logger.getInstance(WebProxyFactory.class.getSimpleName()).fatal("Getting web proxy status error: " + e);
+            Logger.getInstance(WebProxyFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }

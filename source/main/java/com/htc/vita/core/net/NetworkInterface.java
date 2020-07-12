@@ -31,11 +31,17 @@ public class NetworkInterface {
                         continue;
                     }
 
-                    result.put(inetAddress, broadcastAddress);
+                    result.put(
+                            inetAddress,
+                            broadcastAddress
+                    );
                 }
             }
         } catch (Exception e) {
-            Logger.getInstance(NetworkInterface.class.getSimpleName()).error("Can not get local IP addresses with broadcast addresses, error: " + e.getMessage());
+            Logger.getInstance(NetworkInterface.class.getSimpleName()).error(String.format(
+                    "Can not get local IP addresses with broadcast addresses, error: %s",
+                    e.getMessage()
+            ));
         }
 
         return result;
@@ -53,7 +59,10 @@ public class NetworkInterface {
                 }
             }
         } catch (Exception e) {
-            Logger.getInstance(NetworkInterface.class.getSimpleName()).error("Can not detect if network is available, error: " + e.getMessage());
+            Logger.getInstance(NetworkInterface.class.getSimpleName()).error(String.format(
+                    "Can not detect if network is available, error: %s",
+                    e.getMessage()
+            ));
         }
 
         return false;

@@ -505,7 +505,10 @@ public abstract class JsonArray {
         if (result >= 0) {
             return result;
         }
-        Logger.getInstance(JsonArray.class.getSimpleName()).fatal("Size abnormal: " + result);
+        Logger.getInstance(JsonArray.class.getSimpleName()).fatal(String.format(
+                "Size abnormal: %d",
+                result
+        ));
         return 0;
     }
 
