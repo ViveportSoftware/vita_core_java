@@ -8,13 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class WebProxyFactory {
-    public enum WebProxyStatus {
-        Unknown,
-        NotSet,
-        Working,
-        CannotTest
-    }
-
     private static final Map<String, WebProxyFactory> sInstances = new HashMap<String, WebProxyFactory>();
     private static final Object sInstancesLock = new Object();
     private static Class<? extends WebProxyFactory> sDefaultClass = DefaultWebProxyFactory.class;

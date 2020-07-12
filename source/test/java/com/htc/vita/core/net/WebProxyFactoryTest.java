@@ -27,7 +27,7 @@ public class WebProxyFactoryTest {
         Proxy proxy = webProxyFactory.getWebProxy();
         Assert.assertNotNull(proxy);
         // proxy = new Proxy(Proxy.Type.HTTP, new java.net.InetSocketAddress("localhost", 8888));
-        WebProxyFactory.WebProxyStatus webProxyStatus = webProxyFactory.getWebProxyStatus(proxy);
-        Assert.assertNotSame(webProxyStatus, WebProxyFactory.WebProxyStatus.Unknown);
+        WebProxyStatus webProxyStatus = webProxyFactory.getWebProxyStatus(proxy);
+        Assert.assertNotSame(webProxyStatus, WebProxyStatus.Unknown);
     }
 }
