@@ -144,9 +144,9 @@ public abstract class Base64 {
     protected abstract byte[] onDecode(
             String data,
             Base64Option option
-    );
+    ) throws Exception;
     protected abstract String onEncodeToString(
             byte[] data,
             Base64Option option
-    );
+    ) throws Exception;
 }
