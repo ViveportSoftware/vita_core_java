@@ -13,12 +13,16 @@ public abstract class Base64 {
     private static Class<? extends Base64> sDefaultClass = DummyBase64.class;
 
     public static <T extends Base64> void register(Class<T> clazz) {
+        if (sDefaultClass == clazz) {
+            return;
+        }
+
         sDefaultClass = clazz;
-        System.err.printf(
+        Logger.getInstance(Base64.class.getSimpleName()).info(String.format(
                 "Registered default %s type to %s%n",
                 Base64.class.getSimpleName(),
                 sDefaultClass.getName()
-        );
+        ));
     }
 
     public static Base64 getInstance() {

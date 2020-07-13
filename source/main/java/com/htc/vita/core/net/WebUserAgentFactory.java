@@ -12,12 +12,16 @@ public abstract class WebUserAgentFactory {
     private static Class<? extends WebUserAgentFactory> sDefaultClass = DummyWebUserAgentFactory.class;
 
     public static <T extends WebUserAgentFactory> void register(Class<T> clazz) {
+        if (sDefaultClass == clazz) {
+            return;
+        }
+
         sDefaultClass = clazz;
-        System.err.printf(
+        Logger.getInstance(WebUserAgentFactory.class.getSimpleName()).info(String.format(
                 "Registered default %s type to %s%n",
                 WebUserAgentFactory.class.getSimpleName(),
                 sDefaultClass.getName()
-        );
+        ));
     }
 
     public static WebUserAgentFactory getInstance() {

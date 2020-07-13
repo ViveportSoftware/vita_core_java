@@ -13,12 +13,16 @@ public abstract class JsonFactory {
     private static Class<? extends JsonFactory> sDefaultClass = DummyJsonFactory.class;
 
     public static <T extends JsonFactory> void register(Class<T> clazz) {
+        if (sDefaultClass == clazz) {
+            return;
+        }
+
         sDefaultClass = clazz;
-        System.err.printf(
+        Logger.getInstance(JsonFactory.class.getSimpleName()).info(String.format(
                 "Registered default %s type to %s%n",
                 JsonFactory.class.getSimpleName(),
                 sDefaultClass.getName()
-        );
+        ));
     }
 
     public static JsonFactory getInstance() {

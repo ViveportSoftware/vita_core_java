@@ -13,12 +13,16 @@ public abstract class WebRequestFactory {
     private static Class<? extends WebRequestFactory> sDefaultClass = DefaultWebRequestFactory.class;
 
     public static <T extends WebRequestFactory> void register(Class<T> clazz) {
+        if (sDefaultClass == clazz) {
+            return;
+        }
+
         sDefaultClass = clazz;
-        System.err.printf(
+        Logger.getInstance(WebRequestFactory.class.getSimpleName()).info(String.format(
                 "Registered default %s type to %s%n",
                 WebRequestFactory.class.getSimpleName(),
                 sDefaultClass.getName()
-        );
+        ));
     }
 
     public static WebRequestFactory getInstance() {

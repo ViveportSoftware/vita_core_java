@@ -13,12 +13,16 @@ public abstract class WebProxyFactory {
     private static Class<? extends WebProxyFactory> sDefaultClass = DefaultWebProxyFactory.class;
 
     public static <T extends WebProxyFactory> void register(Class<T> clazz) {
+        if (sDefaultClass == clazz) {
+            return;
+        }
+
         sDefaultClass = clazz;
-        System.err.printf(
+        Logger.getInstance(WebProxyFactory.class.getSimpleName()).info(String.format(
                 "Registered default %s type to %s%n",
                 WebProxyFactory.class.getSimpleName(),
                 sDefaultClass.getName()
-        );
+        ));
     }
 
     public static WebProxyFactory getInstance() {

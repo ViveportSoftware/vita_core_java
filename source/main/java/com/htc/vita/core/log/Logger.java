@@ -16,6 +16,10 @@ public abstract class Logger {
     private String mName;
 
     public static <T extends Logger> void register(Class<T> clazz) {
+        if (sDefaultClass == clazz) {
+            return;
+        }
+
         sDefaultClass = clazz;
         System.err.printf(
                 "Registered default %s type to %s%n",

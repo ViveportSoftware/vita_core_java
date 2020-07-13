@@ -15,7 +15,6 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
 public class DefaultHttpWebRequest extends HttpWebRequest {
-
     private final Map<String, String> mHeaderMap = new HashMap<String, String>();
 
     private int mConnectTimeoutInMilli = -1;
