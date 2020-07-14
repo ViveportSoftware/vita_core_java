@@ -10,7 +10,9 @@ import java.util.Map;
 public abstract class Base64 {
     private static final Map<String, Base64> sInstances = new HashMap<String, Base64>();
     private static final Object sInstancesLock = new Object();
+
     private static Class<? extends Base64> sDefaultClass = DummyBase64.class;
+    private static boolean sIsJava8ImplPreferred = true;
 
     public static <T extends Base64> void register(Class<T> clazz) {
         if (sDefaultClass == clazz) {
@@ -23,6 +25,22 @@ public abstract class Base64 {
                 Base64.class.getSimpleName(),
                 sDefaultClass.getName()
         ));
+    }
+
+    public static void preferJava8Impl(boolean preferred) {
+        if (sIsJava8ImplPreferred == preferred) {
+            return;
+        }
+
+        Logger.getInstance(Base64.class.getSimpleName()).info(String.format(
+                "Change Java8 implementation preference to: %s",
+                preferred
+        ));
+        sIsJava8ImplPreferred = preferred;
+    }
+
+    public static boolean isJava8ImplPreferred() {
+        return sIsJava8ImplPreferred;
     }
 
     public static Base64 getInstance() {
@@ -107,6 +125,13 @@ public abstract class Base64 {
             return null;
         }
 
+        if (sIsJava8ImplPreferred && Java8Base64.isReady()) {
+            return Java8Base64.decode(
+                    data,
+                    option
+            );
+        }
+
         byte[] result = null;
         try {
             result = onDecode(
@@ -131,6 +156,13 @@ public abstract class Base64 {
             Base64Option option) {
         if (data == null) {
             return null;
+        }
+
+        if (sIsJava8ImplPreferred && Java8Base64.isReady()) {
+            return Java8Base64.encodeToString(
+                    data,
+                    option
+            );
         }
 
         String result = null;
