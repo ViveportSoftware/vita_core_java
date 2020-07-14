@@ -40,7 +40,10 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
                 return proxy;
             }
         } catch (URISyntaxException e) {
-            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error("Can not parse web proxy test URI, error: " + e.getMessage());
+            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
+                    "Can not parse web proxy test URI, error: %s",
+                    e.getMessage()
+            ));
         }
         return Proxy.NO_PROXY;
     }
@@ -95,9 +98,15 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
             );
             return WebProxyStatus.Working;
         } catch (MalformedURLException e) {
-            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error("Can not parse web proxy test URI, error: " + e.getMessage());
+            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
+                    "Can not parse web proxy test URI, error: %s",
+                    e.getMessage()
+            ));
         } catch (IOException e) {
-            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error("Can not get web proxy status, error: " + e.getMessage());
+            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
+                    "Can not get web proxy status, error: %s",
+                    e.getMessage()
+            ));
         } finally {
             if (httpURLConnection != null) {
                 httpURLConnection.disconnect();

@@ -13,20 +13,20 @@ public abstract class JsonFactory {
     private static Class<? extends JsonFactory> sDefaultClass = DummyJsonFactory.class;
 
     public static <T extends JsonFactory> void register(Class<T> clazz) {
+        if (sDefaultClass == clazz) {
+            return;
+        }
+
         sDefaultClass = clazz;
-        System.err.println("Registered default " + JsonFactory.class.getName() + " type to " + sDefaultClass.getName());
+        Logger.getInstance(JsonFactory.class.getSimpleName()).info(String.format(
+                "Registered default %s type to %s%n",
+                JsonFactory.class.getSimpleName(),
+                sDefaultClass.getName()
+        ));
     }
 
     public static JsonFactory getInstance() {
-        JsonFactory instance;
-        try {
-            instance = doGetInstance(sDefaultClass);
-        } catch (Exception e) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).fatal("Instance initialization error: " + e);
-            Logger.getInstance(JsonFactory.class.getSimpleName()).info("Initializing " + DummyJsonFactory.class.getName() + "...");
-            instance = new DummyJsonFactory();
-        }
-        return instance;
+        return getInstance(sDefaultClass);
     }
 
     public static <T extends JsonFactory> JsonFactory getInstance(Class<T> clazz) {
@@ -34,8 +34,14 @@ public abstract class JsonFactory {
         try {
             instance = doGetInstance(clazz);
         } catch (Exception e) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).fatal("Instance initialization error: " + e);
-            Logger.getInstance(JsonFactory.class.getSimpleName()).info("Initializing " + DummyJsonFactory.class.getName() + "...");
+            Logger.getInstance(JsonFactory.class.getSimpleName()).fatal(String.format(
+                    "Instance initialization error: %s",
+                    e
+            ));
+            Logger.getInstance(JsonFactory.class.getSimpleName()).info(String.format(
+                    "Initializing %s...",
+                    DummyJsonFactory.class.getName()
+            ));
             instance = new DummyJsonFactory();
         }
         return instance;
@@ -43,32 +49,45 @@ public abstract class JsonFactory {
 
     private static <T extends JsonFactory> JsonFactory doGetInstance(Class<T> clazz) {
         if (clazz == null) {
-            throw new IllegalArgumentException(String.format("Invalid argument to get %s instance", JsonFactory.class.getName()));
+            throw new IllegalArgumentException(String.format(
+                    "Invalid argument to get %s instance",
+                    JsonFactory.class.getSimpleName()
+            ));
         }
 
-        String key = clazz.getName() + "_";
+        String key = String.format(
+                "%s_",
+                clazz.getName()
+        );
         JsonFactory instance = null;
         if (sInstances.containsKey(key)) {
             instance = sInstances.get(key);
         }
         if (instance == null) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).info("Initializing " + key + "...");
+            Logger.getInstance(JsonFactory.class.getSimpleName()).info(String.format(
+                    "Initializing %s...",
+                    key
+            ));
             try {
-                Constructor constructor = clazz.getConstructor();
-                if (constructor != null) {
-                    instance = (JsonFactory) constructor.newInstance();
-                }
+                Constructor<T> constructor = clazz.getConstructor();
+                instance = constructor.newInstance();
             } catch (Exception e) {
                 // Skip
             }
         }
         if (instance == null) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).info("Initializing " + DummyJsonFactory.class.getName() + "...");
+            Logger.getInstance(JsonFactory.class.getSimpleName()).info(String.format(
+                    "Initializing %s...",
+                    DummyJsonFactory.class.getName()
+            ));
             instance = new DummyJsonFactory();
         }
         synchronized (sInstancesLock) {
             if (!sInstances.containsKey(key)) {
-                sInstances.put(key, instance);
+                sInstances.put(
+                        key,
+                        instance
+                );
             }
         }
         return instance;
@@ -83,15 +102,15 @@ public abstract class JsonFactory {
     }
 
     public <T> T deserializeObject(String content, Class<T> type) {
-        T result = null;
         if (StringUtils.isNullOrWhiteSpace(content)) {
-            return result;
+            return null;
         }
 
+        T result = null;
         try {
             result = onDeserializeObject(content, type);
         } catch (Exception e) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).fatal("Deserializing object error: " + e);
+            Logger.getInstance(JsonFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
@@ -105,7 +124,7 @@ public abstract class JsonFactory {
         try {
             result = onGetJsonArray(content);
         } catch (Exception e) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).fatal("Getting json array error: " + e);
+            Logger.getInstance(JsonFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
@@ -119,7 +138,7 @@ public abstract class JsonFactory {
         try {
             result = onGetJsonObject(content);
         } catch (Exception e) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).fatal("Getting json object error: " + e);
+            Logger.getInstance(JsonFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
@@ -133,7 +152,7 @@ public abstract class JsonFactory {
         try {
             result = onSerializeObject(content);
         } catch (Exception e) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).fatal("Serializing object error: " + e);
+            Logger.getInstance(JsonFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }

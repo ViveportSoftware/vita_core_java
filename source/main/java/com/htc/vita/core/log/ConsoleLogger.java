@@ -6,70 +6,150 @@ public class ConsoleLogger extends Logger {
     }
 
     @Override
-    protected void onDebug(String tag, String message) {
-        System.out.println("[" + getName() + "][debug][" + tag + "] " + message);
+    protected void onDebug(
+            String tag,
+            String message) {
+        onDebug(
+                tag,
+                message,
+                null
+        );
     }
 
     @Override
-    protected void onDebug(String tag, String message, Exception exception) {
+    protected void onDebug(
+            String tag,
+            String message,
+            Exception exception) {
         if (exception == null)
         {
-            System.out.println("[" + getName() + "][debug][" + tag + "] " + message);
+            System.out.printf(
+                    "[%s][debug][%s] %s%n",
+                    getName(),
+                    tag,
+                    message
+            );
         }
         else
         {
-            System.out.println("[" + getName() + "][debug][" + tag + "] " + message + ", " + exception.toString());
+            System.out.printf(
+                    "[%s][debug][%s] %s, %s%n",
+                    getName(),
+                    tag,
+                    message,
+                    exception.toString()
+            );
         }
     }
 
     @Override
-    protected void onError(String tag, String message) {
-        System.out.println("[" + getName() + "][error][" + tag + "] " + message);
+    protected void onError(
+            String tag,
+            String message) {
+        onError(
+                tag,
+                message,
+                null
+        );
     }
 
     @Override
-    protected void onError(String tag, String message, Exception exception) {
+    protected void onError(
+            String tag,
+            String message,
+            Exception exception) {
         if (exception == null)
         {
-            System.out.println("[" + getName() + "][error][" + tag + "] " + message);
+            System.out.printf(
+                    "[%s][error][%s] %s%n",
+                    getName(),
+                    tag,
+                    message
+            );
         }
         else
         {
-            System.out.println("[" + getName() + "][error][" + tag + "] " + message + ", " + exception.toString());
+            System.out.printf(
+                    "[%s][error][%s] %s, %s%n",
+                    getName(),
+                    tag,
+                    message,
+                    exception.toString()
+            );
         }
     }
 
     @Override
-    protected void onFatal(String tag, String message) {
-        System.out.println("[" + getName() + "][fatal][" + tag + "] " + message);
+    protected void onFatal(
+            String tag,
+            String message) {
+        onFatal(
+                tag,
+                message,
+                null
+        );
     }
 
     @Override
-    protected void onFatal(String tag, String message, Exception exception) {
+    protected void onFatal(
+            String tag,
+            String message,
+            Exception exception) {
         if (exception == null)
         {
-            System.out.println("[" + getName() + "][fatal][" + tag + "] " + message);
+            System.out.printf(
+                    "[%s][fatal][%s] %s%n",
+                    getName(),
+                    tag,
+                    message
+            );
         }
         else
         {
-            System.out.println("[" + getName() + "][fatal][" + tag + "] " + message + ", " + exception.toString());
+            System.out.printf(
+                    "[%s][fatal][%s] %s, %s%n",
+                    getName(),
+                    tag,
+                    message,
+                    exception.toString()
+            );
         }
     }
 
     @Override
-    protected void onInfo(String tag, String message) {
-        System.out.println("[" + getName() + "][info][" + tag + "] " + message);
+    protected void onInfo(
+            String tag,
+            String message) {
+        onInfo(
+                tag,
+                message,
+                null
+        );
     }
 
     @Override
-    protected void onInfo(String tag, String message, Exception exception) {
+    protected void onInfo(
+            String tag,
+            String message,
+            Exception exception) {
         if (exception == null)
         {
-            System.out.println("[" + getName() + "][info][" + tag + "] " + message);
+            System.out.printf(
+                    "[%s][info][%s] %s%n",
+                    getName(),
+                    tag,
+                    message
+            );
         }
         else
         {
-            System.out.println("[" + getName() + "][info][" + tag + "] " + message + ", " + exception.toString());
+            System.out.printf(
+                    "[%s][info][%s] %s, %s%n",
+                    getName(),
+                    tag,
+                    message,
+                    exception.toString()
+            );
         }
     }
 
@@ -79,36 +159,76 @@ public class ConsoleLogger extends Logger {
     }
 
     @Override
-    protected void onTrace(String tag, String message) {
-        System.out.println("[" + getName() + "][trace][" + tag + "] " + message);
+    protected void onTrace(
+            String tag,
+            String message) {
+        onTrace(
+                tag,
+                message,
+                null
+        );
     }
 
     @Override
-    protected void onTrace(String tag, String message, Exception exception) {
+    protected void onTrace(
+            String tag,
+            String message,
+            Exception exception) {
         if (exception == null)
         {
-            System.out.println("[" + getName() + "][trace][" + tag + "] " + message);
+            System.out.printf(
+                    "[%s][trace][%s] %s%n",
+                    getName(),
+                    tag,
+                    message
+            );
         }
         else
         {
-            System.out.println("[" + getName() + "][trace][" + tag + "] " + message + ", " + exception.toString());
+            System.out.printf(
+                    "[%s][trace][%s] %s, %s%n",
+                    getName(),
+                    tag,
+                    message,
+                    exception.toString()
+            );
         }
     }
 
     @Override
-    protected void onWarn(String tag, String message) {
-        System.out.println("[" + getName() + "][warn][" + tag + "] " + message);
+    protected void onWarn(
+            String tag,
+            String message) {
+        onWarn(
+                tag,
+                message,
+                null
+        );
     }
 
     @Override
-    protected void onWarn(String tag, String message, Exception exception) {
+    protected void onWarn(
+            String tag,
+            String message,
+            Exception exception) {
         if (exception == null)
         {
-            System.out.println("[" + getName() + "][warn][" + tag + "] " + message);
+            System.out.printf(
+                    "[%s][warn][%s] %s%n",
+                    getName(),
+                    tag,
+                    message
+            );
         }
         else
         {
-            System.out.println("[" + getName() + "][warn][" + tag + "] " + message + ", " + exception.toString());
+            System.out.printf(
+                    "[%s][warn][%s] %s, %s%n",
+                    getName(),
+                    tag,
+                    message,
+                    exception.toString()
+            );
         }
     }
 }
