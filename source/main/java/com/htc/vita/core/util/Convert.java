@@ -1,8 +1,17 @@
 package com.htc.vita.core.util;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.text.Base64;
 
 public class Convert {
+    public static byte[] fromBase64String(String data) {
+        if (StringUtils.isNullOrEmpty(data)) {
+            return null;
+        }
+
+        return Base64.getInstance().decode(data);
+    }
+
     public static byte[] fromHexString(String data) {
         if (StringUtils.isNullOrEmpty(data)) {
             return null;
@@ -16,6 +25,14 @@ public class Convert {
             result[i / 2] = (byte) (upperByte * 16 + lowerByte);
         }
         return result;
+    }
+
+    public static String toBase64String(byte[] data) {
+        if (data == null) {
+            return "";
+        }
+
+        return Base64.getInstance().encodeToString(data);
     }
 
     public static String toHexString(byte[] data) {
