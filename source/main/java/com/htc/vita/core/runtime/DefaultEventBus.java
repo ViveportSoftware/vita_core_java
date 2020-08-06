@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DefaultEventBus extends EventBus {
-    private final Map<Class, List<IEventListener<?>>> mListenerListMap = new HashMap<Class, List<IEventListener<?>>>();
+    private final ExecutorService mExecutorService = Executors.newCachedThreadPool();
+    private final Map<Class<?>, List<IEventListener<?>>> mListenerListMap = new HashMap<Class<?>, List<IEventListener<?>>>();
 
     private static <T extends IEventData> Method getCandidateMethod(
             Class<T> clazz,
@@ -60,7 +63,7 @@ public class DefaultEventBus extends EventBus {
     @Override
     protected <T extends IEventData> EventBus onTrigger(
             Class<T> clazz,
-            IEventData eventData) throws Exception {
+            final IEventData eventData) {
         List<IEventListener<?>> listenerList;
         synchronized (mListenerListMap) {
             if (!mListenerListMap.containsKey(clazz)) {
@@ -73,7 +76,7 @@ public class DefaultEventBus extends EventBus {
         }
 
         Method method = null;
-        for (IEventListener eventListener : listenerList) {
+        for (final IEventListener<?> eventListener : listenerList) {
             if (eventListener == null) {
                 continue;
             }
@@ -90,7 +93,20 @@ public class DefaultEventBus extends EventBus {
                 return this;
             }
 
-            method.invoke(eventListener, eventData);
+            final Method methodInTask = method;
+            mExecutorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            methodInTask.invoke(
+                                    eventListener,
+                                    eventData
+                            );
+                        } catch (Exception e) {
+                            Logger.getInstance(DefaultEventBus.class.getSimpleName()).error("Can not execute task successfully. " + e.toString());
+                        }
+                    }
+            });
         }
 
         return this;
@@ -108,9 +124,7 @@ public class DefaultEventBus extends EventBus {
             if (listenerList == null) {
                 return true;
             }
-            if (listenerList.contains(eventListener)) {
-                listenerList.remove(eventListener);
-            }
+            listenerList.remove(eventListener);
         }
 
         return true;

@@ -119,6 +119,10 @@ public abstract class EventBus {
             return this;
         }
 
+        if (!clazz.isAssignableFrom(eventData.getClass())) {
+            return this;
+        }
+
         EventBus result = null;
         try {
             result = onTrigger(
