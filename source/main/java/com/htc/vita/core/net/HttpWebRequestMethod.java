@@ -9,7 +9,7 @@ public enum HttpWebRequestMethod {
 
     private String mValue;
 
-    private HttpWebRequestMethod(String value) {
+    HttpWebRequestMethod(String value) {
         mValue = value;
     }
 
