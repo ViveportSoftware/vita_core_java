@@ -1,6 +1,7 @@
 package com.htc.vita.core.crypto;
 
 import com.htc.vita.core.util.Convert;
+import com.htc.vita.core.util.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,7 +40,7 @@ public class DefaultSha1 extends Sha1 {
     @Override
     protected String onGenerateInHex(String content) throws Exception {
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
-        messageDigest.update(content.getBytes("UTF-8"));
+        messageDigest.update(StringUtils.toBytesByUtf8(content));
         return Convert.toHexString(messageDigest.digest());
     }
 }
