@@ -4,7 +4,10 @@ import com.htc.vita.core.log.Logger;
 
 public class DummyJsonFactory extends JsonFactory {
     public DummyJsonFactory() {
-        Logger.getInstance(DummyJsonFactory.class.getSimpleName()).error("You are using dummy JsonFactory instance!!");
+        Logger.getInstance(DummyJsonFactory.class.getSimpleName()).error(String.format(
+                "You are using dummy %s instance!!",
+                JsonFactory.class.getSimpleName()
+        ));
     }
 
     @Override
