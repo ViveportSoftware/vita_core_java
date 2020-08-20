@@ -1,6 +1,5 @@
 package com.htc.vita.core.runtime;
 
-import com.htc.vita.core.json.JsonArray;
 import com.htc.vita.core.log.Logger;
 
 import java.lang.reflect.Constructor;
@@ -104,5 +103,5 @@ public abstract class Platform {
         return result;
     }
 
-    protected abstract String onGetMachineId();
+    protected abstract String onGetMachineId() throws Exception;
 }

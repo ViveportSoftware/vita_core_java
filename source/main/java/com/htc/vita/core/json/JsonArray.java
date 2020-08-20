@@ -526,72 +526,72 @@ public abstract class JsonArray {
         return result;
     }
 
-    protected abstract JsonArray onAppendBoolean(boolean value);
-    protected abstract JsonArray onAppendDouble(double value);
-    protected abstract JsonArray onAppendFloat(float value);
-    protected abstract JsonArray onAppendInt(int value);
-    protected abstract JsonArray onAppendLong(long value);
-    protected abstract JsonArray onAppendString(String value);
-    protected abstract JsonArray onAppendJsonArray(JsonArray value);
-    protected abstract JsonArray onAppendJsonObject(JsonObject value);
+    protected abstract JsonArray onAppendBoolean(boolean value) throws Exception;
+    protected abstract JsonArray onAppendDouble(double value) throws Exception;
+    protected abstract JsonArray onAppendFloat(float value) throws Exception;
+    protected abstract JsonArray onAppendInt(int value) throws Exception;
+    protected abstract JsonArray onAppendLong(long value) throws Exception;
+    protected abstract JsonArray onAppendString(String value) throws Exception;
+    protected abstract JsonArray onAppendJsonArray(JsonArray value) throws Exception;
+    protected abstract JsonArray onAppendJsonObject(JsonObject value) throws Exception;
     protected abstract JsonArray onInsertBoolean(
             int index,
             boolean value
-    );
+    ) throws Exception;
     protected abstract JsonArray onInsertDouble(
             int index,
             double value
-    );
+    ) throws Exception;
     protected abstract JsonArray onInsertFloat(
             int index,
             float value
-    );
+    ) throws Exception;
     protected abstract JsonArray onInsertInt(
             int index,
             int value
-    );
+    ) throws Exception;
     protected abstract JsonArray onInsertLong(
             int index,
             long value
-    );
+    ) throws Exception;
     protected abstract JsonArray onInsertString(
             int index,
             String value
-    );
+    ) throws Exception;
     protected abstract JsonArray onInsertJsonArray(
             int index,
             JsonArray value
-    );
+    ) throws Exception;
     protected abstract JsonArray onInsertJsonObject(
             int index,
             JsonObject value
-    );
+    ) throws Exception;
     protected abstract boolean onParseBoolean(
             int index,
             boolean defaultValue
-    );
+    ) throws Exception;
     protected abstract double onParseDouble(
             int index,
             double defaultValue
-    );
+    ) throws Exception;
     protected abstract float onParseFloat(
             int index,
             float defaultValue
-    );
+    ) throws Exception;
     protected abstract int onParseInt(
             int index,
             int defaultValue
-    );
+    ) throws Exception;
     protected abstract long onParseLong(
             int index,
             long defaultValue
-    );
+    ) throws Exception;
     protected abstract String onParseString(
             int index,
             String defaultValue
-    );
-    protected abstract JsonArray onParseJsonArray(int index);
-    protected abstract JsonObject onParseJsonObject(int index);
-    protected abstract int onSize();
-    protected abstract String onToPrettyString();
+    ) throws Exception;
+    protected abstract JsonArray onParseJsonArray(int index) throws Exception;
+    protected abstract JsonObject onParseJsonObject(int index) throws Exception;
+    protected abstract int onSize() throws Exception;
+    protected abstract String onToPrettyString() throws Exception;
 }

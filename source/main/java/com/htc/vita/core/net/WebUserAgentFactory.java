@@ -102,5 +102,5 @@ public abstract class WebUserAgentFactory {
         return result;
     }
 
-    protected abstract WebUserAgent onGetWebUserAgent();
+    protected abstract WebUserAgent onGetWebUserAgent() throws Exception;
 }

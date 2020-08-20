@@ -103,5 +103,5 @@ public abstract class WebRequestFactory {
         return result;
     }
 
-    protected abstract HttpWebRequest onGetHttpWebRequest(URL url);
+    protected abstract HttpWebRequest onGetHttpWebRequest(URL url) throws Exception;
 }

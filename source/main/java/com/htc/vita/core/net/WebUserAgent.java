@@ -18,5 +18,5 @@ public abstract class WebUserAgent {
         return result;
     }
 
-    protected abstract WebUserAgent onSetName(String name);
+    protected abstract WebUserAgent onSetName(String name) throws Exception;
 }
