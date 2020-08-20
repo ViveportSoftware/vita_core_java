@@ -2,14 +2,11 @@ package com.htc.vita.core.crypto;
 
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.Convert;
+import com.htc.vita.core.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-
 public class AesFactoryTest {
-    private static final String STRING_ENCODING_UTF_8 = "UTF-8";
-
     @Test
     public void default_0_getInstance() {
         AesFactory aesFactory = AesFactory.getInstance();
@@ -26,7 +23,7 @@ public class AesFactoryTest {
     }
 
     @Test
-    public void default_1_encrypt_withInput_withPassword() throws Exception {
+    public void default_1_encrypt_withInput_withPassword() {
         AesFactory aesFactory = AesFactory.getInstance();
         Assert.assertNotNull(aesFactory);
 
@@ -35,7 +32,7 @@ public class AesFactoryTest {
 
         String plain = "data";
         String password = "p@ssword";
-        byte[] inputInBytes = plain.getBytes(STRING_ENCODING_UTF_8);
+        byte[] inputInBytes = StringUtils.toBytesByUtf8(plain);
         byte[] outputInBytes = aes.encrypt(
                 inputInBytes,
                 password
@@ -44,7 +41,7 @@ public class AesFactoryTest {
     }
 
     @Test
-    public void default_1_encrypt_withEmptyInput_withPassword() throws Exception {
+    public void default_1_encrypt_withEmptyInput_withPassword() {
         AesFactory aesFactory = AesFactory.getInstance();
         Assert.assertNotNull(aesFactory);
 
@@ -53,7 +50,7 @@ public class AesFactoryTest {
 
         String plain = "";
         String password = "p@ssword";
-        byte[] inputInBytes = plain.getBytes(STRING_ENCODING_UTF_8);
+        byte[] inputInBytes = StringUtils.toBytesByUtf8(plain);
         byte[] outputInBytes = aes.encrypt(
                 inputInBytes,
                 password
@@ -62,7 +59,7 @@ public class AesFactoryTest {
     }
 
     @Test
-    public void default_2_decrypt_withPassword() throws Exception {
+    public void default_2_decrypt_withPassword() {
         AesFactory aesFactory = AesFactory.getInstance();
         Assert.assertNotNull(aesFactory);
 
@@ -71,7 +68,7 @@ public class AesFactoryTest {
 
         String plain = "test data";
         String password = "p@ssword";
-        byte[] inputInBytes = plain.getBytes(STRING_ENCODING_UTF_8);
+        byte[] inputInBytes = StringUtils.toBytesByUtf8(plain);
         byte[] encryptedInBytes = aesEncryptor.encrypt(
                 inputInBytes,
                 password
@@ -87,15 +84,12 @@ public class AesFactoryTest {
                 encryptedInBytes,
                 password
         );
-        String decrypted = new String(
-                decryptedInBytes,
-                STRING_ENCODING_UTF_8
-        );
+        String decrypted = StringUtils.fromBytesByUtf8(decryptedInBytes);
         Assert.assertEquals(plain, decrypted);
     }
 
     @Test
-    public void default_3_decrypt_withDataFromCSharp() throws UnsupportedEncodingException {
+    public void default_3_decrypt_withDataFromCSharp() {
         AesFactory aesFactory = AesFactory.getInstance();
         Assert.assertNotNull(aesFactory);
         Aes aesDecryptor = aesFactory.get();
@@ -107,7 +101,7 @@ public class AesFactoryTest {
         String password = "p@ssword";
         byte[] decodedData = aesDecryptor.decrypt(encodedData, password);
         Assert.assertNotNull(decodedData);
-        String decodedString = new String(decodedData, STRING_ENCODING_UTF_8);
+        String decodedString = StringUtils.fromBytesByUtf8(decodedData);
         Assert.assertEquals("test data", decodedString);
     }
 }

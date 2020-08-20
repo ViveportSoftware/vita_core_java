@@ -1,10 +1,9 @@
 package com.htc.vita.core.text;
 
 import com.htc.vita.core.util.Convert;
+import com.htc.vita.core.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.io.UnsupportedEncodingException;
 
 public class Base64Test {
     private static final String DATA_IN_HEX = "0000010001001010000001002000680400001600000028000000100000002000"
@@ -86,11 +85,11 @@ public class Base64Test {
     }
 
     @Test
-    public void dummy_2_encodeToString() throws UnsupportedEncodingException {
+    public void dummy_2_encodeToString() {
         Base64.preferJava8Impl(false);
         Base64 base64 = Base64.getInstance();
         Assert.assertNotNull(base64);
-        byte[] data = "Test".getBytes("UTF-8");
+        byte[] data = StringUtils.toBytesByUtf8("Test");
         Assert.assertNull(base64.encodeToString(data));
         Assert.assertNull(base64.encodeToString(data, Base64Option.Basic));
         Assert.assertNull(base64.encodeToString(data, Base64Option.Mime));
@@ -189,14 +188,14 @@ public class Base64Test {
     }
 
     @Test
-    public void java_2_decode() throws UnsupportedEncodingException {
+    public void java_2_decode() {
         Base64.preferJava8Impl(true);
         Base64 base64 = Base64.getInstance();
         Assert.assertNotNull(base64);
 
         byte[] decodedInBytes = base64.decode("VGVzdA==");
         Assert.assertNotNull(decodedInBytes);
-        String decoded = new String(decodedInBytes, "UTF-8");
+        String decoded = StringUtils.fromBytesByUtf8(decodedInBytes);
         Assert.assertEquals("Test", decoded);
     }
 

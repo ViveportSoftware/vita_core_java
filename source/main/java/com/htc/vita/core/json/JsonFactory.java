@@ -94,11 +94,23 @@ public abstract class JsonFactory {
     }
 
     public JsonArray createJsonArray() {
-        return onCreateJsonArray();
+        JsonArray result = null;
+        try {
+            result = onCreateJsonArray();
+        } catch (Exception e) {
+            Logger.getInstance(JsonFactory.class.getSimpleName()).error(e.toString());
+        }
+        return result;
     }
 
     public JsonObject createJsonObject() {
-        return onCreateJsonObject();
+        JsonObject result = null;
+        try {
+            result = onCreateJsonObject();
+        } catch (Exception e) {
+            Logger.getInstance(JsonFactory.class.getSimpleName()).error(e.toString());
+        }
+        return result;
     }
 
     public <T> T deserializeObject(String content, Class<T> type) {
@@ -157,10 +169,13 @@ public abstract class JsonFactory {
         return result;
     }
 
-    protected abstract JsonArray onCreateJsonArray();
-    protected abstract JsonObject onCreateJsonObject();
-    protected abstract <T> T onDeserializeObject(String content, Class<T> type);
-    protected abstract JsonArray onGetJsonArray(String content);
-    protected abstract JsonObject onGetJsonObject(String content);
-    protected abstract String onSerializeObject(Object content);
+    protected abstract JsonArray onCreateJsonArray() throws Exception;
+    protected abstract JsonObject onCreateJsonObject() throws Exception;
+    protected abstract <T> T onDeserializeObject(
+            String content,
+            Class<T> type
+    ) throws Exception;
+    protected abstract JsonArray onGetJsonArray(String content) throws Exception;
+    protected abstract JsonObject onGetJsonObject(String content) throws Exception;
+    protected abstract String onSerializeObject(Object content) throws Exception;
 }

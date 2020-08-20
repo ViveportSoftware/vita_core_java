@@ -1,57 +1,57 @@
-package com.htc.vita.core.net;
+package com.htc.vita.core.runtime;
 
 import com.htc.vita.core.log.Logger;
 
 import java.lang.reflect.Constructor;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class WebRequestFactory {
-    private static final Map<String, WebRequestFactory> sInstances = new HashMap<String, WebRequestFactory>();
+public abstract class Platform {
+    private static final Map<String, Platform> sInstances = new HashMap<String, Platform>();
     private static final Object sInstancesLock = new Object();
-    private static Class<? extends WebRequestFactory> sDefaultClass = DefaultWebRequestFactory.class;
 
-    public static <T extends WebRequestFactory> void register(Class<T> clazz) {
+    private static Class<? extends Platform> sDefaultClass = DummyPlatform.class;
+
+    public static <T extends Platform> void register(Class<T> clazz) {
         if (sDefaultClass == clazz) {
             return;
         }
 
         sDefaultClass = clazz;
-        Logger.getInstance(WebRequestFactory.class.getSimpleName()).info(String.format(
+        Logger.getInstance(Platform.class.getSimpleName()).info(String.format(
                 "Registered default %s type to %s%n",
-                WebRequestFactory.class.getSimpleName(),
+                Platform.class.getSimpleName(),
                 sDefaultClass.getName()
         ));
     }
 
-    public static WebRequestFactory getInstance() {
+    public static Platform getInstance() {
         return getInstance(sDefaultClass);
     }
 
-    public static <T extends WebRequestFactory> WebRequestFactory getInstance(Class<T> clazz) {
-        WebRequestFactory instance;
+    public static <T extends Platform> Platform getInstance(Class<T> clazz) {
+        Platform instance;
         try {
             instance = doGetInstance(clazz);
         } catch (Exception e) {
-            Logger.getInstance(WebRequestFactory.class.getSimpleName()).fatal(String.format(
+            Logger.getInstance(Platform.class.getSimpleName()).fatal(String.format(
                     "Instance initialization error: %s",
                     e
             ));
-            Logger.getInstance(WebRequestFactory.class.getSimpleName()).info(String.format(
+            Logger.getInstance(Platform.class.getSimpleName()).info(String.format(
                     "Initializing %s...",
-                    DefaultWebRequestFactory.class.getName()
+                    DummyPlatform.class.getName()
             ));
-            instance = new DefaultWebRequestFactory();
+            instance = new DummyPlatform();
         }
         return instance;
     }
 
-    private static <T extends WebRequestFactory> WebRequestFactory doGetInstance(Class<T> clazz) {
+    private static <T extends Platform> Platform doGetInstance(Class<T> clazz) {
         if (clazz == null) {
             throw new IllegalArgumentException(String.format(
                     "Invalid argument to get %s instance",
-                    WebRequestFactory.class.getSimpleName()
+                    Platform.class.getSimpleName()
             ));
         }
 
@@ -59,12 +59,12 @@ public abstract class WebRequestFactory {
                 "%s_",
                 clazz.getName()
         );
-        WebRequestFactory instance = null;
+        Platform instance = null;
         if (sInstances.containsKey(key)) {
             instance = sInstances.get(key);
         }
         if (instance == null) {
-            Logger.getInstance(WebRequestFactory.class.getSimpleName()).info(String.format(
+            Logger.getInstance(Platform.class.getSimpleName()).info(String.format(
                     "Initializing %s...",
                     key
             ));
@@ -76,11 +76,11 @@ public abstract class WebRequestFactory {
             }
         }
         if (instance == null) {
-            Logger.getInstance(WebRequestFactory.class.getSimpleName()).info(String.format(
+            Logger.getInstance(Platform.class.getSimpleName()).info(String.format(
                     "Initializing %s...",
-                    DefaultWebRequestFactory.class.getName()
+                    DummyPlatform.class.getName()
             ));
-            instance = new DefaultWebRequestFactory();
+            instance = new DummyPlatform();
         }
         synchronized (sInstancesLock) {
             if (!sInstances.containsKey(key)) {
@@ -93,15 +93,15 @@ public abstract class WebRequestFactory {
         return instance;
     }
 
-    public HttpWebRequest getHttpWebRequest(URL url) {
-        HttpWebRequest result = null;
+    public String getMachineId() {
+        String result = null;
         try {
-            result = onGetHttpWebRequest(url);
+            result = onGetMachineId();
         } catch (Exception e) {
-            Logger.getInstance(WebRequestFactory.class.getSimpleName()).error(e.toString());
+            Logger.getInstance(Platform.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    protected abstract HttpWebRequest onGetHttpWebRequest(URL url) throws Exception;
+    protected abstract String onGetMachineId() throws Exception;
 }

@@ -139,13 +139,16 @@ public abstract class HttpWebRequest implements Closeable {
         return result;
     }
 
-    protected abstract InputStream onGetInputStream() throws IOException;
-    protected abstract OutputStream onGetOutputStream() throws IOException;
-    protected abstract HttpWebRequest onSetAccept(String accept);
-    protected abstract HttpWebRequest onSetConnectTimeoutInMilli(int connectTimeoutInMilli);
-    protected abstract HttpWebRequest onSetContentType(String contentType);
-    protected abstract HttpWebRequest onSetCustomHeader(String key, String value);
-    protected abstract HttpWebRequest onSetMethod(HttpWebRequestMethod httpWebRequestMethod);
-    protected abstract HttpWebRequest onSetProxy(Proxy proxy);
-    protected abstract HttpWebRequest onSetUserAgent(String userAgent);
+    protected abstract InputStream onGetInputStream() throws Exception;
+    protected abstract OutputStream onGetOutputStream() throws Exception;
+    protected abstract HttpWebRequest onSetAccept(String accept) throws Exception;
+    protected abstract HttpWebRequest onSetConnectTimeoutInMilli(int connectTimeoutInMilli) throws Exception;
+    protected abstract HttpWebRequest onSetContentType(String contentType) throws Exception;
+    protected abstract HttpWebRequest onSetCustomHeader(
+            String key,
+            String value
+    ) throws Exception;
+    protected abstract HttpWebRequest onSetMethod(HttpWebRequestMethod httpWebRequestMethod) throws Exception;
+    protected abstract HttpWebRequest onSetProxy(Proxy proxy) throws Exception;
+    protected abstract HttpWebRequest onSetUserAgent(String userAgent) throws Exception;
 }

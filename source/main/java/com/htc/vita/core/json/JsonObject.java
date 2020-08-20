@@ -400,65 +400,65 @@ public abstract class JsonObject {
         return result;
     }
 
-    protected abstract Set<String> onAllKeys();
-    protected abstract boolean onHasKey(String key);
+    protected abstract Set<String> onAllKeys() throws Exception;
+    protected abstract boolean onHasKey(String key) throws Exception;
     protected abstract boolean onParseBoolean(
             String key,
             boolean defaultValue
-    );
+    ) throws Exception;
     protected abstract double onParseDouble(
             String key,
             double defaultValue
-    );
+    ) throws Exception;
     protected abstract float onParseFloat(
             String key,
             float defaultValue
-    );
+    ) throws Exception;
     protected abstract int onParseInt(
             String key,
             int defaultValue
-    );
+    ) throws Exception;
     protected abstract long onParseLong(
             String key,
             long defaultValue
-    );
+    ) throws Exception;
     protected abstract String onParseString(
             String key,
             String defaultValue
-    );
-    protected abstract JsonArray onParseJsonArray(String key);
-    protected abstract JsonObject onParseJsonObject(String key);
+    ) throws Exception;
+    protected abstract JsonArray onParseJsonArray(String key) throws Exception;
+    protected abstract JsonObject onParseJsonObject(String key) throws Exception;
     protected abstract JsonObject onPutBoolean(
             String key,
             boolean value
-    );
+    ) throws Exception;
     protected abstract JsonObject onPutDouble(
             String key,
             double value
-    );
+    ) throws Exception;
     protected abstract JsonObject onPutFloat(
             String key,
             float value
-    );
+    ) throws Exception;
     protected abstract JsonObject onPutInt(
             String key,
             int value
-    );
+    ) throws Exception;
     protected abstract JsonObject onPutLong(
             String key,
             long value
-    );
+    ) throws Exception;
     protected abstract JsonObject onPutString(
             String key,
             String value
-    );
+    ) throws Exception;
     protected abstract JsonObject onPutJsonArray(
             String key,
             JsonArray value
-    );
+    ) throws Exception;
     protected abstract JsonObject onPutJsonObject(
             String key,
             JsonObject value
-    );
-    protected abstract String onToPrettyString();
+    ) throws Exception;
+    protected abstract String onToPrettyString() throws Exception;
 }

@@ -117,6 +117,6 @@ public abstract class WebProxyFactory {
         return result;
     }
 
-    protected abstract Proxy onGetWebProxy();
-    protected abstract WebProxyStatus onGetWebProxyStatus(Proxy proxy);
+    protected abstract Proxy onGetWebProxy() throws Exception;
+    protected abstract WebProxyStatus onGetWebProxyStatus(Proxy proxy) throws Exception;
 }

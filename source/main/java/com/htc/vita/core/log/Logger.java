@@ -544,56 +544,56 @@ public abstract class Logger {
     protected abstract void onDebug(
             String tag,
             String message
-    );
+    ) throws Exception;
     protected abstract void onDebug(
             String tag,
             String message,
             Exception exception
-    );
+    ) throws Exception;
     protected abstract void onError(
             String tag,
             String message
-    );
+    ) throws Exception;
     protected abstract void onError(
             String tag,
             String message,
             Exception exception
-    );
+    ) throws Exception;
     protected abstract void onFatal(
             String tag,
             String message
-    );
+    ) throws Exception;
     protected abstract void onFatal(
             String tag,
             String message,
             Exception exception
-    );
+    ) throws Exception;
     protected abstract void onInfo(
             String tag,
             String message
-    );
+    ) throws Exception;
     protected abstract void onInfo(
             String tag,
             String message,
             Exception exception
-    );
-    protected abstract void onShutdown();
+    ) throws Exception;
+    protected abstract void onShutdown() throws Exception;
     protected abstract void onTrace(
             String tag,
             String message
-    );
+    ) throws Exception;
     protected abstract void onTrace(
             String tag,
             String message,
             Exception exception
-    );
+    ) throws Exception;
     protected abstract void onWarn(
             String tag,
             String message
-    );
+    ) throws Exception;
     protected abstract void onWarn(
             String tag,
             String message,
             Exception exception
-    );
+    ) throws Exception;
 }
