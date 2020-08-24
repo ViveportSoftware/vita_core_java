@@ -7,7 +7,7 @@ public enum HttpWebRequestMethod {
     Put("PUT"),
     Delete("DELETE");
 
-    private String mValue;
+    private final String mValue;
 
     HttpWebRequestMethod(String value) {
         mValue = value;

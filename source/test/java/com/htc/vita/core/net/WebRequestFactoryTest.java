@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 public class WebRequestFactoryTest {
     @Test
@@ -25,18 +27,41 @@ public class WebRequestFactoryTest {
         Assert.assertNotNull(webRequestFactory);
         HttpWebRequest httpWebRequest = webRequestFactory.getHttpWebRequest(new URL("https://www.google.com/search?q=firefox"));
         Assert.assertNotNull(httpWebRequest);
-        InputStream inputStream = httpWebRequest.getInputStream();
-        Assert.assertNotNull(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        HttpWebResponse httpWebResponse = httpWebRequest.getResponse();
+        Assert.assertNotNull(httpWebResponse);
+        InputStream responseStream = httpWebResponse.getResponseStream();
+        Assert.assertNotNull(responseStream);
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
         StringBuffer buffer = new StringBuffer();
         String line = "";
         while ((line = bufferedReader.readLine()) != null){
             buffer.append(line);
         }
-        String input = buffer.toString();
+        String response = buffer.toString();
         bufferedReader.close();
+        Assert.assertFalse(StringUtils.isNullOrWhiteSpace(response));
+        // Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error("response: " + response);
+
+        HttpWebResponseStatusCode statusCode = httpWebResponse.getStatusCode();
+        Assert.assertEquals(HttpWebResponseStatusCode.Ok, statusCode);
+
+        Map<String, List<String>> responseHeaders = httpWebResponse.getHeaders();
+        for (String headerKey : responseHeaders.keySet()) {
+            if (StringUtils.isNullOrWhiteSpace(headerKey)) {
+                continue;
+            }
+
+            List<String> header = responseHeaders.get(headerKey);
+            int index = 0;
+            for (String item : header) {
+                Assert.assertFalse(StringUtils.isNullOrWhiteSpace(item));
+                // Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).info("header[" + headerKey + "][" + index + "]: " + item);
+                index++;
+            }
+        }
+
+        httpWebResponse.close();
         httpWebRequest.close();
-        Assert.assertFalse(StringUtils.isNullOrWhiteSpace(input));
-        // Logger.getInstance().error("input: " + input);
     }
 }

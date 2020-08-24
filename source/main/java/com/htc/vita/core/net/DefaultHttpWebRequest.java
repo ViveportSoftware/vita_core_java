@@ -3,7 +3,6 @@ package com.htc.vita.core.net;
 import com.htc.vita.core.util.StringUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.Proxy;
@@ -11,8 +10,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.InflaterInputStream;
 
 public class DefaultHttpWebRequest extends HttpWebRequest {
     private final Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -21,6 +18,7 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
     private HttpURLConnection mHttpUrlConnection = null;
     private HttpWebRequestMethod mHttpWebRequestMethod = HttpWebRequestMethod.Get;
     private Proxy mProxy = null;
+    private OutputStream mRequestStream = null;
 
     public DefaultHttpWebRequest(URL url) {
         super(url);
@@ -81,20 +79,12 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
 
     @Override
     public void close() throws IOException {
+        if (mRequestStream != null) {
+            mRequestStream.close();
+            mRequestStream = null;
+        }
         if (mHttpUrlConnection != null) {
-            if (mHttpUrlConnection.getDoOutput()) {
-                OutputStream outputStream = mHttpUrlConnection.getOutputStream();
-                if (outputStream != null) {
-                    outputStream.close();
-                }
-            }
-            if (mHttpUrlConnection.getDoInput()) {
-                InputStream inputStream = mHttpUrlConnection.getInputStream();
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-            }
-            mHttpUrlConnection.disconnect();
+            // mHttpUrlConnection.disconnect();
             mHttpUrlConnection = null;
         }
     }
@@ -106,34 +96,27 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
     }
 
     @Override
-    protected InputStream onGetInputStream() throws IOException {
+    protected OutputStream onGetRequestStream() throws IOException {
+        if (mRequestStream != null) {
+            return mRequestStream;
+        }
+
         boolean isConnectionAvailable = checkHttpUrlConnection();
         if (!isConnectionAvailable) {
             return null;
         }
 
-        InputStream inputStream = mHttpUrlConnection.getInputStream();
-        if (inputStream == null) {
-            return null;
-        }
-
-        String contentEncoding = mHttpUrlConnection.getContentEncoding();
-        if ("gzip".equalsIgnoreCase(contentEncoding)) {
-            return new GZIPInputStream(inputStream);
-        }
-        if ("deflate".equalsIgnoreCase(contentEncoding)) {
-            return new InflaterInputStream(inputStream);
-        }
-        return inputStream;
+        mRequestStream = mHttpUrlConnection.getOutputStream();
+        return mRequestStream;
     }
 
     @Override
-    protected OutputStream onGetOutputStream() throws IOException {
+    protected HttpWebResponse onGetResponse() throws Exception {
         boolean isConnectionAvailable = checkHttpUrlConnection();
         if (!isConnectionAvailable) {
             return null;
         }
-        return mHttpUrlConnection.getOutputStream();
+        return new DefaultHttpWebResponse(mHttpUrlConnection);
     }
 
     @Override
