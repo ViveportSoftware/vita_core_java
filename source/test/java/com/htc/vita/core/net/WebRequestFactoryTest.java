@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 public class WebRequestFactoryTest {
+
+    static {
+        // SSLTrustManager.trustAll();
+    }
+
     @Test
     public void default_0_getInstance() {
         WebRequestFactory webRequestFactory = WebRequestFactory.getInstance();
