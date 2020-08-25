@@ -80,6 +80,7 @@ public class WebRequestFactoryTest {
         try {
             InputStream responseStream = httpWebResponse.getResponseStream();
         } catch (Exception e) {
+            Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error(e.toString());
             Assert.assertTrue(e instanceof UnknownHostException);
         }
     }
@@ -96,6 +97,7 @@ public class WebRequestFactoryTest {
         try {
             InputStream responseStream = httpWebResponse.getResponseStream();
         } catch (Exception e) {
+            Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error(e.toString());
             Assert.assertTrue(e instanceof ConnectException);
         }
     }
@@ -112,6 +114,7 @@ public class WebRequestFactoryTest {
         try {
             InputStream responseStream = httpWebResponse.getResponseStream();
         } catch (Exception e) {
+            Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error(e.toString());
             Assert.assertTrue(e instanceof SocketException);
         }
     }
