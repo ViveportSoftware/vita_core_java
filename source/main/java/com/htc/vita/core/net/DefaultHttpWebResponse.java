@@ -40,7 +40,7 @@ public class DefaultHttpWebResponse extends HttpWebResponse {
     }
 
     @Override
-    protected InputStream onGetResponseStream() throws Exception {
+    protected InputStream onGetResponseStream() throws IOException {
         if (mResponseStream != null) {
             return mResponseStream;
         }
@@ -64,7 +64,7 @@ public class DefaultHttpWebResponse extends HttpWebResponse {
     }
 
     @Override
-    protected HttpWebResponseStatusCode onGetStatusCode() throws Exception {
+    protected HttpWebResponseStatusCode onGetStatusCode() throws IOException {
         return HttpWebResponseStatusCode.fromValue(mHttpUrlConnection.getResponseCode());
     }
 }

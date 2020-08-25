@@ -111,7 +111,7 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
     }
 
     @Override
-    protected HttpWebResponse onGetResponse() throws Exception {
+    protected HttpWebResponse onGetResponse() throws IOException {
         boolean isConnectionAvailable = checkHttpUrlConnection();
         if (!isConnectionAvailable) {
             return null;

@@ -4,6 +4,7 @@ import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
 import java.io.Closeable;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Proxy;
 import java.net.URL;
@@ -15,24 +16,12 @@ public abstract class HttpWebRequest implements Closeable {
         mUrl = url;
     }
 
-    public OutputStream getRequestStream() {
-        OutputStream result = null;
-        try {
-            result = onGetRequestStream();
-        } catch (Exception e) {
-            Logger.getInstance(HttpWebRequest.class.getSimpleName()).error(e.toString());
-        }
-        return result;
+    public OutputStream getRequestStream() throws IOException {
+        return onGetRequestStream();
     }
 
-    public HttpWebResponse getResponse() {
-        HttpWebResponse result = null;
-        try {
-            result = onGetResponse();
-        } catch (Exception e) {
-            Logger.getInstance(HttpWebRequest.class.getSimpleName()).error(e.toString());
-        }
-        return result;
+    public HttpWebResponse getResponse() throws IOException {
+        return onGetResponse();
     }
 
     protected URL getUrl() {
@@ -137,8 +126,8 @@ public abstract class HttpWebRequest implements Closeable {
         return result;
     }
 
-    protected abstract OutputStream onGetRequestStream() throws Exception;
-    protected abstract HttpWebResponse onGetResponse() throws Exception;
+    protected abstract OutputStream onGetRequestStream() throws IOException;
+    protected abstract HttpWebResponse onGetResponse() throws IOException;
     protected abstract HttpWebRequest onSetAccept(String accept) throws Exception;
     protected abstract HttpWebRequest onSetConnectTimeoutInMilli(int connectTimeoutInMilli) throws Exception;
     protected abstract HttpWebRequest onSetContentType(String contentType) throws Exception;
