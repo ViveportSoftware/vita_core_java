@@ -57,6 +57,9 @@ public class DefaultHttpWebResponse extends HttpWebResponse {
         if ("deflate".equalsIgnoreCase(contentEncoding)) {
             mResponseStream = new InflaterInputStream(inputStream);
         }
+        if (mResponseStream == null){
+            mResponseStream = inputStream;
+        }
         return mResponseStream;
     }
 
