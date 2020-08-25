@@ -5,10 +5,7 @@ import com.htc.vita.core.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
@@ -83,6 +80,8 @@ public class WebRequestFactoryTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof UnknownHostException);
         }
+        httpWebResponse.close();
+        httpWebRequest.close();
     }
 
     @Test
@@ -99,6 +98,8 @@ public class WebRequestFactoryTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof ConnectException);
         }
+        httpWebResponse.close();
+        httpWebRequest.close();
     }
 
     @Test
@@ -116,5 +117,79 @@ public class WebRequestFactoryTest {
             Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error(e.toString());
             Assert.assertTrue(e instanceof SocketException || e instanceof SocketTimeoutException);
         }
+        httpWebResponse.close();
+        httpWebRequest.close();
+    }
+
+    @Test
+    public void default_1_getHttpWebRequest_withGet() throws IOException {
+        // System.setProperty("java.net.useSystemProxies", "true");
+        WebRequestFactory webRequestFactory = WebRequestFactory.getInstance();
+        Assert.assertNotNull(webRequestFactory);
+        HttpWebRequest httpWebRequest = webRequestFactory.getHttpWebRequest(new URL("https://postman-echo.com/get?foo1=bar1&foo2=bar2"));
+        Assert.assertNotNull(httpWebRequest);
+        HttpWebResponse httpWebResponse = httpWebRequest.getResponse();
+        Assert.assertNotNull(httpWebResponse);
+        HttpWebResponseStatusCode statusCode = httpWebResponse.getStatusCode();
+        Assert.assertEquals(HttpWebResponseStatusCode.Ok, statusCode);
+
+        InputStream responseStream = httpWebResponse.getResponseStream();
+        Assert.assertNotNull(responseStream);
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
+        StringBuffer buffer = new StringBuffer();
+        String line = "";
+        while ((line = bufferedReader.readLine()) != null){
+            buffer.append(line);
+        }
+        String response = buffer.toString();
+        bufferedReader.close();
+        Assert.assertFalse(StringUtils.isNullOrWhiteSpace(response));
+        // Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error("response: " + response);
+        responseStream.close();
+
+        httpWebResponse.close();
+        httpWebRequest.close();
+    }
+
+    @Test
+    public void default_1_getHttpWebRequest_withPost() throws IOException {
+        // System.setProperty("java.net.useSystemProxies", "true");
+        WebRequestFactory webRequestFactory = WebRequestFactory.getInstance();
+        Assert.assertNotNull(webRequestFactory);
+        HttpWebRequest httpWebRequest = webRequestFactory.getHttpWebRequest(new URL("https://postman-echo.com/post"));
+        Assert.assertNotNull(httpWebRequest);
+        httpWebRequest.setMethod(HttpWebRequestMethod.Post);
+        OutputStream requestStream = httpWebRequest.getRequestStream();
+        Assert.assertNotNull(requestStream);
+
+        String data = "This is expected to be sent back as part of response body.";
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(requestStream));
+        bufferedWriter.write(data);
+        bufferedWriter.flush();
+        bufferedWriter.close();
+
+        HttpWebResponse httpWebResponse = httpWebRequest.getResponse();
+        Assert.assertNotNull(httpWebResponse);
+        HttpWebResponseStatusCode statusCode = httpWebResponse.getStatusCode();
+        Assert.assertEquals(HttpWebResponseStatusCode.Ok, statusCode);
+
+        InputStream responseStream = httpWebResponse.getResponseStream();
+        Assert.assertNotNull(responseStream);
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
+        StringBuffer buffer = new StringBuffer();
+        String line = "";
+        while ((line = bufferedReader.readLine()) != null){
+            buffer.append(line);
+        }
+        String response = buffer.toString();
+        bufferedReader.close();
+        Assert.assertFalse(StringUtils.isNullOrWhiteSpace(response));
+        // Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error("response: " + response);
+        responseStream.close();
+
+        httpWebResponse.close();
+        httpWebRequest.close();
     }
 }
