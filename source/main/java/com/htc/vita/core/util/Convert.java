@@ -35,6 +35,34 @@ public class Convert {
         return Base64.getInstance().encodeToString(data);
     }
 
+    public static boolean toBoolean(String data) {
+        return toBoolean(
+                data,
+                false
+        );
+    }
+
+    public static boolean toBoolean(
+            String data,
+            boolean defaultValue) {
+        if (StringUtils.isNullOrWhiteSpace(data)) {
+            return defaultValue;
+        }
+
+        boolean result = defaultValue;
+        try
+        {
+            result = Boolean.parseBoolean(data);
+        }
+        catch (Exception e) {
+            Logger.getInstance(Convert.class.getSimpleName()).error(String.format(
+                    "Can not parse \"%s\" to boolean",
+                    data
+            ));
+        }
+        return result;
+    }
+
     public static String toHexString(byte[] data) {
         if (data == null) {
             return "";
@@ -48,10 +76,15 @@ public class Convert {
     }
 
     public static int toInt32(String data) {
-        return toInt32(data, 0);
+        return toInt32(
+                data,
+                0
+        );
     }
 
-    public static int toInt32(String data, int defaultValue) {
+    public static int toInt32(
+            String data,
+            int defaultValue) {
         if (StringUtils.isNullOrWhiteSpace(data)) {
             return defaultValue;
         }
