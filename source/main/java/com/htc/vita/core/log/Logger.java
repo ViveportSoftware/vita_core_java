@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Logger {
-    private static final Map<String, Logger> sInstances = new HashMap<String, Logger>();
-    private static final Object sInstancesLock = new Object();
+    private static final Map<String, Logger> INSTANCE_MAP = new HashMap<String, Logger>();
 
     private static boolean sShouldSkipMethodResolution = false;
     private static Class<? extends Logger> sDefaultClass = ConsoleLogger.class;
@@ -123,9 +122,9 @@ public abstract class Logger {
                 name
         );
         Logger instance = null;
-        if (sInstances.containsKey(key))
+        if (INSTANCE_MAP.containsKey(key))
         {
-            instance = sInstances.get(key);
+            instance = INSTANCE_MAP.get(key);
         }
         if (instance == null)
         {
@@ -149,11 +148,11 @@ public abstract class Logger {
             );
             instance = new ConsoleLogger(name);
         }
-        synchronized (sInstancesLock)
+        synchronized (INSTANCE_MAP)
         {
-            if (!sInstances.containsKey(key))
+            if (!INSTANCE_MAP.containsKey(key))
             {
-                sInstances.put(
+                INSTANCE_MAP.put(
                         key,
                         instance
                 );
