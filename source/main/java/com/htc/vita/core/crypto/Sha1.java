@@ -2,96 +2,34 @@ package com.htc.vita.core.crypto;
 
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
+import com.htc.vita.core.util.TypeRegistry;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class Sha1 {
-    private static final Map<String, Sha1> sInstances = new HashMap<String, Sha1>();
-    private static final Object sInstancesLock = new Object();
-    private static Class<? extends Sha1> sDefaultClass = DefaultSha1.class;
+    static {
+        TypeRegistry.registerDefault(
+                Sha1.class,
+                DefaultSha1.class
+        );
+    }
 
     public static <T extends Sha1> void register(Class<T> clazz) {
-        if (sDefaultClass == clazz) {
-            return;
-        }
-
-        sDefaultClass = clazz;
-        Logger.getInstance(Sha1.class.getSimpleName()).info(String.format(
-                "Registered default %s type to %s%n",
-                Sha1.class.getSimpleName(),
-                sDefaultClass.getName()
-        ));
+        TypeRegistry.register(
+                Sha1.class,
+                clazz
+        );
     }
 
     public static Sha1 getInstance() {
-        return getInstance(sDefaultClass);
+        return TypeRegistry.getInstance(Sha1.class);
     }
 
     public static <T extends Sha1> Sha1 getInstance(Class<T> clazz) {
-        Sha1 instance;
-        try {
-            instance = doGetInstance(clazz);
-        } catch (Exception e) {
-            Logger.getInstance(Sha1.class.getSimpleName()).fatal(String.format(
-                    "Instance initialization error: %s",
-                    e
-            ));
-            Logger.getInstance(Sha1.class.getSimpleName()).info(String.format(
-                    "Initializing %s...",
-                    DefaultSha1.class.getName()
-            ));
-            instance = new DefaultSha1();
-        }
-        return instance;
-    }
-
-    private static <T extends Sha1> Sha1 doGetInstance(Class<T> clazz) {
-        if (clazz == null) {
-            throw new IllegalArgumentException(String.format(
-                    "Invalid argument to get %s instance",
-                    Sha1.class.getSimpleName()
-            ));
-        }
-
-        String key = String.format(
-                "%s_",
-                clazz.getName()
+        return TypeRegistry.getInstance(
+                Sha1.class,
+                clazz
         );
-        Sha1 instance = null;
-        if (sInstances.containsKey(key)) {
-            instance = sInstances.get(key);
-        }
-        if (instance == null) {
-            Logger.getInstance(Sha1.class.getSimpleName()).info(String.format(
-                    "Initializing %s...",
-                    key
-            ));
-            try {
-                Constructor<T> constructor = clazz.getConstructor();
-                instance = constructor.newInstance();
-            } catch (Exception e) {
-                // Skip
-            }
-        }
-        if (instance == null) {
-            Logger.getInstance(Sha1.class.getSimpleName()).info(String.format(
-                    "Initializing %s...",
-                    DefaultSha1.class.getName()
-            ));
-            instance = new DefaultSha1();
-        }
-        synchronized (sInstancesLock) {
-            if (!sInstances.containsKey(key)) {
-                sInstances.put(
-                        key,
-                        instance
-                );
-            }
-        }
-        return instance;
     }
 
     public String generateInHex(File file) {
