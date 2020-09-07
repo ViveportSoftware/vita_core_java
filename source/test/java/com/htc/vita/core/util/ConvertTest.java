@@ -72,4 +72,11 @@ public class ConvertTest {
         Assert.assertEquals(0.1D, Convert.toDouble("0.2"), 0.1D);
         Assert.assertNotEquals(0.1D, Convert.toDouble("0.3"), 0.1D);
     }
+
+    @Test
+    public void default_8_toLong() {
+        Assert.assertEquals(0L, Convert.toLong("0"));
+        Assert.assertEquals(1L, Convert.toLong("1"));
+        Assert.assertEquals(1234567890123L, Convert.toLong("1234567890123"));
+    }
 }

@@ -130,4 +130,32 @@ public class Convert {
         }
         return result;
     }
+
+    public static long toLong(String data) {
+        return toLong(
+                data,
+                0L
+        );
+    }
+
+    public static long toLong(
+            String data,
+            long defaultValue) {
+        if (StringUtils.isNullOrWhiteSpace(data)) {
+            return defaultValue;
+        }
+
+        long result = defaultValue;
+        try
+        {
+            result = Long.parseLong(data);
+        }
+        catch (Exception e) {
+            Logger.getInstance(Convert.class.getSimpleName()).error(String.format(
+                    "Can not parse \"%s\" to long/int64",
+                    data
+            ));
+        }
+        return result;
+    }
 }
