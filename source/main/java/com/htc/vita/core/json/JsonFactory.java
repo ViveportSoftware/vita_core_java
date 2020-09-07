@@ -2,95 +2,32 @@ package com.htc.vita.core.json;
 
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
-
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
+import com.htc.vita.core.util.TypeRegistry;
 
 public abstract class JsonFactory {
-    private static final Map<String, JsonFactory> sInstances = new HashMap<String, JsonFactory>();
-    private static final Object sInstancesLock = new Object();
-    private static Class<? extends JsonFactory> sDefaultClass = DummyJsonFactory.class;
+    static {
+        TypeRegistry.registerDefault(
+                JsonFactory.class,
+                DummyJsonFactory.class
+        );
+    }
 
     public static <T extends JsonFactory> void register(Class<T> clazz) {
-        if (sDefaultClass == clazz) {
-            return;
-        }
-
-        sDefaultClass = clazz;
-        Logger.getInstance(JsonFactory.class.getSimpleName()).info(String.format(
-                "Registered default %s type to %s%n",
-                JsonFactory.class.getSimpleName(),
-                sDefaultClass.getName()
-        ));
+        TypeRegistry.register(
+                JsonFactory.class,
+                clazz
+        );
     }
 
     public static JsonFactory getInstance() {
-        return getInstance(sDefaultClass);
+        return TypeRegistry.getInstance(JsonFactory.class);
     }
 
     public static <T extends JsonFactory> JsonFactory getInstance(Class<T> clazz) {
-        JsonFactory instance;
-        try {
-            instance = doGetInstance(clazz);
-        } catch (Exception e) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).fatal(String.format(
-                    "Instance initialization error: %s",
-                    e
-            ));
-            Logger.getInstance(JsonFactory.class.getSimpleName()).info(String.format(
-                    "Initializing %s...",
-                    DummyJsonFactory.class.getName()
-            ));
-            instance = new DummyJsonFactory();
-        }
-        return instance;
-    }
-
-    private static <T extends JsonFactory> JsonFactory doGetInstance(Class<T> clazz) {
-        if (clazz == null) {
-            throw new IllegalArgumentException(String.format(
-                    "Invalid argument to get %s instance",
-                    JsonFactory.class.getSimpleName()
-            ));
-        }
-
-        String key = String.format(
-                "%s_",
-                clazz.getName()
+        return TypeRegistry.getInstance(
+                JsonFactory.class,
+                clazz
         );
-        JsonFactory instance = null;
-        if (sInstances.containsKey(key)) {
-            instance = sInstances.get(key);
-        }
-        if (instance == null) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).info(String.format(
-                    "Initializing %s...",
-                    key
-            ));
-            try {
-                Constructor<T> constructor = clazz.getConstructor();
-                instance = constructor.newInstance();
-            } catch (Exception e) {
-                // Skip
-            }
-        }
-        if (instance == null) {
-            Logger.getInstance(JsonFactory.class.getSimpleName()).info(String.format(
-                    "Initializing %s...",
-                    DummyJsonFactory.class.getName()
-            ));
-            instance = new DummyJsonFactory();
-        }
-        synchronized (sInstancesLock) {
-            if (!sInstances.containsKey(key)) {
-                sInstances.put(
-                        key,
-                        instance
-                );
-            }
-        }
-        return instance;
     }
 
     public JsonArray createJsonArray() {
