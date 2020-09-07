@@ -63,6 +63,34 @@ public class Convert {
         return result;
     }
 
+    public static double toDouble(String data) {
+        return toDouble(
+                data,
+                0.0D
+        );
+    }
+
+    public static double toDouble(
+            String data,
+            double defaultValue) {
+        if (StringUtils.isNullOrWhiteSpace(data)) {
+            return defaultValue;
+        }
+
+        double result = defaultValue;
+        try
+        {
+            result = Double.parseDouble(data);
+        }
+        catch (Exception e) {
+            Logger.getInstance(Convert.class.getSimpleName()).error(String.format(
+                    "Can not parse \"%s\" to double",
+                    data
+            ));
+        }
+        return result;
+    }
+
     public static String toHexString(byte[] data) {
         if (data == null) {
             return "";

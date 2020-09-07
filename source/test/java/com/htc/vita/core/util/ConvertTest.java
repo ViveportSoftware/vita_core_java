@@ -65,4 +65,11 @@ public class ConvertTest {
         Assert.assertTrue(Convert.toBoolean("TRue"));
         Assert.assertFalse(Convert.toBoolean("TRue1"));
     }
+
+    @Test
+    public void default_7_toDouble() {
+        Assert.assertEquals(0.0D, Convert.toDouble("0.0"), 0.00000001D);
+        Assert.assertEquals(0.1D, Convert.toDouble("0.2"), 0.1D);
+        Assert.assertNotEquals(0.1D, Convert.toDouble("0.3"), 0.1D);
+    }
 }
