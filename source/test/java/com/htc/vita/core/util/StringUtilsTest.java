@@ -27,4 +27,14 @@ public class StringUtilsTest {
         String whiteSpaceString = " ";
         Assert.assertTrue(StringUtils.isNullOrWhiteSpace(whiteSpaceString));
     }
+
+    @Test
+    public void default_2_join() {
+        Assert.assertNull(StringUtils.join("+", (String[]) null));
+        Assert.assertEquals("a", StringUtils.join("+", "a"));
+        Assert.assertEquals("a+b+c", StringUtils.join("+", "a", "b", "c"));
+        Assert.assertEquals("a+b+c", StringUtils.join("+", new String[] {"a", "b", "c"}));
+        Assert.assertEquals("anullbnullc", StringUtils.join(null, "a", "b", "c"));
+        Assert.assertNull(StringUtils.join(null, (String[]) null));
+    }
 }

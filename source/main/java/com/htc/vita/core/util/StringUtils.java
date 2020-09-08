@@ -43,6 +43,25 @@ public class StringUtils {
         return true;
     }
 
+    public static String join(String separator, String... params) {
+        if (params == null) {
+            return null;
+        }
+        if (params.length == 0) {
+            return "";
+        }
+
+        if (params.length == 1) {
+            return params[0];
+        }
+
+        StringBuilder builder = new StringBuilder(params[0]);
+        for (int i = 1; i < params.length; i++) {
+            builder.append(separator).append(params[i]);
+        }
+        return builder.toString();
+    }
+
     public static byte[] toBytesByUtf8(String data) {
         if (data == null) {
             return null;
