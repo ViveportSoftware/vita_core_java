@@ -3,7 +3,7 @@ package com.htc.vita.core.util;
 import java.io.UnsupportedEncodingException;
 
 public class StringUtils {
-    private static final String STRING_ENCODING_UTF_8 = "UTF-8";
+    public static final String STRING_ENCODING_UTF_8 = "UTF-8";
 
     public static String fromBytesByUtf8(byte[] data) {
         if (data == null) {
