@@ -3,7 +3,9 @@ package com.htc.vita.core.json;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class JsonObject {
@@ -524,6 +526,20 @@ public abstract class JsonObject {
             result = result.trim();
         } catch (Exception e) {
             Logger.getInstance(JsonObject.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
+    public Map<String, String> toStringMap() {
+        Map<String, String> result = new HashMap<String, String>();
+        for (String key : allKeys()) {
+            if (StringUtils.isNullOrWhiteSpace(key)) {
+                continue;
+            }
+            result.put(
+                    key,
+                    parseString(key)
+            );
         }
         return result;
     }
