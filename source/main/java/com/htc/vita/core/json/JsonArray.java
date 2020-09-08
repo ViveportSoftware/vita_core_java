@@ -3,6 +3,9 @@ package com.htc.vita.core.json;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class JsonArray {
     public JsonArray append(boolean value) {
         JsonArray result = this;
@@ -522,6 +525,19 @@ public abstract class JsonArray {
             result = result.trim();
         } catch (Exception e) {
             Logger.getInstance(JsonArray.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
+    public List<String> toStringList() {
+        List<String> result = new ArrayList<String>();
+        int jsonArraySize = size();
+        for (int i = 0; i < jsonArraySize; i++) {
+            String value = parseString(i);
+            if (StringUtils.isNullOrWhiteSpace(value)) {
+                continue;
+            }
+            result.add(value);
         }
         return result;
     }
