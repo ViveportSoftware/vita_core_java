@@ -52,6 +52,25 @@ public abstract class JsonObject {
         return result;
     }
 
+    public boolean parseBooleanIfKeyExist(String key) {
+        return parseBooleanIfKeyExist(
+                key,
+                false
+        );
+    }
+
+    public boolean parseBooleanIfKeyExist(
+            String key,
+            boolean defaultValue) {
+        if (!hasKey(key)) {
+            return defaultValue;
+        }
+        return parseBoolean(
+                key,
+                defaultValue
+        );
+    }
+
     public double parseDouble(String key) {
         return parseDouble(
                 key,
@@ -72,6 +91,25 @@ public abstract class JsonObject {
             Logger.getInstance(JsonObject.class.getSimpleName()).error(e.toString());
         }
         return result;
+    }
+
+    public double parseDoubleIfKeyExist(String key) {
+        return parseDoubleIfKeyExist(
+                key,
+                0.0D
+        );
+    }
+
+    public double parseDoubleIfKeyExist(
+            String key,
+            double defaultValue) {
+        if (!hasKey(key)) {
+            return defaultValue;
+        }
+        return parseDouble(
+                key,
+                defaultValue
+        );
     }
 
     public float parseFloat(String key) {
@@ -96,6 +134,25 @@ public abstract class JsonObject {
         return result;
     }
 
+    public float parseFloatIfKeyExist(String key) {
+        return parseFloatIfKeyExist(
+                key,
+                0.0F
+        );
+    }
+
+    public float parseFloatIfKeyExist(
+            String key,
+            float defaultValue) {
+        if (!hasKey(key)) {
+            return defaultValue;
+        }
+        return parseFloat(
+                key,
+                defaultValue
+        );
+    }
+
     public int parseInt(String key) {
         return parseInt(
                 key,
@@ -116,6 +173,25 @@ public abstract class JsonObject {
             Logger.getInstance(JsonObject.class.getSimpleName()).error(e.toString());
         }
         return result;
+    }
+
+    public int parseIntIfKeyExist(String key) {
+        return parseIntIfKeyExist(
+                key,
+                0
+        );
+    }
+
+    public int parseIntIfKeyExist(
+            String key,
+            int defaultValue) {
+        if (!hasKey(key)) {
+            return defaultValue;
+        }
+        return parseInt(
+                key,
+                defaultValue
+        );
     }
 
     public long parseLong(String key) {
@@ -140,6 +216,25 @@ public abstract class JsonObject {
         return result;
     }
 
+    public long parseLongIfKeyExist(String key) {
+        return parseLongIfKeyExist(
+                key,
+                0L
+        );
+    }
+
+    public long parseLongIfKeyExist(
+            String key,
+            long defaultValue) {
+        if (!hasKey(key)) {
+            return defaultValue;
+        }
+        return parseLong(
+                key,
+                defaultValue
+        );
+    }
+
     public String parseString(String key) {
         return parseString(
                 key,
@@ -162,6 +257,25 @@ public abstract class JsonObject {
         return result;
     }
 
+    public String parseStringIfKeyExist(String key) {
+        return parseStringIfKeyExist(
+                key,
+                null
+        );
+    }
+
+    public String parseStringIfKeyExist(
+            String key,
+            String defaultValue) {
+        if (!hasKey(key)) {
+            return defaultValue;
+        }
+        return parseString(
+                key,
+                defaultValue
+        );
+    }
+
     public JsonArray parseJsonArray(String key) {
         JsonArray result = null;
         try {
@@ -172,6 +286,13 @@ public abstract class JsonObject {
         return result;
     }
 
+    public JsonArray parseJsonArrayIfKeyExist(String key) {
+        if (!hasKey(key)) {
+            return null;
+        }
+        return parseJsonArray(key);
+    }
+
     public JsonObject parseJsonObject(String key) {
         JsonObject result = null;
         try {
@@ -180,6 +301,13 @@ public abstract class JsonObject {
             Logger.getInstance(JsonObject.class.getSimpleName()).error(e.toString());
         }
         return result;
+    }
+
+    public JsonObject parseJsonObjectIfKeyExist(String key) {
+        if (!hasKey(key)) {
+            return null;
+        }
+        return parseJsonObject(key);
     }
 
     public JsonObject put(
