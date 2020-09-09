@@ -1,6 +1,7 @@
 package com.htc.vita.core.net;
 
 import java.net.HttpURLConnection;
+import java.util.Locale;
 
 public enum HttpWebResponseStatusCode {
     Unknown(0),
@@ -57,6 +58,7 @@ public enum HttpWebResponseStatusCode {
             }
         }
         throw new IllegalArgumentException(String.format(
+                Locale.ROOT,
                 "Can not find suitable status code from value: %d",
                 value
         ));

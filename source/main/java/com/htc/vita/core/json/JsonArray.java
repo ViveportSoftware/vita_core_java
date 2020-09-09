@@ -5,6 +5,7 @@ import com.htc.vita.core.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public abstract class JsonArray {
     public JsonArray append(boolean value) {
@@ -520,6 +521,7 @@ public abstract class JsonArray {
             return result;
         }
         Logger.getInstance(JsonArray.class.getSimpleName()).fatal(String.format(
+                Locale.ROOT,
                 "Size abnormal: %d",
                 result
         ));

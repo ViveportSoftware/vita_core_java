@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.net.InetAddress;
+import java.util.Locale;
 import java.util.Map;
 
 public class NetworkInterfaceTest {
@@ -18,6 +19,7 @@ public class NetworkInterfaceTest {
             InetAddress broadcastAddress = addressMapping.get(localAddress);
             Assert.assertNotNull(broadcastAddress);
             Logger.getInstance(NetworkInterfaceTest.class.getSimpleName()).info(String.format(
+                    Locale.ROOT,
                     "localAddress: %s, broadcastAddress: %s",
                     localAddress.getHostAddress(),
                     broadcastAddress.getHostAddress()

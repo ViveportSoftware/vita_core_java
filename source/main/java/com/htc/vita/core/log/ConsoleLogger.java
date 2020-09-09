@@ -1,5 +1,7 @@
 package com.htc.vita.core.log;
 
+import java.util.Locale;
+
 public class ConsoleLogger extends Logger {
     protected ConsoleLogger(String name) {
         super(name);
@@ -24,6 +26,7 @@ public class ConsoleLogger extends Logger {
         if (exception == null)
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][debug][%s] %s%n",
                     getName(),
                     tag,
@@ -33,6 +36,7 @@ public class ConsoleLogger extends Logger {
         else
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][debug][%s] %s, %s%n",
                     getName(),
                     tag,
@@ -61,6 +65,7 @@ public class ConsoleLogger extends Logger {
         if (exception == null)
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][error][%s] %s%n",
                     getName(),
                     tag,
@@ -70,6 +75,7 @@ public class ConsoleLogger extends Logger {
         else
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][error][%s] %s, %s%n",
                     getName(),
                     tag,
@@ -98,6 +104,7 @@ public class ConsoleLogger extends Logger {
         if (exception == null)
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][fatal][%s] %s%n",
                     getName(),
                     tag,
@@ -107,6 +114,7 @@ public class ConsoleLogger extends Logger {
         else
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][fatal][%s] %s, %s%n",
                     getName(),
                     tag,
@@ -135,6 +143,7 @@ public class ConsoleLogger extends Logger {
         if (exception == null)
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][info][%s] %s%n",
                     getName(),
                     tag,
@@ -144,6 +153,7 @@ public class ConsoleLogger extends Logger {
         else
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][info][%s] %s, %s%n",
                     getName(),
                     tag,
@@ -177,6 +187,7 @@ public class ConsoleLogger extends Logger {
         if (exception == null)
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][trace][%s] %s%n",
                     getName(),
                     tag,
@@ -186,6 +197,7 @@ public class ConsoleLogger extends Logger {
         else
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][trace][%s] %s, %s%n",
                     getName(),
                     tag,
@@ -214,6 +226,7 @@ public class ConsoleLogger extends Logger {
         if (exception == null)
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][warn][%s] %s%n",
                     getName(),
                     tag,
@@ -223,6 +236,7 @@ public class ConsoleLogger extends Logger {
         else
         {
             System.out.printf(
+                    Locale.ROOT,
                     "[%s][warn][%s] %s, %s%n",
                     getName(),
                     tag,

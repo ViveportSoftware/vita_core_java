@@ -4,6 +4,8 @@ import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 import com.htc.vita.core.util.TypeRegistry;
 
+import java.util.Locale;
+
 public abstract class Base64 {
     private static boolean sIsJava8ImplPreferred = true;
 
@@ -27,6 +29,7 @@ public abstract class Base64 {
         }
 
         Logger.getInstance(Base64.class.getSimpleName()).info(String.format(
+                Locale.ROOT,
                 "Change Java8 implementation preference to: %s",
                 preferred
         ));

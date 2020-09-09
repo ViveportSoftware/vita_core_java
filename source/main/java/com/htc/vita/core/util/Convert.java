@@ -3,6 +3,8 @@ package com.htc.vita.core.util;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.text.Base64;
 
+import java.util.Locale;
+
 public class Convert {
     public static byte[] fromBase64String(String data) {
         if (StringUtils.isNullOrEmpty(data)) {
@@ -56,6 +58,7 @@ public class Convert {
         }
         catch (Exception e) {
             Logger.getInstance(Convert.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not parse \"%s\" to boolean",
                     data
             ));
@@ -84,6 +87,7 @@ public class Convert {
         }
         catch (Exception e) {
             Logger.getInstance(Convert.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not parse \"%s\" to double",
                     data
             ));
@@ -98,7 +102,11 @@ public class Convert {
 
         StringBuilder buffer = new StringBuilder(data.length * 2);
         for (byte b : data) {
-            buffer.append(String.format("%02x", b));
+            buffer.append(String.format(
+                    Locale.ROOT,
+                    "%02x",
+                    b
+            ));
         }
         return buffer.toString();
     }
@@ -124,6 +132,7 @@ public class Convert {
         }
         catch (Exception e) {
             Logger.getInstance(Convert.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not parse \"%s\" to int/int32",
                     data
             ));
@@ -152,6 +161,7 @@ public class Convert {
         }
         catch (Exception e) {
             Logger.getInstance(Convert.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not parse \"%s\" to long/int64",
                     data
             ));

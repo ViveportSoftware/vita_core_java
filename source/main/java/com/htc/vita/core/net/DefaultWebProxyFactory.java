@@ -4,10 +4,7 @@ import com.htc.vita.core.log.Logger;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DefaultWebProxyFactory extends WebProxyFactory {
     private static final String TEST_URL = "https://www.microsoft.com/";
@@ -41,6 +38,7 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
             }
         } catch (URISyntaxException e) {
             Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not parse web proxy test URI, error: %s",
                     e.getMessage()
             ));
@@ -99,11 +97,13 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
             return WebProxyStatus.Working;
         } catch (MalformedURLException e) {
             Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not parse web proxy test URI, error: %s",
                     e.getMessage()
             ));
         } catch (IOException e) {
             Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not get web proxy status, error: %s",
                     e.getMessage()
             ));
