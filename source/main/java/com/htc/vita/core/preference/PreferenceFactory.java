@@ -35,6 +35,19 @@ public abstract class PreferenceFactory {
     }
 
     public Preferences loadPreferences(String label) {
+        return loadPreferences(
+                "",
+                label
+        );
+    }
+
+    public Preferences loadPreferences(
+            String category,
+            String label) {
+        String preferenceCategory = category;
+        if (StringUtils.isNullOrWhiteSpace(preferenceCategory)) {
+            preferenceCategory = "Vita";
+        }
         String preferenceLabel = label;
         if (StringUtils.isNullOrWhiteSpace(preferenceLabel)) {
             preferenceLabel = "default";
@@ -42,12 +55,18 @@ public abstract class PreferenceFactory {
 
         Preferences result = null;
         try {
-            result = onLoadPreferences(preferenceLabel);
+            result = onLoadPreferences(
+                    preferenceCategory,
+                    preferenceLabel
+            );
         } catch (Exception e) {
             Logger.getInstance(PreferenceFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    protected abstract Preferences onLoadPreferences(String label) throws Exception;
+    protected abstract Preferences onLoadPreferences(
+            String category,
+            String label
+    ) throws Exception;
 }
