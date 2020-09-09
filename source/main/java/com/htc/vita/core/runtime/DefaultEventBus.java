@@ -3,10 +3,7 @@ package com.htc.vita.core.runtime;
 import com.htc.vita.core.log.Logger;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -106,7 +103,11 @@ public class DefaultEventBus extends EventBus {
                                     eventData
                             );
                         } catch (Exception e) {
-                            Logger.getInstance(DefaultEventBus.class.getSimpleName()).error("Can not execute task successfully. " + e.toString());
+                            Logger.getInstance(DefaultEventBus.class.getSimpleName()).error(String.format(
+                                    Locale.ROOT,
+                                    "Can not execute task successfully. %s",
+                                    e.toString()
+                            ));
                         }
                     }
             });
