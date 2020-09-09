@@ -3,7 +3,9 @@ package com.htc.vita.core.json;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JsonFactoryTest {
@@ -217,6 +219,19 @@ public class JsonFactoryTest {
     }
 
     @Test
+    public void jsonArray_11_appendAllString() {
+        List<String> data = new ArrayList<String>();
+        data.add("someItem0");
+        data.add("someItem1");
+        data.add("someItem2");
+        JsonFactory jsonFactory = JsonFactory.getInstance();
+        Assert.assertNotNull(jsonFactory);
+        JsonArray jsonArray = jsonFactory.createJsonArray();
+        Assert.assertNotNull(jsonArray);
+        Assert.assertNotNull(jsonArray.appendAllString(data));
+    }
+
+    @Test
     public void jsonObject_00_hasKey() {
         JsonFactory jsonFactory = JsonFactory.getInstance();
         Assert.assertNotNull(jsonFactory);
@@ -389,7 +404,7 @@ public class JsonFactoryTest {
     }
 
     @Test
-    public void jsonObject_11_putAll() {
+    public void jsonObject_11_putAllString() {
         Map<String, String> data = new HashMap<String, String>();
         data.put("testKey0", "testValue0");
         data.put("testKey1", "testValue1");

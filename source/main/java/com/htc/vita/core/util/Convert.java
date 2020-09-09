@@ -97,7 +97,7 @@ public class Convert {
         }
 
         StringBuilder buffer = new StringBuilder(data.length * 2);
-        for (byte b: data) {
+        for (byte b : data) {
             buffer.append(String.format("%02x", b));
         }
         return buffer.toString();

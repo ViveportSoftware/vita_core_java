@@ -28,7 +28,7 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
                 return Proxy.NO_PROXY;
             }
 
-            for (Proxy proxy: proxyList) {
+            for (Proxy proxy : proxyList) {
                 if (proxy == null) {
                     continue;
                 }

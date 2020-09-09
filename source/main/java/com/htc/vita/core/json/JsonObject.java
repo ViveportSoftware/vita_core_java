@@ -438,7 +438,7 @@ public abstract class JsonObject {
             return this;
         }
 
-        for (String key: data.keySet()) {
+        for (String key : data.keySet()) {
             if (key == null) {
                 continue;
             }

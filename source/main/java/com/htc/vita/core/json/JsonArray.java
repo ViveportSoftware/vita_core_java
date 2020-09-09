@@ -87,6 +87,17 @@ public abstract class JsonArray {
         return result;
     }
 
+    public JsonArray appendAllString(List<String> data) {
+        if (data == null) {
+            return this;
+        }
+
+        for (String value : data) {
+            append(value);
+        }
+        return this;
+    }
+
     public JsonArray appendIfNotNull(String value) {
         if (value == null) {
             return this;
