@@ -22,8 +22,14 @@ public class Convert {
         int size = data.length();
         byte[] result = new byte[size / 2];
         for (int i = 0; i < size; i += 2) {
-            int upperByte = Character.digit(data.charAt(i), 16);
-            int lowerByte = Character.digit(data.charAt(i + 1), 16);
+            int upperByte = Character.digit(
+                    data.charAt(i),
+                    16
+            );
+            int lowerByte = Character.digit(
+                    data.charAt(i + 1),
+                    16
+            );
             result[i / 2] = (byte) (upperByte * 16 + lowerByte);
         }
         return result;

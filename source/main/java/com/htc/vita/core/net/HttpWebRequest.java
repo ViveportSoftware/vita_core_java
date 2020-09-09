@@ -70,14 +70,19 @@ public abstract class HttpWebRequest implements Closeable {
         return result;
     }
 
-    public HttpWebRequest setCustomHeader(String key, String value) {
+    public HttpWebRequest setCustomHeader(
+            String key,
+            String value) {
         if (StringUtils.isNullOrWhiteSpace(key) || StringUtils.isNullOrWhiteSpace(value)) {
             return this;
         }
 
         HttpWebRequest result = null;
         try {
-            result = onSetCustomHeader(key, value);
+            result = onSetCustomHeader(
+                    key,
+                    value
+            );
         } catch (Exception e) {
             Logger.getInstance(HttpWebRequest.class.getSimpleName()).error(e.toString());
         }

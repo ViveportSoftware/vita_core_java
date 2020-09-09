@@ -42,72 +42,100 @@ public class DummyJsonArray extends JsonArray {
     }
 
     @Override
-    protected JsonArray onInsertBoolean(int index, boolean value) {
+    protected JsonArray onInsertBoolean(
+            int index,
+            boolean value) {
         return this;
     }
 
     @Override
-    protected JsonArray onInsertDouble(int index, double value) {
+    protected JsonArray onInsertDouble(
+            int index,
+            double value) {
         return this;
     }
 
     @Override
-    protected JsonArray onInsertFloat(int index, float value) {
+    protected JsonArray onInsertFloat(
+            int index,
+            float value) {
         return this;
     }
 
     @Override
-    protected JsonArray onInsertInt(int index, int value) {
+    protected JsonArray onInsertInt(
+            int index,
+            int value) {
         return this;
     }
 
     @Override
-    protected JsonArray onInsertLong(int index, long value) {
+    protected JsonArray onInsertLong(
+            int index,
+            long value) {
         return this;
     }
 
     @Override
-    protected JsonArray onInsertString(int index, String value) {
+    protected JsonArray onInsertString(
+            int index,
+            String value) {
         return this;
     }
 
     @Override
-    protected JsonArray onInsertJsonArray(int index, JsonArray value) {
+    protected JsonArray onInsertJsonArray(
+            int index,
+            JsonArray value) {
         return this;
     }
 
     @Override
-    protected JsonArray onInsertJsonObject(int index, JsonObject value) {
+    protected JsonArray onInsertJsonObject(
+            int index,
+            JsonObject value) {
         return this;
     }
 
     @Override
-    protected boolean onParseBoolean(int index, boolean defaultValue) {
+    protected boolean onParseBoolean(
+            int index,
+            boolean defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected double onParseDouble(int index, double defaultValue) {
+    protected double onParseDouble(
+            int index,
+            double defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected float onParseFloat(int index, float defaultValue) {
+    protected float onParseFloat(
+            int index,
+            float defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected int onParseInt(int index, int defaultValue) {
+    protected int onParseInt(
+            int index,
+            int defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected long onParseLong(int index, long defaultValue) {
+    protected long onParseLong(
+            int index,
+            long defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected String onParseString(int index, String defaultValue) {
+    protected String onParseString(
+            int index,
+            String defaultValue) {
         return defaultValue;
     }
 

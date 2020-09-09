@@ -24,7 +24,9 @@ public class DummyJsonFactory extends JsonFactory {
     }
 
     @Override
-    protected <T> T onDeserializeObject(String content, Class<T> type) {
+    protected <T> T onDeserializeObject(
+            String content,
+            Class<T> type) {
         return null;
     }
 

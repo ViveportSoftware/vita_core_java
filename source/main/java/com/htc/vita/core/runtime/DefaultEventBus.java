@@ -54,7 +54,10 @@ public class DefaultEventBus extends EventBus {
             if (!listenerList.contains(eventListener)) {
                 listenerList.add(eventListener);
             }
-            mListenerListMap.put(clazz, listenerList);
+            mListenerListMap.put(
+                    clazz,
+                    listenerList
+            );
         }
 
         return true;

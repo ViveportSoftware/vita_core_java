@@ -12,7 +12,10 @@ public class StringUtils {
 
         String result = null;
         try {
-            result = new String(data, STRING_ENCODING_UTF_8);
+            result = new String(
+                    data,
+                    STRING_ENCODING_UTF_8
+            );
         } catch (UnsupportedEncodingException e) {
             // Skip
         }
@@ -43,7 +46,9 @@ public class StringUtils {
         return true;
     }
 
-    public static String join(String separator, String... params) {
+    public static String join(
+            String separator,
+            String... params) {
         if (params == null) {
             return null;
         }

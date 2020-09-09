@@ -95,7 +95,10 @@ public class TypeRegistry {
 
         if (subClass != CONCRETE_CLASS_MAP.get(baseClass))
         {
-            CONCRETE_CLASS_MAP.put(baseClass, subClass);
+            CONCRETE_CLASS_MAP.put(
+                    baseClass,
+                    subClass
+            );
             Logger.getInstance(TypeRegistry.class.getSimpleName()).info(String.format(
                     Locale.ROOT,
                     "Registered %s type to %s",

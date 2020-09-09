@@ -15,32 +15,44 @@ public class DummyJsonObject extends JsonObject {
     }
 
     @Override
-    protected boolean onParseBoolean(String key, boolean defaultValue) {
+    protected boolean onParseBoolean(
+            String key,
+            boolean defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected double onParseDouble(String key, double defaultValue) {
+    protected double onParseDouble(
+            String key,
+            double defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected float onParseFloat(String key, float defaultValue) {
+    protected float onParseFloat(
+            String key,
+            float defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected int onParseInt(String key, int defaultValue) {
+    protected int onParseInt(
+            String key,
+            int defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected long onParseLong(String key, long defaultValue) {
+    protected long onParseLong(
+            String key,
+            long defaultValue) {
         return defaultValue;
     }
 
     @Override
-    protected String onParseString(String key, String defaultValue) {
+    protected String onParseString(
+            String key,
+            String defaultValue) {
         return defaultValue;
     }
 
@@ -55,42 +67,58 @@ public class DummyJsonObject extends JsonObject {
     }
 
     @Override
-    protected JsonObject onPutBoolean(String key, boolean value) {
+    protected JsonObject onPutBoolean(
+            String key,
+            boolean value) {
         return this;
     }
 
     @Override
-    protected JsonObject onPutDouble(String key, double value) {
+    protected JsonObject onPutDouble(
+            String key,
+            double value) {
         return this;
     }
 
     @Override
-    protected JsonObject onPutFloat(String key, float value) {
+    protected JsonObject onPutFloat(
+            String key,
+            float value) {
         return this;
     }
 
     @Override
-    protected JsonObject onPutInt(String key, int value) {
+    protected JsonObject onPutInt(
+            String key,
+            int value) {
         return this;
     }
 
     @Override
-    protected JsonObject onPutLong(String key, long value) {
+    protected JsonObject onPutLong(
+            String key,
+            long value) {
         return this;
     }
 
     @Override
-    protected JsonObject onPutString(String key, String value) {
+    protected JsonObject onPutString(
+            String key,
+            String value) {
         return this;
     }
 
     @Override
-    protected JsonObject onPutJsonArray(String key, JsonArray value) {
+    protected JsonObject onPutJsonArray(
+            String key,
+            JsonArray value) {
         return this;
     }
 
     @Override
-    protected JsonObject onPutJsonObject(String key, JsonObject value) {
+    protected JsonObject onPutJsonObject(
+            String key,
+            JsonObject value) {
         return this;
     }
 
