@@ -3,6 +3,9 @@ package com.htc.vita.core.json;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class JsonFactoryTest {
     @Test
     public void dummy_0_getInstance() {
@@ -383,5 +386,18 @@ public class JsonFactoryTest {
         JsonObject jsonObject2 = jsonFactory.createJsonObject();
         Assert.assertNotNull(jsonObject.put("test", jsonObject2));
         Assert.assertEquals(0, jsonObject.allKeys().size());
+    }
+
+    @Test
+    public void jsonObject_11_putAll() {
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("testKey0", "testValue0");
+        data.put("testKey1", "testValue1");
+        data.put("testKey2", "testValue2");
+        JsonFactory jsonFactory = JsonFactory.getInstance();
+        Assert.assertNotNull(jsonFactory);
+        JsonObject jsonObject = jsonFactory.createJsonObject();
+        Assert.assertNotNull(jsonObject);
+        Assert.assertNotNull(jsonObject.putAllString(data));
     }
 }

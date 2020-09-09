@@ -433,6 +433,24 @@ public abstract class JsonObject {
         return result;
     }
 
+    public JsonObject putAllString(Map<String, String> data) {
+        if (data == null) {
+            return this;
+        }
+
+        for (String key: data.keySet()) {
+            if (key == null) {
+                continue;
+            }
+
+            put(
+                    key,
+                    data.get(key)
+            );
+        }
+        return this;
+    }
+
     public JsonObject putIfNotNull(
             String key,
             String value) {
