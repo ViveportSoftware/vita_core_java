@@ -3,7 +3,7 @@ package com.htc.vita.core.util;
 import java.io.UnsupportedEncodingException;
 
 public class StringUtils {
-    private static final String STRING_ENCODING_UTF_8 = "UTF-8";
+    public static final String STRING_ENCODING_UTF_8 = "UTF-8";
 
     public static String fromBytesByUtf8(byte[] data) {
         if (data == null) {
@@ -41,6 +41,25 @@ public class StringUtils {
             }
         }
         return true;
+    }
+
+    public static String join(String separator, String... params) {
+        if (params == null) {
+            return null;
+        }
+        if (params.length == 0) {
+            return "";
+        }
+
+        if (params.length == 1) {
+            return params[0];
+        }
+
+        StringBuilder builder = new StringBuilder(params[0]);
+        for (int i = 1; i < params.length; i++) {
+            builder.append(separator).append(params[i]);
+        }
+        return builder.toString();
     }
 
     public static byte[] toBytesByUtf8(String data) {

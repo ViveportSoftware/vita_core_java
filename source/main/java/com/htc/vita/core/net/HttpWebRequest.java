@@ -5,36 +5,23 @@ import com.htc.vita.core.util.StringUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Proxy;
 import java.net.URL;
 
 public abstract class HttpWebRequest implements Closeable {
-    private URL mUrl = null;
+    private URL mUrl;
 
     public HttpWebRequest(URL url) {
         mUrl = url;
     }
 
-    public InputStream getInputStream() {
-        InputStream result = null;
-        try {
-            result = onGetInputStream();
-        } catch (Exception e) {
-            Logger.getInstance(HttpWebRequest.class.getSimpleName()).error(e.toString());
-        }
-        return result;
+    public OutputStream getRequestStream() throws IOException {
+        return onGetRequestStream();
     }
 
-    public OutputStream getOutputStream() {
-        OutputStream result = null;
-        try {
-            result = onGetOutputStream();
-        } catch (Exception e) {
-            Logger.getInstance(HttpWebRequest.class.getSimpleName()).error(e.toString());
-        }
-        return result;
+    public HttpWebResponse getResponse() throws IOException {
+        return onGetResponse();
     }
 
     protected URL getUrl() {
@@ -139,8 +126,8 @@ public abstract class HttpWebRequest implements Closeable {
         return result;
     }
 
-    protected abstract InputStream onGetInputStream() throws Exception;
-    protected abstract OutputStream onGetOutputStream() throws Exception;
+    protected abstract OutputStream onGetRequestStream() throws IOException;
+    protected abstract HttpWebResponse onGetResponse() throws IOException;
     protected abstract HttpWebRequest onSetAccept(String accept) throws Exception;
     protected abstract HttpWebRequest onSetConnectTimeoutInMilli(int connectTimeoutInMilli) throws Exception;
     protected abstract HttpWebRequest onSetContentType(String contentType) throws Exception;
