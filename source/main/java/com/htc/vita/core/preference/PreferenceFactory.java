@@ -8,7 +8,7 @@ public abstract class PreferenceFactory {
     static {
         TypeRegistry.registerDefault(
                 PreferenceFactory.class,
-                DummyPreferenceFactory.class
+                DefaultPreferenceFactory.class
         );
     }
 
@@ -35,19 +35,6 @@ public abstract class PreferenceFactory {
     }
 
     public Preferences loadPreferences(String label) {
-        return loadPreferences(
-                "",
-                label
-        );
-    }
-
-    public Preferences loadPreferences(
-            String category,
-            String label) {
-        String preferenceCategory = category;
-        if (StringUtils.isNullOrWhiteSpace(preferenceCategory)) {
-            preferenceCategory = "Vita";
-        }
         String preferenceLabel = label;
         if (StringUtils.isNullOrWhiteSpace(preferenceLabel)) {
             preferenceLabel = "default";
@@ -56,7 +43,7 @@ public abstract class PreferenceFactory {
         Preferences result = null;
         try {
             result = onLoadPreferences(
-                    preferenceCategory,
+                    "",
                     preferenceLabel
             );
         } catch (Exception e) {
