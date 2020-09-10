@@ -3,6 +3,9 @@ package com.htc.vita.core.util;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringUtilsTest {
     @Test
     public void default_0_isNullOrEmpty() {
@@ -36,5 +39,10 @@ public class StringUtilsTest {
         Assert.assertEquals("a+b+c", StringUtils.join("+", new String[] {"a", "b", "c"}));
         Assert.assertEquals("anullbnullc", StringUtils.join(null, "a", "b", "c"));
         Assert.assertNull(StringUtils.join(null, (String[]) null));
+        List<String> list = new ArrayList<String>();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        Assert.assertEquals("a+b+c", StringUtils.join("+", list));
     }
 }

@@ -6,6 +6,8 @@ import com.htc.vita.core.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Locale;
+
 public class AesFactoryTest {
     @Test
     public void default_0_getInstance() {
@@ -74,7 +76,11 @@ public class AesFactoryTest {
                 password
         );
         Assert.assertNotNull(encryptedInBytes);
-        Logger.getInstance(AesFactoryTest.class.getSimpleName()).info("encrypted: " + Convert.toHexString(encryptedInBytes));
+        Logger.getInstance(AesFactoryTest.class.getSimpleName()).info(String.format(
+                Locale.ROOT,
+                "encrypted: %s",
+                Convert.toHexString(encryptedInBytes)
+        ));
 
         Aes aesDecryptor = aesFactory.get();
         Assert.assertNotNull(aesDecryptor);

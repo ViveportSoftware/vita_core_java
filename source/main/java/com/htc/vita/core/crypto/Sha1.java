@@ -60,7 +60,9 @@ public abstract class Sha1 {
         return result;
     }
 
-    public boolean validateInHex(File file, String checksum) {
+    public boolean validateInHex(
+            File file,
+            String checksum) {
         if (file == null || !file.isFile() || StringUtils.isNullOrWhiteSpace(checksum)) {
             return false;
         }
@@ -74,7 +76,9 @@ public abstract class Sha1 {
         return result;
     }
 
-    public boolean validateInHex(String content, String checksum) {
+    public boolean validateInHex(
+            String content,
+            String checksum) {
         if (content == null || StringUtils.isNullOrWhiteSpace(checksum)) {
             return false;
         }

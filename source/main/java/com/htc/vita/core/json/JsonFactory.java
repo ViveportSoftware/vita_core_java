@@ -50,14 +50,19 @@ public abstract class JsonFactory {
         return result;
     }
 
-    public <T> T deserializeObject(String content, Class<T> type) {
+    public <T> T deserializeObject(
+            String content,
+            Class<T> type) {
         if (StringUtils.isNullOrWhiteSpace(content)) {
             return null;
         }
 
         T result = null;
         try {
-            result = onDeserializeObject(content, type);
+            result = onDeserializeObject(
+                    content,
+                    type
+            );
         } catch (Exception e) {
             Logger.getInstance(JsonFactory.class.getSimpleName()).error(e.toString());
         }

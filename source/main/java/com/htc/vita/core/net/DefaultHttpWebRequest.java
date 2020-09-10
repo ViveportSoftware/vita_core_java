@@ -61,7 +61,10 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
             if (StringUtils.isNullOrWhiteSpace(headerValue)) {
                 continue;
             }
-            mHttpUrlConnection.setRequestProperty(headerKey, headerValue);
+            mHttpUrlConnection.setRequestProperty(
+                    headerKey,
+                    headerValue
+            );
         }
         mHttpUrlConnection.setRequestMethod(mHttpWebRequestMethod.value());
 
@@ -144,8 +147,13 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
     }
 
     @Override
-    protected HttpWebRequest onSetCustomHeader(String key, String value) {
-        mHeaderMap.put(key, value);
+    protected HttpWebRequest onSetCustomHeader(
+            String key,
+            String value) {
+        mHeaderMap.put(
+                key,
+                value
+        );
         return this;
     }
 

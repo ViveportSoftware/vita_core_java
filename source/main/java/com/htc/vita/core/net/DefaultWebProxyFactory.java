@@ -4,16 +4,13 @@ import com.htc.vita.core.log.Logger;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DefaultWebProxyFactory extends WebProxyFactory {
     private static final String TEST_URL = "https://www.microsoft.com/";
     private static final long CACHE_PERIOD_IN_MILLI = 1000L * 5;
 
-    private static final Map<String, Map.Entry<WebProxyStatus, Long>> sWebProxyStatusMap = new HashMap<String, Map.Entry<WebProxyStatus, Long>>();
+    private static final Map<String, Map.Entry<WebProxyStatus, Long>> PROXY_STATUS_MAP = new HashMap<String, Map.Entry<WebProxyStatus, Long>>();
 
     @Override
     protected Proxy onGetWebProxy() {
@@ -41,6 +38,7 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
             }
         } catch (URISyntaxException e) {
             Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not parse web proxy test URI, error: %s",
                     e.getMessage()
             ));
@@ -62,8 +60,8 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
         long currentTimeInMilli = System.currentTimeMillis();
         InetSocketAddress inetSocketAddress = (InetSocketAddress) socketAddress;
         String key = inetSocketAddress.toString();
-        if (sWebProxyStatusMap.containsKey(key)) {
-            Map.Entry<WebProxyStatus, Long> pair = sWebProxyStatusMap.get(key);
+        if (PROXY_STATUS_MAP.containsKey(key)) {
+            Map.Entry<WebProxyStatus, Long> pair = PROXY_STATUS_MAP.get(key);
             if (pair != null) {
                 WebProxyStatus webProxyStatus = pair.getKey();
                 Long value = pair.getValue();
@@ -92,18 +90,23 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
             httpURLConnection.setReadTimeout(2000);
             httpURLConnection.connect();
             httpURLConnection.getResponseMessage();
-            sWebProxyStatusMap.put(
+            PROXY_STATUS_MAP.put(
                     key,
-                    new AbstractMap.SimpleEntry<WebProxyStatus, Long>(WebProxyStatus.Working, System.currentTimeMillis())
+                    new AbstractMap.SimpleEntry<WebProxyStatus, Long>(
+                            WebProxyStatus.Working,
+                            System.currentTimeMillis()
+                    )
             );
             return WebProxyStatus.Working;
         } catch (MalformedURLException e) {
             Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not parse web proxy test URI, error: %s",
                     e.getMessage()
             ));
         } catch (IOException e) {
             Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
+                    Locale.ROOT,
                     "Can not get web proxy status, error: %s",
                     e.getMessage()
             ));

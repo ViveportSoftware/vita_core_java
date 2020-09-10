@@ -1,6 +1,7 @@
 package com.htc.vita.core.util;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 public class StringUtils {
     public static final String STRING_ENCODING_UTF_8 = "UTF-8";
@@ -12,7 +13,10 @@ public class StringUtils {
 
         String result = null;
         try {
-            result = new String(data, STRING_ENCODING_UTF_8);
+            result = new String(
+                    data,
+                    STRING_ENCODING_UTF_8
+            );
         } catch (UnsupportedEncodingException e) {
             // Skip
         }
@@ -43,7 +47,30 @@ public class StringUtils {
         return true;
     }
 
-    public static String join(String separator, String... params) {
+    public static String join(
+            String separator,
+            List<String> params){
+        if (params == null) {
+            return null;
+        }
+        if (params.size() <= 0) {
+            return "";
+        }
+
+        if (params.size() == 1) {
+            return params.get(0);
+        }
+
+        StringBuilder builder = new StringBuilder(params.get(0));
+        for (int i = 1; i < params.size(); i++) {
+            builder.append(separator).append(params.get(i));
+        }
+        return builder.toString();
+    }
+
+    public static String join(
+            String separator,
+            String... params) {
         if (params == null) {
             return null;
         }

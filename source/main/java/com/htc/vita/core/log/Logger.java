@@ -4,6 +4,7 @@ import com.htc.vita.core.util.StringUtils;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public abstract class Logger {
@@ -21,6 +22,7 @@ public abstract class Logger {
 
         sDefaultClass = clazz;
         System.err.printf(
+                Locale.ROOT,
                 "Registered default %s type to %s%n",
                 Logger.class.getSimpleName(),
                 sDefaultClass.getName()
@@ -43,10 +45,12 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.getInstance(name)] %s%n",
                     e
             );
             System.err.printf(
+                    Locale.ROOT,
                     "Initializing %s...%n",
                     ConsoleLogger.class.getName()
             );
@@ -90,10 +94,12 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.getInstance(clazz, name))] %s%n",
                     e
             );
             System.err.printf(
+                    Locale.ROOT,
                     "Initializing %s...%n",
                     ConsoleLogger.class.getName()
             );
@@ -110,6 +116,7 @@ public abstract class Logger {
         {
             throw new IllegalArgumentException(
                     String.format(
+                            Locale.ROOT,
                             "Invalid argument to get %s instance",
                             Logger.class.getSimpleName()
                     )
@@ -117,6 +124,7 @@ public abstract class Logger {
         }
 
         String key = String.format(
+                Locale.ROOT,
                 "%s_%s",
                 type.getName(),
                 name
@@ -129,6 +137,7 @@ public abstract class Logger {
         if (instance == null)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "Initializing %s...%n",
                     key
             );
@@ -142,6 +151,7 @@ public abstract class Logger {
         if (instance == null)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "Initializing %s[%s]...%n",
                     ConsoleLogger.class.getName(),
                     name
@@ -188,6 +198,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.debug(tag, message)] %s%n",
                     e
             );
@@ -219,6 +230,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.debug(tag, message, exception)] %s%n",
                     e
             );
@@ -245,6 +257,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.error(tag, message)] %s%n",
                     e
             );
@@ -276,6 +289,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.error(tag, message, exception)] %s%n",
                     e
             );
@@ -302,6 +316,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.fatal(tag, message)] %s%n",
                     e
             );
@@ -333,6 +348,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.fatal(tag, message, exception)] %s%n",
                     e
             );
@@ -375,6 +391,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.info(tag, message)] %s%n",
                     e
             );
@@ -406,6 +423,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.info(tag, message, exception)] %s%n",
                     e
             );
@@ -420,6 +438,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.shutdown] %s%n",
                     e
             );
@@ -446,6 +465,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.trace(tag, message)] %s%n",
                     e
             );
@@ -477,6 +497,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.trace(tag, message, exception)] %s%n",
                     e
             );
@@ -503,6 +524,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.warn(tag, message)] %s%n",
                     e
             );
@@ -534,6 +556,7 @@ public abstract class Logger {
         catch (Exception e)
         {
             System.err.printf(
+                    Locale.ROOT,
                     "[Fatal][Logger.warn(tag, message, exception)] %s%n",
                     e
             );

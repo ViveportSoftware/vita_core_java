@@ -4,6 +4,7 @@ import com.htc.vita.core.log.Logger;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class TypeRegistry {
@@ -25,6 +26,7 @@ public class TypeRegistry {
         }
 
         String key = String.format(
+                Locale.ROOT,
                 "%s_",
                 concreteClassType.getName()
         );
@@ -35,6 +37,7 @@ public class TypeRegistry {
             }
             if (instance == null) {
                 Logger.getInstance(TypeRegistry.class.getSimpleName()).info(String.format(
+                        Locale.ROOT,
                         "Initializing %s...",
                         key
                 ));
@@ -82,6 +85,7 @@ public class TypeRegistry {
                     subClass
             );
             Logger.getInstance(TypeRegistry.class.getSimpleName()).info(String.format(
+                    Locale.ROOT,
                     "Registered %s type to %s",
                     baseClass.getSimpleName(),
                     subClass.getName()
@@ -91,8 +95,12 @@ public class TypeRegistry {
 
         if (subClass != CONCRETE_CLASS_MAP.get(baseClass))
         {
-            CONCRETE_CLASS_MAP.put(baseClass, subClass);
+            CONCRETE_CLASS_MAP.put(
+                    baseClass,
+                    subClass
+            );
             Logger.getInstance(TypeRegistry.class.getSimpleName()).info(String.format(
+                    Locale.ROOT,
                     "Registered %s type to %s",
                     baseClass.getSimpleName(),
                     subClass.getName()
@@ -108,6 +116,7 @@ public class TypeRegistry {
             if (oldSubClass != subClass)
             {
                 Logger.getInstance(TypeRegistry.class.getSimpleName()).error(String.format(
+                        Locale.ROOT,
                         "%s had been registered to %s. Registering to %s will be ignored.",
                         baseClass.getName(),
                         oldSubClass.getName(),

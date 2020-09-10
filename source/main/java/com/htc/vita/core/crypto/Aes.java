@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
+import java.util.Locale;
 
 public abstract class Aes {
     public static final int IV_SIZE_128BIT_IN_BIT = 128;
@@ -40,6 +41,7 @@ public abstract class Aes {
 
         mCipherMode = cipherMode;
         Logger.getInstance(Aes.class.getSimpleName()).info(String.format(
+                Locale.ROOT,
                 "Set cipher mode to %s",
                 cipherMode.value()
         ));
@@ -53,6 +55,7 @@ public abstract class Aes {
 
         mPaddingMode = paddingMode;
         Logger.getInstance(Aes.class.getSimpleName()).info(String.format(
+                Locale.ROOT,
                 "Set padding mode to %s",
                 paddingMode.value()
         ));
@@ -110,6 +113,7 @@ public abstract class Aes {
             );
         } catch (Exception e) {
             Logger.getInstance(Aes.class.getSimpleName()).fatal(String.format(
+                    Locale.ROOT,
                     "Decrypt input with password error: %s",
                     e
             ));
@@ -153,6 +157,7 @@ public abstract class Aes {
             );
         } catch (Exception e) {
             Logger.getInstance(Aes.class.getSimpleName()).fatal(String.format(
+                    Locale.ROOT,
                     "Decrypt input with key and iv error: %s",
                     e
             ));
@@ -198,6 +203,7 @@ public abstract class Aes {
             result = byteArrayOutputStream.toByteArray();
         } catch (Exception e) {
             Logger.getInstance(Aes.class.getSimpleName()).fatal(String.format(
+                    Locale.ROOT,
                     "Encrypt input with password error: %s",
                     e
             ));
@@ -241,6 +247,7 @@ public abstract class Aes {
             );
         } catch (Exception e) {
             Logger.getInstance(Aes.class.getSimpleName()).fatal(String.format(
+                    Locale.ROOT,
                     "Encrypt input with key and iv error: %s",
                     e
             ));
