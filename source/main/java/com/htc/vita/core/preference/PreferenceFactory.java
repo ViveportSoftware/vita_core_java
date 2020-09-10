@@ -43,7 +43,7 @@ public abstract class PreferenceFactory {
         Preferences result = null;
         try {
             result = onLoadPreferences(
-                    "",
+                    "Vita",
                     preferenceLabel
             );
         } catch (Exception e) {

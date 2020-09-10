@@ -59,7 +59,7 @@ public class PreferenceFactoryTest {
         Assert.assertNotNull(preferenceFactory);
         Preferences preferences = preferenceFactory.loadPreferences();
         Assert.assertNotNull(preferences);
-        Assert.assertTrue(StringUtils.isNullOrWhiteSpace(preferences.getCategory()));
+        Assert.assertFalse(StringUtils.isNullOrWhiteSpace(preferences.getCategory()));
     }
 
     @Test

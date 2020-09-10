@@ -1,14 +1,15 @@
 package com.htc.vita.core.preference;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 import com.htc.vita.core.util.TypeRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class PreferenceStorage {
-    private String mCategory;
-    private String mLabel;
+    private String mCategory = "Vita";
+    private String mLabel = "default";
 
     static {
         TypeRegistry.registerDefault(
@@ -67,12 +68,16 @@ public abstract class PreferenceStorage {
     }
 
     public PreferenceStorage setCategory(String category) {
-        mCategory = category;
+        if (!StringUtils.isNullOrWhiteSpace(category)) {
+            mCategory = category;
+        }
         return this;
     }
 
     public PreferenceStorage setLabel(String label) {
-        mLabel = label;
+        if (!StringUtils.isNullOrWhiteSpace(label)) {
+            mLabel = label;
+        }
         return this;
     }
 
