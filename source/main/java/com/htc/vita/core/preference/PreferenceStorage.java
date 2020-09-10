@@ -35,6 +35,14 @@ public abstract class PreferenceStorage {
         );
     }
 
+    public String getCategory() {
+        return mCategory;
+    }
+
+    public String getLabel() {
+        return mLabel;
+    }
+
     public Map<String, String> load() {
         Map<String, String> result = null;
         try {
