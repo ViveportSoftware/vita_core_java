@@ -35,7 +35,7 @@ public class LoggerTest {
 
     @Test
     public void default_5_warn() {
-        Logger.getInstance(LoggerTest.class.getSimpleName()).trace("log message from warn");
-        Logger.getInstance(LoggerTest.class.getSimpleName()).trace("log message from warn", new Exception("log exception from warn"));
+        Logger.getInstance(LoggerTest.class.getSimpleName()).warn("log message from warn");
+        Logger.getInstance(LoggerTest.class.getSimpleName()).warn("log message from warn", new Exception("log exception from warn"));
     }
 }

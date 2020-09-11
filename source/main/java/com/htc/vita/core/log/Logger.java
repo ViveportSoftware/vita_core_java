@@ -61,7 +61,7 @@ public abstract class Logger {
 
     public static <T extends Logger> Logger getInstance(
             Class<T> clazz,
-            Class type) {
+            Class<?> type) {
         String name = "";
         if (type != null)
         {
