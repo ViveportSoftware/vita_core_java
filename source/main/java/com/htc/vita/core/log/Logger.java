@@ -362,7 +362,26 @@ public abstract class Logger {
         }
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         if (stackTraceElements.length >= 4) {
+            // In generic JVM. StackTraceElement array may like the following:
+            //
+            // 0 = {StackTraceElement@1755} "java.lang.Thread.getStackTrace(Thread.java:1559)"
+            // 1 = {StackTraceElement@1756} "com.htc.vita.core.log.Logger.getMethodName(Logger.java:363)"
+            // 2 = {StackTraceElement@1757} "com.htc.vita.core.log.Logger.debug(Logger.java:183)"
+            // 3 = {StackTraceElement@1750} "com.htc.vita.core.runtime.NativePlatformTest.java_1_getMachineId(NativePlatformTest.java:31)"
             result = stackTraceElements[3].getMethodName();
+        }
+        if (stackTraceElements.length >= 5) {
+            String className = stackTraceElements[0].getClassName();
+            if ("dalvik.system.VMStack".equals(className)) {
+                // In DalvikVM. StackTraceElement array may like the following:
+                //
+                // 0 = {StackTraceElement@10985} "dalvik.system.VMStack.getThreadStackTrace(Native Method)"
+                // 1 = {StackTraceElement@10986} "java.lang.Thread.getStackTrace(Thread.java:1538)"
+                // 2 = {StackTraceElement@10987} "com.htc.vita.core.log.Logger.getMethodName(Logger.java:363)"
+                // 3 = {StackTraceElement@10983} "com.htc.vita.core.log.Logger.debug(Logger.java:183)"
+                // 4 = {StackTraceElement@10988} "com.htc.vita.mod.android.log.AndroidLoggerTest.default_0_debug(AndroidLoggerTest.java:13)"
+                result = stackTraceElements[4].getMethodName();
+            }
         }
         return result;
     }
