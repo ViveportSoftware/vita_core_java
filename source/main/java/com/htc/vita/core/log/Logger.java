@@ -430,6 +430,17 @@ public abstract class Logger {
         }
     }
 
+    public static void SkipMethodResolution(boolean shouldSkipMethodResolution) {
+        if (sShouldSkipMethodResolution != shouldSkipMethodResolution) {
+            sShouldSkipMethodResolution = shouldSkipMethodResolution;
+            System.err.printf(
+                    Locale.ROOT,
+                    "Set method resolution skipping to %s%n",
+                    sShouldSkipMethodResolution
+            );
+        }
+    }
+
     public void shutdown() {
         try
         {
