@@ -1,12 +1,12 @@
 package com.htc.vita.core.net;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class NetworkInterface {
@@ -39,8 +39,7 @@ public class NetworkInterface {
                 }
             }
         } catch (Exception e) {
-            Logger.getInstance(NetworkInterface.class.getSimpleName()).error(String.format(
-                    Locale.ROOT,
+            Logger.getInstance(NetworkInterface.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                     "Can not get local IP addresses with broadcast addresses, error: %s",
                     e.getMessage()
             ));
@@ -61,8 +60,7 @@ public class NetworkInterface {
                 }
             }
         } catch (Exception e) {
-            Logger.getInstance(NetworkInterface.class.getSimpleName()).error(String.format(
-                    Locale.ROOT,
+            Logger.getInstance(NetworkInterface.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                     "Can not detect if network is available, error: %s",
                     e.getMessage()
             ));

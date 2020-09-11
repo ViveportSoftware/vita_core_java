@@ -1,9 +1,10 @@
 package com.htc.vita.core.crypto;
 
+import com.htc.vita.core.util.StringUtils;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Locale;
 
 public class DefaultAes extends Aes {
     protected byte[] doTransform(
@@ -21,8 +22,7 @@ public class DefaultAes extends Aes {
             throw new IllegalArgumentException("key size is not match");
         }
 
-        Cipher cipher = Cipher.getInstance(String.format(
-                Locale.ROOT,
+        Cipher cipher = Cipher.getInstance(StringUtils.rootLocaleFormat(
                 "AES/%s/%s",
                 getCipherMode().value(),
                 getPaddingMode().value()

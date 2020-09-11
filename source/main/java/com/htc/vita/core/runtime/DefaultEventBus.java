@@ -1,6 +1,7 @@
 package com.htc.vita.core.runtime;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -103,8 +104,7 @@ public class DefaultEventBus extends EventBus {
                                     eventData
                             );
                         } catch (Exception e) {
-                            Logger.getInstance(DefaultEventBus.class.getSimpleName()).error(String.format(
-                                    Locale.ROOT,
+                            Logger.getInstance(DefaultEventBus.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                                     "Can not execute task successfully. %s",
                                     e.toString()
                             ));

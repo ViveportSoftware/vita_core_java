@@ -1,6 +1,7 @@
 package com.htc.vita.core.net;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 
 import java.io.IOException;
 import java.net.*;
@@ -37,8 +38,7 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
                 return proxy;
             }
         } catch (URISyntaxException e) {
-            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
-                    Locale.ROOT,
+            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                     "Can not parse web proxy test URI, error: %s",
                     e.getMessage()
             ));
@@ -99,14 +99,12 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
             );
             return WebProxyStatus.Working;
         } catch (MalformedURLException e) {
-            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
-                    Locale.ROOT,
+            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                     "Can not parse web proxy test URI, error: %s",
                     e.getMessage()
             ));
         } catch (IOException e) {
-            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(String.format(
-                    Locale.ROOT,
+            Logger.getInstance(DefaultWebProxyFactory.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                     "Can not get web proxy status, error: %s",
                     e.getMessage()
             ));
