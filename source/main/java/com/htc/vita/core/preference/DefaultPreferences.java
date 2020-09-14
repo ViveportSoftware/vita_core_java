@@ -4,13 +4,13 @@ import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.Convert;
 
 import java.util.*;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 public class DefaultPreferences extends Preferences {
-    private static boolean sUseAsync = false;
-
     private Map<String, String> mProperties = new HashMap<String, String>();
-    private Future<Map<String, String>> mPropertiesFuture;
+
+    private final ExecutorService mExecutorService = Executors.newCachedThreadPool();
+    private final Object mLock = new Object();
     private final PreferenceStorage mPreferenceStorage;
 
     protected DefaultPreferences(
@@ -26,279 +26,314 @@ public class DefaultPreferences extends Preferences {
     }
 
     private Map<String, String> getProperties() {
-        if (!sUseAsync) {
-            return mProperties;
-        }
-
-        if (mPropertiesFuture == null) {
-            return null;
-        }
-        Map<String, String> result = null;
-        try {
-            result = mPropertiesFuture.get();
-        } catch (Exception e) {
-            Logger.getInstance(DefaultPreferences.class.getSimpleName()).error(e.toString());
-        }
-        return result;
+        return mProperties;
     }
 
     @Override
     protected Set<String> onAllKeys() {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
-            return new HashSet<String>();
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return new HashSet<String>();
+            }
+            return properties.keySet();
         }
-        return properties.keySet();
     }
 
     @Override
     protected Preferences onClear() {
-        Map<String, String> properties = getProperties();
-        if (properties != null) {
-            properties.clear();
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties != null) {
+                properties.clear();
+            }
         }
         return this;
     }
 
     @Override
     protected boolean onHasKey(String key) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
-            return false;
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return false;
+            }
+            return properties.containsKey(key);
         }
-        return properties.containsKey(key);
     }
 
     @Override
     protected Preferences onInitialize() {
-        if (!sUseAsync) {
+        synchronized (mLock) {
             mProperties = mPreferenceStorage.load();
-        } else {
-            mPropertiesFuture = mPreferenceStorage.loadAsync();
         }
         return this;
+    }
+
+    @Override
+    protected Future<Preferences> onInitializeAsync() {
+        return mExecutorService.submit(new Callable<Preferences>() {
+                @Override
+                public Preferences call() {
+                    synchronized (mLock) {
+                        try {
+                            mProperties = mPreferenceStorage.loadAsync().get();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    return DefaultPreferences.this;
+                }
+        });
     }
 
     @Override
     protected boolean onParseBoolean(
             String key,
             boolean defaultValue) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
-            return defaultValue;
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return defaultValue;
+            }
+            if (!properties.containsKey(key)) {
+                return defaultValue;
+            }
+            return Convert.toBoolean(
+                    properties.get(key),
+                    defaultValue
+            );
         }
-        if (!properties.containsKey(key)) {
-            return defaultValue;
-        }
-        return Convert.toBoolean(
-                properties.get(key),
-                defaultValue
-        );
     }
 
     @Override
     protected double onParseDouble(
             String key,
             double defaultValue) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
-            return defaultValue;
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return defaultValue;
+            }
+            if (!properties.containsKey(key)) {
+                return defaultValue;
+            }
+            return Convert.toDouble(
+                    properties.get(key),
+                    defaultValue
+            );
         }
-        if (!properties.containsKey(key)) {
-            return defaultValue;
-        }
-        return Convert.toDouble(
-                properties.get(key),
-                defaultValue
-        );
     }
 
     @Override
     protected float onParseFloat(
             String key,
             float defaultValue) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
-            return defaultValue;
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return defaultValue;
+            }
+            if (!properties.containsKey(key)) {
+                return defaultValue;
+            }
+            return (float) Convert.toDouble(
+                    properties.get(key),
+                    defaultValue
+            );
         }
-        if (!properties.containsKey(key)) {
-            return defaultValue;
-        }
-        return (float) Convert.toDouble(
-                properties.get(key),
-                defaultValue
-        );
     }
 
     @Override
     protected int onParseInt(
             String key,
             int defaultValue) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
-            return defaultValue;
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return defaultValue;
+            }
+            if (!properties.containsKey(key)) {
+                return defaultValue;
+            }
+            return Convert.toInt32(
+                    properties.get(key),
+                    defaultValue
+            );
         }
-        if (!properties.containsKey(key)) {
-            return defaultValue;
-        }
-        return Convert.toInt32(
-                properties.get(key),
-                defaultValue
-        );
     }
 
     @Override
     protected long onParseLong(
             String key,
             long defaultValue) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
-            return defaultValue;
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return defaultValue;
+            }
+            if (!properties.containsKey(key)) {
+                return defaultValue;
+            }
+            return Convert.toLong(
+                    properties.get(key),
+                    defaultValue
+            );
         }
-        if (!properties.containsKey(key)) {
-            return defaultValue;
-        }
-        return Convert.toLong(
-                properties.get(key),
-                defaultValue
-        );
     }
 
     @Override
     protected String onParseString(
             String key,
             String defaultValue) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
-            return defaultValue;
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return defaultValue;
+            }
+            if (!properties.containsKey(key)) {
+                return defaultValue;
+            }
+            String result = properties.get(key);
+            if (result == null) {
+                result = defaultValue;
+            }
+            return result;
         }
-        if (!properties.containsKey(key)) {
-            return defaultValue;
-        }
-        String result = properties.get(key);
-        if (result == null) {
-            result = defaultValue;
-        }
-        return result;
     }
 
     @Override
     protected Preferences onPutBoolean(
             String key,
             boolean value) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return this;
+            }
+            properties.put(
+                    key,
+                    "" + value
+            );
             return this;
         }
-        properties.put(
-                key,
-                "" + value
-        );
-        return this;
     }
 
     @Override
     protected Preferences onPutDouble(
             String key,
             double value) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return this;
+            }
+            properties.put(
+                    key,
+                    "" + value
+            );
             return this;
         }
-        properties.put(
-                key,
-                "" + value
-        );
-        return this;
     }
 
     @Override
     protected Preferences onPutFloat(
             String key,
             float value) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return this;
+            }
+            properties.put(
+                    key,
+                    "" + value
+            );
             return this;
         }
-        properties.put(
-                key,
-                "" + value
-        );
-        return this;
     }
 
     @Override
     protected Preferences onPutInt(
             String key,
             int value) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return this;
+            }
+            properties.put(
+                    key,
+                    "" + value
+            );
             return this;
         }
-        properties.put(
-                key,
-                "" + value
-        );
-        return this;
     }
 
     @Override
     protected Preferences onPutLong(
             String key,
             long value) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return this;
+            }
+            properties.put(
+                    key,
+                    "" + value
+            );
             return this;
         }
-        properties.put(
-                key,
-                "" + value
-        );
-        return this;
     }
 
     @Override
     protected Preferences onPutString(
             String key,
             String value) {
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return this;
+            }
+            properties.put(
+                    key,
+                    "" + value
+            );
             return this;
         }
-        properties.put(
-                key,
-                "" + value
-        );
-        return this;
     }
 
     @Override
     protected boolean onSave() {
-        if (!sUseAsync) {
-            return mPreferenceStorage.save(mProperties);
+        synchronized (mLock) {
+            Map<String, String> properties = getProperties();
+            if (properties == null) {
+                return false;
+            }
+            return mPreferenceStorage.save(properties);
         }
-
-        Map<String, String> properties = getProperties();
-        if (properties == null) {
-            return false;
-        }
-        boolean result = false;
-        try {
-            result = mPreferenceStorage.saveAsync(properties).get();
-        } catch (Exception e) {
-            Logger.getInstance(DefaultPreferences.class.getSimpleName()).error(e.toString());
-        }
-        return result;
     }
 
-    public static void useAsync(boolean useAsync) {
-        if (sUseAsync != useAsync) {
-            sUseAsync = useAsync;
-            System.err.printf(
-                    Locale.ROOT,
-                    "Set async method usage to %s%n",
-                    sUseAsync
-            );
-        }
+    @Override
+    protected Future<Boolean> onSaveAsync() {
+        return mExecutorService.submit(new Callable<Boolean>() {
+                @Override
+                public Boolean call() {
+                    synchronized (mLock) {
+                        Map<String, String> properties = getProperties();
+                        if (properties == null) {
+                            return false;
+                        }
+                        boolean result = false;
+                        try {
+                            result = mPreferenceStorage.saveAsync(properties).get();
+                        } catch (Exception e) {
+                            Logger.getInstance(DefaultPreferences.class.getSimpleName()).error(e.toString());
+                        }
+                        return result;
+                    }
+                }
+        });
     }
 }

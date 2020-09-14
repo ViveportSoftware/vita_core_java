@@ -4,6 +4,8 @@ import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 import com.htc.vita.core.util.TypeRegistry;
 
+import java.util.concurrent.Future;
+
 public abstract class PreferenceFactory {
     static {
         TypeRegistry.registerDefault(
@@ -52,7 +54,33 @@ public abstract class PreferenceFactory {
         return result;
     }
 
+    public Future<Preferences> loadPreferencesAsync() {
+        return loadPreferencesAsync("");
+    }
+
+    public Future<Preferences> loadPreferencesAsync(String label) {
+        String preferenceLabel = label;
+        if (StringUtils.isNullOrWhiteSpace(preferenceLabel)) {
+            preferenceLabel = "default";
+        }
+
+        Future<Preferences> result = null;
+        try {
+            result = onLoadPreferencesAsync(
+                    "Vita",
+                    preferenceLabel
+            );
+        } catch (Exception e) {
+            Logger.getInstance(PreferenceFactory.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
     protected abstract Preferences onLoadPreferences(
+            String category,
+            String label
+    ) throws Exception;
+    protected abstract Future<Preferences> onLoadPreferencesAsync(
             String category,
             String label
     ) throws Exception;

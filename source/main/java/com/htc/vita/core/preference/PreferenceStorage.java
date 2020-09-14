@@ -59,7 +59,13 @@ public abstract class PreferenceStorage {
     }
 
     public Future<Map<String, String>> loadAsync() {
-        return onLoadAsync();
+        Future<Map<String, String>> result = null;
+        try {
+            result = onLoadAsync();
+        } catch (Exception e) {
+            Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
+        }
+        return result;
     }
 
     public boolean save(Map<String, String> data) {
@@ -73,7 +79,13 @@ public abstract class PreferenceStorage {
     }
 
     public Future<Boolean> saveAsync(Map<String, String> data) {
-        return onSaveAsync(data);
+        Future<Boolean> result = null;
+        try {
+            result = onSaveAsync(data);
+        } catch (Exception e) {
+            Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
+        }
+        return result;
     }
 
     public PreferenceStorage setCategory(String category) {
@@ -91,7 +103,7 @@ public abstract class PreferenceStorage {
     }
 
     protected abstract Map<String, String> onLoad() throws Exception;
-    protected abstract Future<Map<String, String>> onLoadAsync();
+    protected abstract Future<Map<String, String>> onLoadAsync() throws Exception;
     protected abstract boolean onSave(Map<String, String> data) throws Exception;
-    protected abstract Future<Boolean> onSaveAsync(Map<String, String> data);
+    protected abstract Future<Boolean> onSaveAsync(Map<String, String> data) throws Exception;
 }
