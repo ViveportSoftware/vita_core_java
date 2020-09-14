@@ -1,18 +1,15 @@
 package com.htc.vita.core.preference;
 
+import com.htc.vita.core.concurrent.InternalTaskRunner;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class DummyPreferenceStorage extends PreferenceStorage {
-    private final ExecutorService mExecutorService = Executors.newCachedThreadPool();
-
     public DummyPreferenceStorage() {
         Logger.getInstance(DummyPreferenceStorage.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                 "You are using dummy %s instance!!",
@@ -45,7 +42,7 @@ public class DummyPreferenceStorage extends PreferenceStorage {
 
     @Override
     protected Future<Map<String, String>> onLoadAsync() {
-        return mExecutorService.submit(new Callable<Map<String, String>>() {
+        return InternalTaskRunner.submit(new Callable<Map<String, String>>() {
                 @Override
                 public Map<String, String> call() {
                     return doLoad();
@@ -60,7 +57,7 @@ public class DummyPreferenceStorage extends PreferenceStorage {
 
     @Override
     protected Future<Boolean> onSaveAsync(final Map<String, String> data) {
-        return mExecutorService.submit(new Callable<Boolean>() {
+        return InternalTaskRunner.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() {
                     return doSave(Collections.unmodifiableMap(data));

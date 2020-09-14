@@ -1,15 +1,13 @@
 package com.htc.vita.core.runtime;
 
+import com.htc.vita.core.concurrent.InternalTaskRunner;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class DefaultEventBus extends EventBus {
-    private final ExecutorService mExecutorService = Executors.newCachedThreadPool();
     private final Map<Class<?>, List<IEventListener<?>>> mListenerListMap = new HashMap<Class<?>, List<IEventListener<?>>>();
 
     private static <T extends IEventData> Method getCandidateMethod(
@@ -95,7 +93,7 @@ public class DefaultEventBus extends EventBus {
             }
 
             final Method methodInTask = method;
-            mExecutorService.execute(new Runnable() {
+            InternalTaskRunner.execute(new Runnable() {
                     @Override
                     public void run() {
                         try {
