@@ -449,7 +449,7 @@ public abstract class Logger {
         }
     }
 
-    public static void SkipMethodResolution(boolean shouldSkipMethodResolution) {
+    public static void skipMethodResolution(boolean shouldSkipMethodResolution) {
         if (sShouldSkipMethodResolution != shouldSkipMethodResolution) {
             sShouldSkipMethodResolution = shouldSkipMethodResolution;
             System.err.printf(
