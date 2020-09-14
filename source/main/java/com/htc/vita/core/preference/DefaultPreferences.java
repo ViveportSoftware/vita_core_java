@@ -1,13 +1,16 @@
 package com.htc.vita.core.preference;
 
+import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.Convert;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.Future;
 
 public class DefaultPreferences extends Preferences {
+    private static boolean sUseAsync = false;
+
     private Map<String, String> mProperties = new HashMap<String, String>();
+    private Future<Map<String, String>> mPropertiesFuture;
     private final PreferenceStorage mPreferenceStorage;
 
     protected DefaultPreferences(
@@ -22,25 +25,57 @@ public class DefaultPreferences extends Preferences {
                 .setLabel(label);
     }
 
+    private Map<String, String> getProperties() {
+        if (!sUseAsync) {
+            return mProperties;
+        }
+
+        if (mPropertiesFuture == null) {
+            return null;
+        }
+        Map<String, String> result = null;
+        try {
+            result = mPropertiesFuture.get();
+        } catch (Exception e) {
+            Logger.getInstance(DefaultPreferences.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
     @Override
     protected Set<String> onAllKeys() {
-        return mProperties.keySet();
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return new HashSet<String>();
+        }
+        return properties.keySet();
     }
 
     @Override
     protected Preferences onClear() {
-        mProperties.clear();
+        Map<String, String> properties = getProperties();
+        if (properties != null) {
+            properties.clear();
+        }
         return this;
     }
 
     @Override
     protected boolean onHasKey(String key) {
-        return mProperties.containsKey(key);
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return false;
+        }
+        return properties.containsKey(key);
     }
 
     @Override
     protected Preferences onInitialize() {
-        mProperties = mPreferenceStorage.load();
+        if (!sUseAsync) {
+            mProperties = mPreferenceStorage.load();
+        } else {
+            mPropertiesFuture = mPreferenceStorage.loadAsync();
+        }
         return this;
     }
 
@@ -48,11 +83,15 @@ public class DefaultPreferences extends Preferences {
     protected boolean onParseBoolean(
             String key,
             boolean defaultValue) {
-        if (!mProperties.containsKey(key)) {
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return defaultValue;
+        }
+        if (!properties.containsKey(key)) {
             return defaultValue;
         }
         return Convert.toBoolean(
-                mProperties.get(key),
+                properties.get(key),
                 defaultValue
         );
     }
@@ -61,11 +100,15 @@ public class DefaultPreferences extends Preferences {
     protected double onParseDouble(
             String key,
             double defaultValue) {
-        if (!mProperties.containsKey(key)) {
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return defaultValue;
+        }
+        if (!properties.containsKey(key)) {
             return defaultValue;
         }
         return Convert.toDouble(
-                mProperties.get(key),
+                properties.get(key),
                 defaultValue
         );
     }
@@ -74,11 +117,15 @@ public class DefaultPreferences extends Preferences {
     protected float onParseFloat(
             String key,
             float defaultValue) {
-        if (!mProperties.containsKey(key)) {
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return defaultValue;
+        }
+        if (!properties.containsKey(key)) {
             return defaultValue;
         }
         return (float) Convert.toDouble(
-                mProperties.get(key),
+                properties.get(key),
                 defaultValue
         );
     }
@@ -87,11 +134,15 @@ public class DefaultPreferences extends Preferences {
     protected int onParseInt(
             String key,
             int defaultValue) {
-        if (!mProperties.containsKey(key)) {
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return defaultValue;
+        }
+        if (!properties.containsKey(key)) {
             return defaultValue;
         }
         return Convert.toInt32(
-                mProperties.get(key),
+                properties.get(key),
                 defaultValue
         );
     }
@@ -100,11 +151,15 @@ public class DefaultPreferences extends Preferences {
     protected long onParseLong(
             String key,
             long defaultValue) {
-        if (!mProperties.containsKey(key)) {
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return defaultValue;
+        }
+        if (!properties.containsKey(key)) {
             return defaultValue;
         }
         return Convert.toLong(
-                mProperties.get(key),
+                properties.get(key),
                 defaultValue
         );
     }
@@ -113,10 +168,14 @@ public class DefaultPreferences extends Preferences {
     protected String onParseString(
             String key,
             String defaultValue) {
-        if (!mProperties.containsKey(key)) {
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
             return defaultValue;
         }
-        String result = mProperties.get(key);
+        if (!properties.containsKey(key)) {
+            return defaultValue;
+        }
+        String result = properties.get(key);
         if (result == null) {
             result = defaultValue;
         }
@@ -127,7 +186,11 @@ public class DefaultPreferences extends Preferences {
     protected Preferences onPutBoolean(
             String key,
             boolean value) {
-        mProperties.put(
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return this;
+        }
+        properties.put(
                 key,
                 "" + value
         );
@@ -138,7 +201,11 @@ public class DefaultPreferences extends Preferences {
     protected Preferences onPutDouble(
             String key,
             double value) {
-        mProperties.put(
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return this;
+        }
+        properties.put(
                 key,
                 "" + value
         );
@@ -149,7 +216,11 @@ public class DefaultPreferences extends Preferences {
     protected Preferences onPutFloat(
             String key,
             float value) {
-        mProperties.put(
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return this;
+        }
+        properties.put(
                 key,
                 "" + value
         );
@@ -160,7 +231,11 @@ public class DefaultPreferences extends Preferences {
     protected Preferences onPutInt(
             String key,
             int value) {
-        mProperties.put(
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return this;
+        }
+        properties.put(
                 key,
                 "" + value
         );
@@ -171,7 +246,11 @@ public class DefaultPreferences extends Preferences {
     protected Preferences onPutLong(
             String key,
             long value) {
-        mProperties.put(
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return this;
+        }
+        properties.put(
                 key,
                 "" + value
         );
@@ -182,15 +261,44 @@ public class DefaultPreferences extends Preferences {
     protected Preferences onPutString(
             String key,
             String value) {
-        mProperties.put(
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return this;
+        }
+        properties.put(
                 key,
-                value
+                "" + value
         );
         return this;
     }
 
     @Override
     protected boolean onSave() {
-        return mPreferenceStorage.save(mProperties);
+        if (!sUseAsync) {
+            return mPreferenceStorage.save(mProperties);
+        }
+
+        Map<String, String> properties = getProperties();
+        if (properties == null) {
+            return false;
+        }
+        boolean result = false;
+        try {
+            result = mPreferenceStorage.saveAsync(properties).get();
+        } catch (Exception e) {
+            Logger.getInstance(DefaultPreferences.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
+    public static void useAsync(boolean useAsync) {
+        if (sUseAsync != useAsync) {
+            sUseAsync = useAsync;
+            System.err.printf(
+                    Locale.ROOT,
+                    "Set async method usage to %s%n",
+                    sUseAsync
+            );
+        }
     }
 }

@@ -6,6 +6,7 @@ import com.htc.vita.core.util.TypeRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 public abstract class PreferenceStorage {
     private String mCategory = "Vita";
@@ -57,6 +58,10 @@ public abstract class PreferenceStorage {
         return result;
     }
 
+    public Future<Map<String, String>> loadAsync() {
+        return onLoadAsync();
+    }
+
     public boolean save(Map<String, String> data) {
         boolean result = false;
         try {
@@ -65,6 +70,10 @@ public abstract class PreferenceStorage {
             Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
         }
         return result;
+    }
+
+    public Future<Boolean> saveAsync(Map<String, String> data) {
+        return onSaveAsync(data);
     }
 
     public PreferenceStorage setCategory(String category) {
@@ -81,6 +90,8 @@ public abstract class PreferenceStorage {
         return this;
     }
 
-    protected abstract Map<String, String> onLoad();
-    protected abstract boolean onSave(Map<String, String> data);
+    protected abstract Map<String, String> onLoad() throws Exception;
+    protected abstract Future<Map<String, String>> onLoadAsync();
+    protected abstract boolean onSave(Map<String, String> data) throws Exception;
+    protected abstract Future<Boolean> onSaveAsync(Map<String, String> data);
 }
