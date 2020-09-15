@@ -1,6 +1,7 @@
 package com.htc.vita.core.net;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,8 +19,7 @@ public class NetworkInterfaceTest {
             Assert.assertNotNull(localAddress);
             InetAddress broadcastAddress = addressMapping.get(localAddress);
             Assert.assertNotNull(broadcastAddress);
-            Logger.getInstance(NetworkInterfaceTest.class.getSimpleName()).info(String.format(
-                    Locale.ROOT,
+            Logger.getInstance(NetworkInterfaceTest.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                     "localAddress: %s, broadcastAddress: %s",
                     localAddress.getHostAddress(),
                     broadcastAddress.getHostAddress()

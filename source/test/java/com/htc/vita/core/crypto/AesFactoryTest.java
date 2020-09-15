@@ -76,8 +76,7 @@ public class AesFactoryTest {
                 password
         );
         Assert.assertNotNull(encryptedInBytes);
-        Logger.getInstance(AesFactoryTest.class.getSimpleName()).info(String.format(
-                Locale.ROOT,
+        Logger.getInstance(AesFactoryTest.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                 "encrypted: %s",
                 Convert.toHexString(encryptedInBytes)
         ));

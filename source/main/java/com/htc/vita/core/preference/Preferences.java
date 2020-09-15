@@ -5,6 +5,7 @@ import com.htc.vita.core.util.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Future;
 
 public abstract class Preferences {
     private String mCategory = "";
@@ -57,6 +58,16 @@ public abstract class Preferences {
         return result;
     }
 
+    public Future<Boolean> commitAsync() {
+        Future<Boolean> result = null;
+        try {
+            result = onSaveAsync();
+        } catch (Exception e) {
+            Logger.getInstance(Preferences.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
     public String getCategory() {
         return mCategory;
     }
@@ -88,6 +99,16 @@ public abstract class Preferences {
         }
         if (result == null) {
             result = this;
+        }
+        return result;
+    }
+
+    public Future<Preferences> initializeAsync() {
+        Future<Preferences> result = null;
+        try {
+            result = onInitializeAsync();
+        } catch (Exception e) {
+            Logger.getInstance(Preferences.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
@@ -336,6 +357,7 @@ public abstract class Preferences {
     protected abstract Preferences onClear() throws Exception;
     protected abstract boolean onHasKey(String key) throws Exception;
     protected abstract Preferences onInitialize() throws Exception;
+    protected abstract Future<Preferences> onInitializeAsync() throws Exception;
     protected abstract boolean onParseBoolean(
             String key,
             boolean defaultValue
@@ -385,4 +407,5 @@ public abstract class Preferences {
             String value
     ) throws Exception;
     protected abstract boolean onSave() throws Exception;
+    protected abstract Future<Boolean> onSaveAsync() throws Exception;
 }

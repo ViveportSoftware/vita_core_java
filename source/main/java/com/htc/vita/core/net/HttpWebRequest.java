@@ -10,7 +10,7 @@ import java.net.Proxy;
 import java.net.URL;
 
 public abstract class HttpWebRequest implements Closeable {
-    private URL mUrl;
+    private final URL mUrl;
 
     public HttpWebRequest(URL url) {
         mUrl = url;

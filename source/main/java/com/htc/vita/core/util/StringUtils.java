@@ -2,6 +2,7 @@ package com.htc.vita.core.util;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Locale;
 
 public class StringUtils {
     public static final String STRING_ENCODING_UTF_8 = "UTF-8";
@@ -87,6 +88,16 @@ public class StringUtils {
             builder.append(separator).append(params[i]);
         }
         return builder.toString();
+    }
+
+    public static String rootLocaleFormat(
+            String format,
+            Object... args) {
+        return String.format(
+                Locale.ROOT,
+                format,
+                args
+        );
     }
 
     public static byte[] toBytesByUtf8(String data) {

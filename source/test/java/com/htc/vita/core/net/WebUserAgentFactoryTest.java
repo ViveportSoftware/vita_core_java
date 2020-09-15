@@ -1,6 +1,7 @@
 package com.htc.vita.core.net;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,8 +30,7 @@ public class WebUserAgentFactoryTest {
         Assert.assertNotNull(webUserAgent);
         String webUserAgentString = webUserAgent.toString();
         Assert.assertTrue(webUserAgentString.startsWith("JRE/"));
-        Logger.getInstance(WebUserAgentFactoryTest.class.getSimpleName()).info(String.format(
-                Locale.ROOT,
+        Logger.getInstance(WebUserAgentFactoryTest.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                 "user agent: %s",
                 webUserAgentString
         ));

@@ -4,7 +4,6 @@ import com.htc.vita.core.log.Logger;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class TypeRegistry {
@@ -25,8 +24,7 @@ public class TypeRegistry {
             return null;
         }
 
-        String key = String.format(
-                Locale.ROOT,
+        String key = StringUtils.rootLocaleFormat(
                 "%s_",
                 concreteClassType.getName()
         );
@@ -36,8 +34,7 @@ public class TypeRegistry {
                 instance = (TBaseClass) INSTANCE_MAP.get(key);
             }
             if (instance == null) {
-                Logger.getInstance(TypeRegistry.class.getSimpleName()).info(String.format(
-                        Locale.ROOT,
+                Logger.getInstance(TypeRegistry.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                         "Initializing %s...",
                         key
                 ));
@@ -84,8 +81,7 @@ public class TypeRegistry {
                     baseClass,
                     subClass
             );
-            Logger.getInstance(TypeRegistry.class.getSimpleName()).info(String.format(
-                    Locale.ROOT,
+            Logger.getInstance(TypeRegistry.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                     "Registered %s type to %s",
                     baseClass.getSimpleName(),
                     subClass.getName()
@@ -99,8 +95,7 @@ public class TypeRegistry {
                     baseClass,
                     subClass
             );
-            Logger.getInstance(TypeRegistry.class.getSimpleName()).info(String.format(
-                    Locale.ROOT,
+            Logger.getInstance(TypeRegistry.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                     "Registered %s type to %s",
                     baseClass.getSimpleName(),
                     subClass.getName()
@@ -115,8 +110,7 @@ public class TypeRegistry {
             Class<?> oldSubClass = CONCRETE_CLASS_MAP.get(baseClass);
             if (oldSubClass != subClass)
             {
-                Logger.getInstance(TypeRegistry.class.getSimpleName()).error(String.format(
-                        Locale.ROOT,
+                Logger.getInstance(TypeRegistry.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                         "%s had been registered to %s. Registering to %s will be ignored.",
                         baseClass.getName(),
                         oldSubClass.getName(),

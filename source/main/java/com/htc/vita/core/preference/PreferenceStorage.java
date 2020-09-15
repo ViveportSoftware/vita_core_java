@@ -6,6 +6,7 @@ import com.htc.vita.core.util.TypeRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 public abstract class PreferenceStorage {
     private String mCategory = "Vita";
@@ -57,10 +58,30 @@ public abstract class PreferenceStorage {
         return result;
     }
 
+    public Future<Map<String, String>> loadAsync() {
+        Future<Map<String, String>> result = null;
+        try {
+            result = onLoadAsync();
+        } catch (Exception e) {
+            Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
     public boolean save(Map<String, String> data) {
         boolean result = false;
         try {
             result = onSave(data);
+        } catch (Exception e) {
+            Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
+    public Future<Boolean> saveAsync(Map<String, String> data) {
+        Future<Boolean> result = null;
+        try {
+            result = onSaveAsync(data);
         } catch (Exception e) {
             Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
         }
@@ -81,6 +102,8 @@ public abstract class PreferenceStorage {
         return this;
     }
 
-    protected abstract Map<String, String> onLoad();
-    protected abstract boolean onSave(Map<String, String> data);
+    protected abstract Map<String, String> onLoad() throws Exception;
+    protected abstract Future<Map<String, String>> onLoadAsync() throws Exception;
+    protected abstract boolean onSave(Map<String, String> data) throws Exception;
+    protected abstract Future<Boolean> onSaveAsync(Map<String, String> data) throws Exception;
 }

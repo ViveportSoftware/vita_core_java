@@ -3,7 +3,7 @@ package com.htc.vita.core.crypto;
 public enum AesCipherMode {
     Cbc("CBC");
 
-    private String mValue;
+    private final String mValue;
 
     AesCipherMode(String value) {
         mValue = value;

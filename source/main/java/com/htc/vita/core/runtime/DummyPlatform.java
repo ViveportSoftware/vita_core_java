@@ -1,13 +1,11 @@
 package com.htc.vita.core.runtime;
 
 import com.htc.vita.core.log.Logger;
-
-import java.util.Locale;
+import com.htc.vita.core.util.StringUtils;
 
 public class DummyPlatform extends Platform {
     public DummyPlatform() {
-        Logger.getInstance(DummyPlatform.class.getSimpleName()).error(String.format(
-                Locale.ROOT,
+        Logger.getInstance(DummyPlatform.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                 "You are using dummy %s instance!!",
                 Platform.class.getSimpleName()
         ));

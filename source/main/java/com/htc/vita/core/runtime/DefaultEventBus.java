@@ -1,14 +1,13 @@
 package com.htc.vita.core.runtime;
 
+import com.htc.vita.core.internal.TaskRunner;
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class DefaultEventBus extends EventBus {
-    private final ExecutorService mExecutorService = Executors.newCachedThreadPool();
     private final Map<Class<?>, List<IEventListener<?>>> mListenerListMap = new HashMap<Class<?>, List<IEventListener<?>>>();
 
     private static <T extends IEventData> Method getCandidateMethod(
@@ -94,7 +93,7 @@ public class DefaultEventBus extends EventBus {
             }
 
             final Method methodInTask = method;
-            mExecutorService.execute(new Runnable() {
+            TaskRunner.execute(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -103,8 +102,7 @@ public class DefaultEventBus extends EventBus {
                                     eventData
                             );
                         } catch (Exception e) {
-                            Logger.getInstance(DefaultEventBus.class.getSimpleName()).error(String.format(
-                                    Locale.ROOT,
+                            Logger.getInstance(DefaultEventBus.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                                     "Can not execute task successfully. %s",
                                     e.toString()
                             ));

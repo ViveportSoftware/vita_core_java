@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Set;
+import java.util.concurrent.Future;
 
 public class PreferenceFactoryTest {
     @Test
@@ -22,6 +23,18 @@ public class PreferenceFactoryTest {
         Preferences preferences1 = preferenceFactory.loadPreferences("customLabel");
         Assert.assertNotNull(preferences1);
         Assert.assertNotEquals(preferences0, preferences1);
+    }
+
+    @Test
+    public void dummy_1_loadPreferencesAsync() throws Exception {
+        PreferenceFactory preferenceFactory = PreferenceFactory.getInstance();
+        Assert.assertNotNull(preferenceFactory);
+        Future<Preferences> preferencesFuture0 = preferenceFactory.loadPreferencesAsync();
+        Assert.assertNotNull(preferencesFuture0);
+        Future<Preferences> preferencesFuture1 = preferenceFactory.loadPreferencesAsync("customLabel");
+        Assert.assertNotNull(preferencesFuture1);
+        Assert.assertNotEquals(preferencesFuture0, preferencesFuture1);
+        Assert.assertNotEquals(preferencesFuture0.get(), preferencesFuture1.get());
     }
 
     @Test
@@ -163,5 +176,27 @@ public class PreferenceFactoryTest {
         Assert.assertNotNull(preferences.put("someKey3", 3));
         Assert.assertNotNull(preferences.put("someKey4", 123456789123L));
         Assert.assertNotNull(preferences.put("someKey5", "someValue"));
+    }
+
+    @Test
+    public void preferences_14_commitAsync() throws Exception {
+        PreferenceFactory preferenceFactory = PreferenceFactory.getInstance();
+        Assert.assertNotNull(preferenceFactory);
+        Future<Preferences> preferencesFuture = preferenceFactory.loadPreferencesAsync();
+        Assert.assertNotNull(preferencesFuture);
+        Preferences preferences = preferencesFuture.get();
+        Assert.assertNotNull(preferences);
+        Assert.assertFalse(preferences.commitAsync().get());
+    }
+
+    @Test
+    public void preferences_15_initializeAsync() throws Exception {
+        PreferenceFactory preferenceFactory = PreferenceFactory.getInstance();
+        Assert.assertNotNull(preferenceFactory);
+        Future<Preferences> preferencesFuture = preferenceFactory.loadPreferencesAsync();
+        Assert.assertNotNull(preferencesFuture);
+        Preferences preferences = preferencesFuture.get();
+        Assert.assertNotNull(preferences);
+        Assert.assertNotNull(preferences.initializeAsync().get());
     }
 }

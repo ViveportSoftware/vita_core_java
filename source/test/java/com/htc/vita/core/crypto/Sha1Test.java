@@ -60,6 +60,54 @@ public class Sha1Test {
         ));
     }
 
+    @Test
+    public void default_3_generateInBase64_withContent() {
+        Sha1 sha1 = Sha1.getInstance();
+        Assert.assertNotNull(sha1);
+        Assert.assertEquals(
+                "2jmj7l5rSw0yVb/vlWAYkK/YBwk=",
+                sha1.generateInBase64("")
+        );
+        Assert.assertEquals(
+                "QL0AFWMIX8NRZTKeof9cXsvbvu8=",
+                sha1.generateInBase64("123")
+        );
+    }
+
+    @Test
+    public void default_3_generateInBase64_withFile() {
+        Sha1 sha1 = Sha1.getInstance();
+        Assert.assertNotNull(sha1);
+        Assert.assertEquals(
+                "9eJAeMCTbKeIFSYOfVjRqUCWbro=",
+                sha1.generateInBase64(getTestFilePath())
+        );
+    }
+
+    @Test
+    public void default_4_validateInBase64_withContent() {
+        Sha1 sha1 = Sha1.getInstance();
+        Assert.assertNotNull(sha1);
+        Assert.assertTrue(sha1.validateInBase64(
+                "",
+                "2jmj7l5rSw0yVb/vlWAYkK/YBwk="
+        ));
+        Assert.assertTrue(sha1.validateInBase64(
+                "123",
+                "QL0AFWMIX8NRZTKeof9cXsvbvu8="
+        ));
+    }
+
+    @Test
+    public void default_4_validateInBase64_withFile() {
+        Sha1 sha1 = Sha1.getInstance();
+        Assert.assertNotNull(sha1);
+        Assert.assertTrue(sha1.validateInBase64(
+                getTestFilePath(),
+                "9eJAeMCTbKeIFSYOfVjRqUCWbro="
+        ));
+    }
+
     private static File getTestFilePath() {
         String testFilePathString = System.getProperty("user.dir")
                 + File.separator
