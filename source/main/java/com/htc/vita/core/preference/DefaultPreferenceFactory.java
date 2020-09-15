@@ -16,7 +16,7 @@ public class DefaultPreferenceFactory extends PreferenceFactory {
     @Override
     protected Future<Preferences> onLoadPreferencesAsync(
             String category,
-            String label) throws Exception {
+            String label) {
         return new DefaultPreferences(
                 category,
                 label

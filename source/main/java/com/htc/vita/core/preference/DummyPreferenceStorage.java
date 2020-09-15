@@ -10,6 +10,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 public class DummyPreferenceStorage extends PreferenceStorage {
+    private final Object mLock = new Object();
+
     public DummyPreferenceStorage() {
         Logger.getInstance(DummyPreferenceStorage.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                 "You are using dummy %s instance!!",
@@ -18,21 +20,27 @@ public class DummyPreferenceStorage extends PreferenceStorage {
     }
 
     private Map<String, String> doLoad() {
-        Logger.getInstance(DummyPreferenceStorage.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
-                "Try to load data from category: \"%s\", label: \"%s\"",
-                getCategory(),
-                getLabel()
-        ));
-        return null;
+        synchronized (mLock) {
+            Logger.getInstance(DummyPreferenceStorage.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
+                    "Try to load data on thread[%s] from category: \"%s\", label: \"%s\"",
+                    Thread.currentThread().getId(),
+                    getCategory(),
+                    getLabel()
+            ));
+            return null;
+        }
     }
 
     private boolean doSave(Map<String, String> data) {
-        Logger.getInstance(DummyPreferenceStorage.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
-                "Try to save data to category: \"%s\", label: \"%s\"",
-                getCategory(),
-                getLabel()
-        ));
-        return false;
+        synchronized (mLock) {
+            Logger.getInstance(DummyPreferenceStorage.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
+                    "Try to save data on thread[%s] to category: \"%s\", label: \"%s\"",
+                    Thread.currentThread().getId(),
+                    getCategory(),
+                    getLabel()
+            ));
+            return false;
+        }
     }
 
     @Override
