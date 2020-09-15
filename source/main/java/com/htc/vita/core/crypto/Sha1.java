@@ -121,6 +121,56 @@ public abstract class Sha1 {
         return result;
     }
 
+    public boolean validateInBase64(
+            File file,
+            String checksum) {
+        return validateInBase64(
+                file,
+                checksum,
+                null
+        );
+    }
+
+    public boolean validateInBase64(
+            File file,
+            String checksum,
+            CancellationToken cancellationToken) {
+        if (file == null || !file.isFile() || StringUtils.isNullOrWhiteSpace(checksum)) {
+            return false;
+        }
+
+        CancellationToken realCancellationToken = cancellationToken;
+        if (realCancellationToken == null) {
+            realCancellationToken = CancellationToken.NONE;
+        }
+        boolean result = false;
+        try {
+            result = checksum.equalsIgnoreCase(onGenerateInBase64(
+                    file,
+                    realCancellationToken
+            ));
+        } catch (Exception e) {
+            Logger.getInstance(Sha1.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
+    public boolean validateInBase64(
+            String content,
+            String checksum) {
+        if (content == null || StringUtils.isNullOrWhiteSpace(checksum)) {
+            return false;
+        }
+
+        boolean result = false;
+        try {
+            result = checksum.equalsIgnoreCase(onGenerateInBase64(content));
+        } catch (Exception e) {
+            Logger.getInstance(Sha1.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
     public boolean validateInHex(
             File file,
             String checksum) {
