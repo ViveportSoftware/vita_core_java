@@ -44,10 +44,7 @@ public abstract class PreferenceFactory {
 
         Preferences result = null;
         try {
-            result = onLoadPreferences(
-                    "Vita",
-                    preferenceLabel
-            );
+            result = onLoadPreferences(preferenceLabel);
         } catch (Exception e) {
             Logger.getInstance(PreferenceFactory.class.getSimpleName()).error(e.toString());
         }
@@ -66,22 +63,13 @@ public abstract class PreferenceFactory {
 
         Future<Preferences> result = null;
         try {
-            result = onLoadPreferencesAsync(
-                    "Vita",
-                    preferenceLabel
-            );
+            result = onLoadPreferencesAsync(preferenceLabel);
         } catch (Exception e) {
             Logger.getInstance(PreferenceFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    protected abstract Preferences onLoadPreferences(
-            String category,
-            String label
-    ) throws Exception;
-    protected abstract Future<Preferences> onLoadPreferencesAsync(
-            String category,
-            String label
-    ) throws Exception;
+    protected abstract Preferences onLoadPreferences(String label) throws Exception;
+    protected abstract Future<Preferences> onLoadPreferencesAsync(String label) throws Exception;
 }
