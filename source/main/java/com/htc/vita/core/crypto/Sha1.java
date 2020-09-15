@@ -1,5 +1,6 @@
 package com.htc.vita.core.crypto;
 
+import com.htc.vita.core.concurrent.CancellationToken;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 import com.htc.vita.core.util.TypeRegistry;
@@ -33,13 +34,29 @@ public abstract class Sha1 {
     }
 
     public String generateInHex(File file) {
+        return generateInHex(
+                file,
+                null
+        );
+    }
+
+    public String generateInHex(
+            File file,
+            CancellationToken cancellationToken) {
         if (file == null || !file.isFile()) {
             return "";
         }
 
+        CancellationToken realCancellationToken = cancellationToken;
+        if (realCancellationToken == null) {
+            realCancellationToken = CancellationToken.NONE;
+        }
         String result = "";
         try {
-            result = onGenerateInHex(file);
+            result = onGenerateInHex(
+                    file,
+                    realCancellationToken
+            );
         } catch (Exception e) {
             Logger.getInstance(Sha1.class.getSimpleName()).error(e.toString());
         }
@@ -63,13 +80,31 @@ public abstract class Sha1 {
     public boolean validateInHex(
             File file,
             String checksum) {
+        return validateInHex(
+                file,
+                checksum,
+                null
+        );
+    }
+
+    public boolean validateInHex(
+            File file,
+            String checksum,
+            CancellationToken cancellationToken) {
         if (file == null || !file.isFile() || StringUtils.isNullOrWhiteSpace(checksum)) {
             return false;
         }
 
+        CancellationToken realCancellationToken = cancellationToken;
+        if (realCancellationToken == null) {
+            realCancellationToken = CancellationToken.NONE;
+        }
         boolean result = false;
         try {
-            result = checksum.equalsIgnoreCase(onGenerateInHex(file));
+            result = checksum.equalsIgnoreCase(onGenerateInHex(
+                    file,
+                    realCancellationToken
+            ));
         } catch (Exception e) {
             Logger.getInstance(Sha1.class.getSimpleName()).error(e.toString());
         }
@@ -92,6 +127,9 @@ public abstract class Sha1 {
         return result;
     }
 
-    protected abstract String onGenerateInHex(File file) throws Exception;
+    protected abstract String onGenerateInHex(
+            File file,
+            CancellationToken cancellationToken
+    ) throws Exception;
     protected abstract String onGenerateInHex(String content) throws Exception;
 }
