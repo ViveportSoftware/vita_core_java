@@ -33,6 +33,50 @@ public abstract class Sha1 {
         );
     }
 
+    public String generateInBase64(File file) {
+        return generateInBase64(
+                file,
+                null
+        );
+    }
+
+    public String generateInBase64(
+            File file,
+            CancellationToken cancellationToken) {
+        if (file == null || !file.isFile()) {
+            return "";
+        }
+
+        CancellationToken realCancellationToken = cancellationToken;
+        if (realCancellationToken == null) {
+            realCancellationToken = CancellationToken.NONE;
+        }
+        String result = "";
+        try {
+            result = onGenerateInBase64(
+                    file,
+                    realCancellationToken
+            );
+        } catch (Exception e) {
+            Logger.getInstance(Sha1.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
+    public String generateInBase64(String content) {
+        if (content == null) {
+            return "";
+        }
+
+        String result = "";
+        try {
+            result = onGenerateInBase64(content);
+        } catch (Exception e) {
+            Logger.getInstance(Sha1.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
     public String generateInHex(File file) {
         return generateInHex(
                 file,
@@ -127,6 +171,11 @@ public abstract class Sha1 {
         return result;
     }
 
+    protected abstract String onGenerateInBase64(
+            File file,
+            CancellationToken cancellationToken
+    ) throws Exception;
+    protected abstract String onGenerateInBase64(String content) throws Exception;
     protected abstract String onGenerateInHex(
             File file,
             CancellationToken cancellationToken

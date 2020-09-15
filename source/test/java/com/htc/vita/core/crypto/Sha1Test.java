@@ -60,6 +60,30 @@ public class Sha1Test {
         ));
     }
 
+    @Test
+    public void default_3_generateInBase64_withContent() {
+        Sha1 sha1 = Sha1.getInstance();
+        Assert.assertNotNull(sha1);
+        Assert.assertEquals(
+                "2jmj7l5rSw0yVb/vlWAYkK/YBwk=",
+                sha1.generateInBase64("")
+        );
+        Assert.assertEquals(
+                "QL0AFWMIX8NRZTKeof9cXsvbvu8=",
+                sha1.generateInBase64("123")
+        );
+    }
+
+    @Test
+    public void default_3_generateInBase64_withFile() {
+        Sha1 sha1 = Sha1.getInstance();
+        Assert.assertNotNull(sha1);
+        Assert.assertEquals(
+                "9eJAeMCTbKeIFSYOfVjRqUCWbro=",
+                sha1.generateInBase64(getTestFilePath())
+        );
+    }
+
     private static File getTestFilePath() {
         String testFilePathString = System.getProperty("user.dir")
                 + File.separator
