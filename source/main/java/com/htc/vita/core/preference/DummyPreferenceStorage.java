@@ -1,6 +1,6 @@
 package com.htc.vita.core.preference;
 
-import com.htc.vita.core.concurrent.InternalTaskRunner;
+import com.htc.vita.core.internal.TaskRunner;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
@@ -50,7 +50,7 @@ public class DummyPreferenceStorage extends PreferenceStorage {
 
     @Override
     protected Future<Map<String, String>> onLoadAsync() {
-        return InternalTaskRunner.submit(new Callable<Map<String, String>>() {
+        return TaskRunner.submit(new Callable<Map<String, String>>() {
                 @Override
                 public Map<String, String> call() {
                     return doLoad();
@@ -65,7 +65,7 @@ public class DummyPreferenceStorage extends PreferenceStorage {
 
     @Override
     protected Future<Boolean> onSaveAsync(final Map<String, String> data) {
-        return InternalTaskRunner.submit(new Callable<Boolean>() {
+        return TaskRunner.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() {
                     return doSave(Collections.unmodifiableMap(data));

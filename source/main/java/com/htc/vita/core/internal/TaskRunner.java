@@ -1,11 +1,11 @@
-package com.htc.vita.core.concurrent;
+package com.htc.vita.core.internal;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class InternalTaskRunner {
+public class TaskRunner {
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
     public static void execute(Runnable command) {

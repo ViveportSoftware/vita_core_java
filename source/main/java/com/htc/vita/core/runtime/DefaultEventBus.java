@@ -1,6 +1,6 @@
 package com.htc.vita.core.runtime;
 
-import com.htc.vita.core.concurrent.InternalTaskRunner;
+import com.htc.vita.core.internal.TaskRunner;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
@@ -93,7 +93,7 @@ public class DefaultEventBus extends EventBus {
             }
 
             final Method methodInTask = method;
-            InternalTaskRunner.execute(new Runnable() {
+            TaskRunner.execute(new Runnable() {
                     @Override
                     public void run() {
                         try {

@@ -1,6 +1,6 @@
 package com.htc.vita.core.preference;
 
-import com.htc.vita.core.concurrent.InternalTaskRunner;
+import com.htc.vita.core.internal.TaskRunner;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.Convert;
 
@@ -72,7 +72,7 @@ public class DefaultPreferences extends Preferences {
 
     @Override
     protected Future<Preferences> onInitializeAsync() {
-        return InternalTaskRunner.submit(new Callable<Preferences>() {
+        return TaskRunner.submit(new Callable<Preferences>() {
                 @Override
                 public Preferences call() {
                     synchronized (mLock) {
@@ -317,7 +317,7 @@ public class DefaultPreferences extends Preferences {
 
     @Override
     protected Future<Boolean> onSaveAsync() {
-        return InternalTaskRunner.submit(new Callable<Boolean>() {
+        return TaskRunner.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() {
                     synchronized (mLock) {
