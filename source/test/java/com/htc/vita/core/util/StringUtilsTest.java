@@ -45,4 +45,14 @@ public class StringUtilsTest {
         list.add("c");
         Assert.assertEquals("a+b+c", StringUtils.join("+", list));
     }
+
+    @Test
+    public void default_3_urlDecodeByUtf8() {
+        Assert.assertEquals("a b", StringUtils.urlDecodeByUtf8("a%20b"));
+    }
+
+    @Test
+    public void default_4_urlEncodeByUtf8() {
+        Assert.assertEquals("a+b", StringUtils.urlEncodeByUtf8("a b"));
+    }
 }

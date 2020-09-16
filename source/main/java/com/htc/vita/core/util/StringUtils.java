@@ -1,6 +1,8 @@
 package com.htc.vita.core.util;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
@@ -108,6 +110,34 @@ public class StringUtils {
         byte[] result = null;
         try {
             result = data.getBytes(STRING_ENCODING_UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            // Skip
+        }
+        return result;
+    }
+
+    public static String urlDecodeByUtf8(String data) {
+        if (data == null) {
+            return null;
+        }
+
+        String result = null;
+        try {
+            result = URLDecoder.decode(data, STRING_ENCODING_UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            // Skip
+        }
+        return result;
+    }
+
+    public static String urlEncodeByUtf8(String data) {
+        if (data == null) {
+            return null;
+        }
+
+        String result = null;
+        try {
+            result = URLEncoder.encode(data, STRING_ENCODING_UTF_8);
         } catch (UnsupportedEncodingException e) {
             // Skip
         }
