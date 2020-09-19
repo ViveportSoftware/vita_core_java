@@ -3,7 +3,7 @@ package com.htc.vita.core.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.List;
+import java.util.Collection;
 import java.util.Locale;
 
 public class StringUtils {
@@ -52,21 +52,19 @@ public class StringUtils {
 
     public static String join(
             String separator,
-            List<String> params){
+            Collection<String> params) {
         if (params == null) {
             return null;
         }
-        if (params.size() <= 0) {
-            return "";
-        }
 
-        if (params.size() == 1) {
-            return params.get(0);
-        }
-
-        StringBuilder builder = new StringBuilder(params.get(0));
-        for (int i = 1; i < params.size(); i++) {
-            builder.append(separator).append(params.get(i));
+        StringBuilder builder = new StringBuilder();
+        boolean isFirst = true;
+        for (String item : params) {
+            if (!isFirst) {
+                builder.append(separator);
+            }
+            builder.append(item);
+            isFirst = false;
         }
         return builder.toString();
     }

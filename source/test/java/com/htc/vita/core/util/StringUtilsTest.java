@@ -4,7 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class StringUtilsTest {
     @Test
@@ -39,11 +41,21 @@ public class StringUtilsTest {
         Assert.assertEquals("a+b+c", StringUtils.join("+", new String[] {"a", "b", "c"}));
         Assert.assertEquals("anullbnullc", StringUtils.join(null, "a", "b", "c"));
         Assert.assertNull(StringUtils.join(null, (String[]) null));
+
         List<String> list = new ArrayList<String>();
         list.add("a");
         list.add("b");
         list.add("c");
         Assert.assertEquals("a+b+c", StringUtils.join("+", list));
+
+        Assert.assertNull(StringUtils.join("+", (Set) null));
+        Set<String> s = new HashSet<String>();
+        s.add("a");
+        Assert.assertEquals("a", StringUtils.join("+", s));
+        s.add("b");
+        Assert.assertEquals("a+b", StringUtils.join("+", s));
+        s.add("c");
+        Assert.assertEquals("a+b+c", StringUtils.join("+", s));
     }
 
     @Test
