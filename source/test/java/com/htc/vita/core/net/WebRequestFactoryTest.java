@@ -39,7 +39,7 @@ public class WebRequestFactoryTest {
         Assert.assertNotNull(responseStream);
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         String line = "";
         while ((line = bufferedReader.readLine()) != null){
             buffer.append(line);
@@ -142,7 +142,7 @@ public class WebRequestFactoryTest {
         Assert.assertNotNull(responseStream);
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         String line = "";
         while ((line = bufferedReader.readLine()) != null){
             buffer.append(line);
@@ -183,7 +183,7 @@ public class WebRequestFactoryTest {
         Assert.assertNotNull(responseStream);
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         String line = "";
         while ((line = bufferedReader.readLine()) != null){
             buffer.append(line);
@@ -193,6 +193,30 @@ public class WebRequestFactoryTest {
         Assert.assertFalse(StringUtils.isNullOrWhiteSpace(response));
         // Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error("response: " + response);
         responseStream.close();
+
+        httpWebResponse.close();
+        httpWebRequest.close();
+    }
+
+    @Test
+    public void default_1_getHttpWebRequest_withPost2() throws IOException {
+        // System.setProperty("java.net.useSystemProxies", "true");
+        WebRequestFactory webRequestFactory = WebRequestFactory.getInstance();
+        Assert.assertNotNull(webRequestFactory);
+        HttpWebRequest httpWebRequest = webRequestFactory.getHttpWebRequest(new URL("https://postman-echo.com/post"));
+        Assert.assertNotNull(httpWebRequest);
+        httpWebRequest.setMethod(HttpWebRequestMethod.Post);
+        String data = "This is expected to be sent back as part of response body.";
+        Assert.assertNotNull(httpWebRequest.writeStringByUtf8(data));
+
+        HttpWebResponse httpWebResponse = httpWebRequest.getResponse();
+        Assert.assertNotNull(httpWebResponse);
+        HttpWebResponseStatusCode statusCode = httpWebResponse.getStatusCode();
+        Assert.assertEquals(HttpWebResponseStatusCode.Ok, statusCode);
+
+        String response = httpWebResponse.readStringByUtf8();
+        Assert.assertFalse(StringUtils.isNullOrWhiteSpace(response));
+        // Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error("response: " + response);
 
         httpWebResponse.close();
         httpWebRequest.close();
