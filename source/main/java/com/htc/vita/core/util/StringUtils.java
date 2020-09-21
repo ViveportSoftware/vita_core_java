@@ -114,6 +114,20 @@ public class StringUtils {
         return result;
     }
 
+    public static String toRootLocaleLowerCase(String data) {
+        if (data == null) {
+            return null;
+        }
+        return data.toLowerCase(Locale.ROOT);
+    }
+
+    public static String toRootLocaleUpperCase(String data) {
+        if (data == null) {
+            return null;
+        }
+        return data.toUpperCase(Locale.ROOT);
+    }
+
     public static String urlDecodeByUtf8(String data) {
         if (data == null) {
             return null;

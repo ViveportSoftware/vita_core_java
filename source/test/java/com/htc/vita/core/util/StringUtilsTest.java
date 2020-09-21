@@ -67,4 +67,18 @@ public class StringUtilsTest {
     public void default_4_urlEncodeByUtf8() {
         Assert.assertEquals("a+b", StringUtils.urlEncodeByUtf8("a b"));
     }
+
+    @Test
+    public void default_5_toRootLocaleUpperCase() {
+        Assert.assertEquals("A", StringUtils.toRootLocaleUpperCase("a"));
+        Assert.assertEquals("A", StringUtils.toRootLocaleUpperCase("A"));
+        Assert.assertNull(StringUtils.toRootLocaleUpperCase(null));
+    }
+
+    @Test
+    public void default_5_toRootLocaleLowerCase() {
+        Assert.assertEquals("a", StringUtils.toRootLocaleLowerCase("a"));
+        Assert.assertEquals("a", StringUtils.toRootLocaleLowerCase("A"));
+        Assert.assertNull(StringUtils.toRootLocaleLowerCase(null));
+    }
 }
