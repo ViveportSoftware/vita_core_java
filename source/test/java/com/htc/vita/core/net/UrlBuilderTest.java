@@ -10,8 +10,8 @@ public class UrlBuilderTest {
     @Test
     public void default_0_setScheme() {
         UrlBuilder builder = new UrlBuilder();
-        Assert.assertNotNull(builder.setScheme(UrlScheme.Http));
-        Assert.assertNotNull(builder.setScheme(UrlScheme.Https));
+        Assert.assertNotNull(builder.setScheme(UrlScheme.HTTP));
+        Assert.assertNotNull(builder.setScheme(UrlScheme.HTTPS));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class UrlBuilderTest {
     @Test
     public void default_5_build() throws MalformedURLException {
         URL url = new UrlBuilder()
-                .setScheme(UrlScheme.Http)
+                .setScheme(UrlScheme.HTTP)
                 .setAuthority("localhost")
                 .setPort(8080)
                 .appendPath("callback")
@@ -56,7 +56,7 @@ public class UrlBuilderTest {
     @Test
     public void default_5_build_withIPAddress() throws MalformedURLException {
         URL url = new UrlBuilder()
-                .setScheme(UrlScheme.Http)
+                .setScheme(UrlScheme.HTTP)
                 .setAuthority("192.168.0.1")
                 .setPort(8080)
                 .appendPath("callback")
@@ -69,7 +69,7 @@ public class UrlBuilderTest {
     @Test
     public void default_5_build_withDefaultPort() throws MalformedURLException {
         URL url = new UrlBuilder()
-                .setScheme(UrlScheme.Http)
+                .setScheme(UrlScheme.HTTP)
                 .setAuthority("localhost")
                 .setPort(-1)
                 .appendPath("callback")
@@ -82,7 +82,7 @@ public class UrlBuilderTest {
     @Test
     public void default_5_build_withMultiPaths() throws MalformedURLException {
         URL url = new UrlBuilder()
-                .setScheme(UrlScheme.Http)
+                .setScheme(UrlScheme.HTTP)
                 .setAuthority("localhost")
                 .setPort(8080)
                 .appendPath("callback")
@@ -96,7 +96,7 @@ public class UrlBuilderTest {
     @Test
     public void default_5_build_withTrailingPathSlash() throws MalformedURLException {
         URL url = new UrlBuilder()
-                .setScheme(UrlScheme.Http)
+                .setScheme(UrlScheme.HTTP)
                 .setAuthority("localhost")
                 .setPort(8080)
                 .appendPath("callback")
@@ -110,7 +110,7 @@ public class UrlBuilderTest {
     @Test
     public void default_5_build_withEmptyQueryKey() throws MalformedURLException {
         URL url = new UrlBuilder()
-                .setScheme(UrlScheme.Http)
+                .setScheme(UrlScheme.HTTP)
                 .setAuthority("localhost")
                 .setPort(8080)
                 .appendPath("callback")
@@ -123,7 +123,7 @@ public class UrlBuilderTest {
     @Test
     public void default_5_build_withEmptyQueryValue() throws MalformedURLException {
         URL url = new UrlBuilder()
-                .setScheme(UrlScheme.Http)
+                .setScheme(UrlScheme.HTTP)
                 .setAuthority("localhost")
                 .setPort(8080)
                 .appendPath("callback")
@@ -136,7 +136,7 @@ public class UrlBuilderTest {
     @Test
     public void default_5_build_withEncodedQuery() throws MalformedURLException {
         URL url = new UrlBuilder()
-                .setScheme(UrlScheme.Http)
+                .setScheme(UrlScheme.HTTP)
                 .setAuthority("localhost")
                 .setPort(8080)
                 .appendPath("callback")

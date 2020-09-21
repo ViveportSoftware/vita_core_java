@@ -41,7 +41,7 @@ public class WebRequestFactoryTest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
         StringBuilder buffer = new StringBuilder();
         String line = "";
-        while ((line = bufferedReader.readLine()) != null){
+        while ((line = bufferedReader.readLine()) != null) {
             buffer.append(line);
         }
         String response = buffer.toString();
@@ -144,7 +144,7 @@ public class WebRequestFactoryTest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
         StringBuilder buffer = new StringBuilder();
         String line = "";
-        while ((line = bufferedReader.readLine()) != null){
+        while ((line = bufferedReader.readLine()) != null) {
             buffer.append(line);
         }
         String response = buffer.toString();
@@ -185,7 +185,7 @@ public class WebRequestFactoryTest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
         StringBuilder buffer = new StringBuilder();
         String line = "";
-        while ((line = bufferedReader.readLine()) != null){
+        while ((line = bufferedReader.readLine()) != null) {
             buffer.append(line);
         }
         String response = buffer.toString();

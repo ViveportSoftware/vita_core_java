@@ -14,7 +14,7 @@ public class UrlBuilder {
     private final Map<String, String> mQueryParameterMap = new HashMap<String, String>();
 
     private String mAuthority = "";
-    private UrlScheme mUrlScheme = UrlScheme.Http;
+    private UrlScheme mUrlScheme = UrlScheme.HTTP;
     private int mPort = -1;
 
     public UrlBuilder appendPath(String path) {

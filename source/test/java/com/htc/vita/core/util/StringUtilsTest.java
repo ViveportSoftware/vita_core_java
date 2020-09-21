@@ -11,8 +11,7 @@ import java.util.Set;
 public class StringUtilsTest {
     @Test
     public void default_0_isNullOrEmpty() {
-        String nullString = null;
-        Assert.assertTrue(StringUtils.isNullOrEmpty(nullString));
+        Assert.assertTrue(StringUtils.isNullOrEmpty(null));
         String emptyString = "";
         Assert.assertTrue(StringUtils.isNullOrEmpty(emptyString));
         String nonEmptyString = "nonEmptyString";
@@ -23,8 +22,7 @@ public class StringUtilsTest {
 
     @Test
     public void default_1_isNullOrWhiteSpace() {
-        String nullString = null;
-        Assert.assertTrue(StringUtils.isNullOrWhiteSpace(nullString));
+        Assert.assertTrue(StringUtils.isNullOrWhiteSpace(null));
         String emptyString = "";
         Assert.assertTrue(StringUtils.isNullOrWhiteSpace(emptyString));
         String nonEmptyString = "nonEmptyString";
@@ -48,7 +46,7 @@ public class StringUtilsTest {
         list.add("c");
         Assert.assertEquals("a+b+c", StringUtils.join("+", list));
 
-        Assert.assertNull(StringUtils.join("+", (Set) null));
+        Assert.assertNull(StringUtils.join("+", (Set<String>) null));
         Set<String> s = new HashSet<String>();
         s.add("a");
         Assert.assertEquals("a", StringUtils.join("+", s));

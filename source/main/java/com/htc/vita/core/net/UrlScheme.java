@@ -1,8 +1,8 @@
 package com.htc.vita.core.net;
 
 public enum UrlScheme {
-    Http("http"),
-    Https("https");
+    HTTP("http"),
+    HTTPS("https");
 
     private final String mValue;
 
