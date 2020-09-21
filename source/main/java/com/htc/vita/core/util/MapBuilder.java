@@ -50,6 +50,6 @@ public class MapBuilder<TKey, TValue> {
     }
 
     public Map<TKey, TValue> toMap() {
-        return mInnerInstance;
+        return new HashMap<TKey, TValue>(mInnerInstance);
     }
 }
