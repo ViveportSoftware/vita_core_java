@@ -39,6 +39,7 @@ public class StringUtilsTest {
         Assert.assertEquals("a+b+c", StringUtils.join("+", new String[] {"a", "b", "c"}));
         Assert.assertEquals("anullbnullc", StringUtils.join(null, "a", "b", "c"));
         Assert.assertNull(StringUtils.join(null, (String[]) null));
+        Assert.assertEquals("", StringUtils.join("+", new String[] {}));
 
         List<String> list = new ArrayList<String>();
         list.add("a");
