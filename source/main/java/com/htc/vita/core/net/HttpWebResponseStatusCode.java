@@ -36,6 +36,7 @@ public enum HttpWebResponseStatusCode {
     ReqTooLong(HttpURLConnection.HTTP_REQ_TOO_LONG),
     Reset(HttpURLConnection.HTTP_RESET),
     SeeOther(HttpURLConnection.HTTP_SEE_OTHER),
+    TooManyRequests(429),
     Unauthorized(HttpURLConnection.HTTP_UNAUTHORIZED),
     Unavailable(HttpURLConnection.HTTP_UNAVAILABLE),
     UnsupportedType(HttpURLConnection.HTTP_UNSUPPORTED_TYPE),

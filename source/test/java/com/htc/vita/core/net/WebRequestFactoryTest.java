@@ -1,6 +1,7 @@
 package com.htc.vita.core.net;
 
 import com.htc.vita.core.log.Logger;
+import com.htc.vita.core.util.Convert;
 import com.htc.vita.core.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -217,6 +218,29 @@ public class WebRequestFactoryTest {
         String response = httpWebResponse.readStringByUtf8();
         Assert.assertFalse(StringUtils.isNullOrWhiteSpace(response));
         // Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error("response: " + response);
+
+        httpWebResponse.close();
+        httpWebRequest.close();
+    }
+
+    @Test
+    public void default_1_getHttpWebRequest_withStatus429() throws IOException {
+        // System.setProperty("java.net.useSystemProxies", "true");
+        WebRequestFactory webRequestFactory = WebRequestFactory.getInstance();
+        Assert.assertNotNull(webRequestFactory);
+        HttpWebRequest httpWebRequest = webRequestFactory.getHttpWebRequest(new URL("https://httpstat.us/429"));
+        Assert.assertNotNull(httpWebRequest);
+
+        HttpWebResponse httpWebResponse = httpWebRequest.getResponse();
+        Assert.assertNotNull(httpWebResponse);
+        HttpWebResponseStatusCode statusCode = httpWebResponse.getStatusCode();
+        Assert.assertEquals(HttpWebResponseStatusCode.TooManyRequests, statusCode);
+        Map<String, List<String>> headers = httpWebResponse.getHeaders();
+        Assert.assertTrue(headers.containsKey("Retry-After"));
+        String retryAfterString = headers.get("Retry-After").get(0);
+        int retryAfter = Convert.toInt32(retryAfterString);
+        // Logger.getInstance(WebRequestFactoryTest.class.getSimpleName()).error("retryAfter: " + retryAfter);
+        Assert.assertTrue(retryAfter > 0);
 
         httpWebResponse.close();
         httpWebRequest.close();
