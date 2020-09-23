@@ -75,9 +75,23 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void default_5_toRootLocaleLowerCase() {
+    public void default_6_toRootLocaleLowerCase() {
         Assert.assertEquals("a", StringUtils.toRootLocaleLowerCase("a"));
         Assert.assertEquals("a", StringUtils.toRootLocaleLowerCase("A"));
         Assert.assertNull(StringUtils.toRootLocaleLowerCase(null));
+    }
+
+    @Test
+    public void default_7_splitToList() {
+        String source = "1 2 3 1 2 3";
+        List<String> result = StringUtils.splitToList(source, " ");
+        Assert.assertTrue(result.size() == 6);
+    }
+
+    @Test
+    public void default_8_splitToSet() {
+        String source = "1 2 3 1 2 3";
+        Set<String> result = StringUtils.splitToSet(source, " ");
+        Assert.assertTrue(result.size() == 3);
     }
 }

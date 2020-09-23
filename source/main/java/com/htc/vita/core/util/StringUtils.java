@@ -3,8 +3,7 @@ package com.htc.vita.core.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Collection;
-import java.util.Locale;
+import java.util.*;
 
 public class StringUtils {
     public static final String STRING_ENCODING_UTF_8 = "UTF-8";
@@ -98,6 +97,70 @@ public class StringUtils {
                 format,
                 args
         );
+    }
+
+    public static List<String> splitToList(
+            String data,
+            String regex) {
+        return splitToList(
+                data,
+                regex,
+                false
+        );
+    }
+
+    public static List<String> splitToList(
+            String data,
+            String regex,
+            boolean shouldKeepEmptyElement) {
+        List<String> result = new ArrayList<String>();
+        if (StringUtils.isNullOrWhiteSpace(data)) {
+            return result;
+        }
+
+        String[] itemArray = data.split(regex);
+        if (itemArray.length <= 0) {
+            return result;
+        }
+        for (String item : itemArray) {
+            if (StringUtils.isNullOrEmpty(item) && !shouldKeepEmptyElement) {
+                continue;
+            }
+            result.add(item);
+        }
+        return result;
+    }
+
+    public static Set<String> splitToSet(
+            String data,
+            String regex) {
+        return splitToSet(
+                data,
+                regex,
+                false
+        );
+    }
+
+    public static Set<String> splitToSet(
+            String data,
+            String regex,
+            boolean shouldKeepEmptyElement) {
+        Set<String> result = new HashSet<String>();
+        if (StringUtils.isNullOrWhiteSpace(data)) {
+            return result;
+        }
+
+        String[] itemArray = data.split(regex);
+        if (itemArray.length <= 0) {
+            return result;
+        }
+        for (String item : itemArray) {
+            if (StringUtils.isNullOrEmpty(item) && !shouldKeepEmptyElement) {
+                continue;
+            }
+            result.add(item);
+        }
+        return result;
     }
 
     public static byte[] toBytesByUtf8(String data) {
