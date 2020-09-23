@@ -23,6 +23,18 @@ public class EnumUtils {
             Class<T> enumClass,
             String data)
                     throws IllegalArgumentException {
+        return parseTypeByName(
+                enumClass,
+                data,
+                false
+        );
+    }
+
+    public static <T extends Enum<T>> T parseTypeByName(
+            Class<T> enumClass,
+            String data,
+            boolean shouldIgnoreCase)
+                    throws IllegalArgumentException {
         T[] enumConstantArray = getEnumConstantArrayOrThrow(enumClass);
         T defaultValue = enumConstantArray[0];
 
@@ -38,6 +50,9 @@ public class EnumUtils {
             if (enumConstant.name().equals(data)) {
                 return enumConstant;
             }
+            if (shouldIgnoreCase && enumConstant.name().equalsIgnoreCase(data)) {
+                return enumConstant;
+            }
         }
 
         return defaultValue;
@@ -46,6 +61,18 @@ public class EnumUtils {
     public static <T extends Enum<T>> T parseTypeByToString(
             Class<T> enumClass,
             String data)
+                    throws IllegalArgumentException {
+        return parseTypeByToString(
+                enumClass,
+                data,
+                false
+        );
+    }
+
+    public static <T extends Enum<T>> T parseTypeByToString(
+            Class<T> enumClass,
+            String data,
+            boolean shouldIgnoreCase)
                     throws IllegalArgumentException {
         T[] enumConstantArray = getEnumConstantArrayOrThrow(enumClass);
         T defaultValue = enumConstantArray[0];
@@ -60,6 +87,9 @@ public class EnumUtils {
             }
 
             if (enumConstant.toString().equals(data)) {
+                return enumConstant;
+            }
+            if (shouldIgnoreCase && enumConstant.toString().equalsIgnoreCase(data)) {
                 return enumConstant;
             }
         }
