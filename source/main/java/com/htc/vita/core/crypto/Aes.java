@@ -23,8 +23,8 @@ public abstract class Aes {
     public static final int SALT_SIZE_128BIT_IN_BIT = 128;
     public static final int SALT_SIZE_128BIT_IN_BYTE = SALT_SIZE_128BIT_IN_BIT / 8;
 
-    private AesCipherMode mCipherMode = AesCipherMode.Cbc;
-    private AesPaddingMode mPaddingMode = AesPaddingMode.Pkcs5;
+    private AesCipherMode mCipherMode = AesCipherMode.CBC;
+    private AesPaddingMode mPaddingMode = AesPaddingMode.PKCS5;
 
     public AesCipherMode getCipherMode() {
         return mCipherMode;

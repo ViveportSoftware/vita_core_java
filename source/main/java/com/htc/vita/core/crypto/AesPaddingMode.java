@@ -1,7 +1,7 @@
 package com.htc.vita.core.crypto;
 
 public enum AesPaddingMode {
-    Pkcs5("PKCS5Padding"); // For AES, PKCS5Padding is the same as PKCS7Padding
+    PKCS5("PKCS5Padding"); // For AES, PKCS5Padding is the same as PKCS7Padding
 
     private final String mValue;
 
