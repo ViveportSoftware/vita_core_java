@@ -146,6 +146,7 @@ public abstract class Logger {
                 instance = constructor.newInstance(name);
             } catch (Exception e) {
                 // Skip
+                e.printStackTrace();
             }
         }
         if (instance == null)
