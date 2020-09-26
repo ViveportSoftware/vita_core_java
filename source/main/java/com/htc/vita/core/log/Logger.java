@@ -10,8 +10,8 @@ import java.util.Map;
 public abstract class Logger {
     private static final Map<String, Logger> INSTANCE_MAP = new HashMap<String, Logger>();
 
-    private static volatile boolean sShouldSkipMethodResolution = false;
-    private static volatile Class<? extends Logger> sDefaultClass = ConsoleLogger.class;
+    private static boolean sShouldSkipMethodResolution = false;
+    private static Class<? extends Logger> sDefaultClass = ConsoleLogger.class;
 
     private String mName;
 
@@ -145,8 +145,11 @@ public abstract class Logger {
                 Constructor<T> constructor = type.getConstructor(String.class);
                 instance = constructor.newInstance(name);
             } catch (Exception e) {
-                // Skip
-                e.printStackTrace();
+                System.err.printf(
+                        Locale.ROOT,
+                        "[Fatal][Logger.doGetInstance(type, name)] %s%n",
+                        e
+                );
             }
         }
         if (instance == null)
