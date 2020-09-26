@@ -10,8 +10,8 @@ import java.util.Map;
 public abstract class Logger {
     private static final Map<String, Logger> INSTANCE_MAP = new HashMap<String, Logger>();
 
-    private static boolean sShouldSkipMethodResolution = false;
-    private static Class<? extends Logger> sDefaultClass = ConsoleLogger.class;
+    private static volatile boolean sShouldSkipMethodResolution = false;
+    private static volatile Class<? extends Logger> sDefaultClass = ConsoleLogger.class;
 
     private String mName;
 
