@@ -4,6 +4,7 @@ import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.Convert;
 import com.htc.vita.core.util.StringUtils;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -223,6 +224,7 @@ public class WebRequestFactoryTest {
         httpWebRequest.close();
     }
 
+    @Ignore("Not stable")
     @Test
     public void default_1_getHttpWebRequest_withStatus429() throws IOException {
         // System.setProperty("java.net.useSystemProxies", "true");
