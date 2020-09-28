@@ -20,7 +20,7 @@ public class DummyOAuth2AuthorizationCodeUserAgent extends OAuth2AuthorizationCo
 
     @Override
     protected OAuth2AuthorizationCodeUserAgent onInitialize(
-            Map<String, String> options,
+            Map<String, Object> options,
             CancellationToken cancellationToken) {
         return this;
     }

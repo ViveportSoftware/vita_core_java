@@ -47,13 +47,12 @@ public abstract class OAuth2AuthorizationCodeUserAgent implements Closeable {
     }
 
     public OAuth2AuthorizationCodeUserAgent initialize(
-            Map<String, String> options,
+            Map<String, Object> options,
             CancellationToken cancellationToken) {
-        Map<String, String> realOptions = options;
+        Map<String, Object> realOptions = options;
         if (realOptions == null) {
-            realOptions = new HashMap<String, String>();
+            realOptions = new HashMap<String, Object>();
         }
-
         CancellationToken realCancellationToken = cancellationToken;
         if (realCancellationToken == null) {
             realCancellationToken = CancellationToken.NONE;
@@ -91,7 +90,7 @@ public abstract class OAuth2AuthorizationCodeUserAgent implements Closeable {
     }
 
     protected abstract OAuth2AuthorizationCodeUserAgent onInitialize(
-            Map<String, String> options,
+            Map<String, Object> options,
             CancellationToken cancellationToken
     ) throws Exception;
     protected abstract LaunchResult onLaunch() throws Exception;
