@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class OAuth2AuthorizationCodeUserAgent implements Closeable {
+    public static final String OBJECT_ANDROID_WEBVIEW = "android_webview";
     public static final String OPTION_AUTHORIZATION_URL = "authorization_uri";
+    public static final String OPTION_ANDROID_LOGIN_JAVASCRIPT_ACTION = "android_login_javascript_option";
+    public static final String OPTION_ANDROID_LOGIN_URL_PREFIX = "android_login_url_prefix";
 
     static {
         TypeRegistry.registerDefault(
