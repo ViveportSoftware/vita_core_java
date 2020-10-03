@@ -8,6 +8,9 @@ import java.util.*;
 public class StringUtils {
     public static final String STRING_ENCODING_UTF_8 = "UTF-8";
 
+    private StringUtils() {
+    }
+
     public static String fromBytesByUtf8(byte[] data) {
         if (data == null) {
             return null;

@@ -1,6 +1,9 @@
 package com.htc.vita.core.util;
 
 public class EnumUtils {
+    private EnumUtils() {
+    }
+
     private static <T extends Enum<T>> T[] getEnumConstantArrayOrThrow(Class<T> enumClass)
             throws IllegalArgumentException {
         if (enumClass == null) {
