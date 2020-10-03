@@ -10,8 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class OAuth2AuthorizationCodeClientConfig {
-    private final Map<String, Object> mObjects = new HashMap<String, Object>();
-    private final Map<String, String> mOptions = new HashMap<String, String>();
+    private final Map<String, Object> mOptions = new HashMap<String, Object>();
 
     private URL mAccessTokenUri;
     private URL mAuthorizationUri;
@@ -42,11 +41,7 @@ public class OAuth2AuthorizationCodeClientConfig {
         return mIntrospectTokenUri;
     }
 
-    public Map<String, Object> getObjects() {
-        return mObjects;
-    }
-
-    public Map<String, String> getOptions() {
+    public Map<String, Object> getOptions() {
         return mOptions;
     }
 
@@ -97,26 +92,13 @@ public class OAuth2AuthorizationCodeClientConfig {
         return this;
     }
 
-    public OAuth2AuthorizationCodeClientConfig setObject(
+    public OAuth2AuthorizationCodeClientConfig setOption(
             String key,
             Object value) {
         if (StringUtils.isNullOrWhiteSpace(key)) {
             return this;
         }
-        mObjects.put(
-                key,
-                value
-        );
-        return this;
-    }
-
-    public OAuth2AuthorizationCodeClientConfig setOption(
-            String key,
-            String value) {
-        if (StringUtils.isNullOrWhiteSpace(key)) {
-            return this;
-        }
-        if (StringUtils.isNullOrWhiteSpace(value)) {
+        if (value == null) {
             return this;
         }
         mOptions.put(
