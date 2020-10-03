@@ -9,6 +9,30 @@ public class HttpUtils {
     private HttpUtils() {
     }
 
+    public static String toEncodedQueryString(Map<String, String> queryParams) {
+        if (queryParams == null || queryParams.size() <= 0) {
+            return "";
+        }
+
+        StringBuilder builder = new StringBuilder();
+        boolean isFirst = true;
+        for (String key : queryParams.keySet()) {
+            if (!isFirst) {
+                builder.append("&");
+            }
+
+            String encodedKey = StringUtils.urlEncodeByUtf8(key)
+                    .replace("+", "%20");
+            String encodedValue = StringUtils.urlEncodeByUtf8(queryParams.get(key))
+                    .replace("+", "%20");
+            builder.append(encodedKey)
+                    .append("=")
+                    .append(encodedValue);
+            isFirst = false;
+        }
+        return builder.toString();
+    }
+
     public static Map<String, String> toQueryParams(String query) {
         Map<String, String> result = new HashMap<String, String>();
         if (StringUtils.isNullOrWhiteSpace(query)) {
