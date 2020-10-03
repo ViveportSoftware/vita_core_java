@@ -1,11 +1,11 @@
-package com.htc.vita.core.crypto;
+package com.htc.vita.core.auth;
 
-public enum AesCipherMode {
-    CBC("CBC");
+public enum OAuth2TokenType {
+    Bearer("Bearer");
 
     private final String mValue;
 
-    AesCipherMode(String value) {
+    OAuth2TokenType(String value) {
         mValue = value;
     }
 

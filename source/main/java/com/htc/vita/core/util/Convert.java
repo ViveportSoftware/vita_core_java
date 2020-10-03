@@ -4,6 +4,9 @@ import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.text.Base64;
 
 public class Convert {
+    private Convert() {
+    }
+
     public static byte[] fromBase64String(String data) {
         if (StringUtils.isNullOrEmpty(data)) {
             return null;

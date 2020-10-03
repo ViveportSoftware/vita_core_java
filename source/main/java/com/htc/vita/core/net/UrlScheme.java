@@ -1,11 +1,12 @@
-package com.htc.vita.core.crypto;
+package com.htc.vita.core.net;
 
-public enum AesCipherMode {
-    CBC("CBC");
+public enum UrlScheme {
+    HTTP("http"),
+    HTTPS("https");
 
     private final String mValue;
 
-    AesCipherMode(String value) {
+    UrlScheme(String value) {
         mValue = value;
     }
 

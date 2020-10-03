@@ -145,7 +145,11 @@ public abstract class Logger {
                 Constructor<T> constructor = type.getConstructor(String.class);
                 instance = constructor.newInstance(name);
             } catch (Exception e) {
-                // Skip
+                System.err.printf(
+                        Locale.ROOT,
+                        "[Fatal][Logger.doGetInstance(type, name)] %s%n",
+                        e
+                );
             }
         }
         if (instance == null)

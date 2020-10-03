@@ -45,7 +45,15 @@ public class DefaultHttpWebResponse extends HttpWebResponse {
             return mResponseStream;
         }
 
-        InputStream inputStream = mHttpUrlConnection.getInputStream();
+        InputStream inputStream = null;
+        try {
+            inputStream = mHttpUrlConnection.getInputStream();
+        } catch (IOException e) {
+            // Skip
+        }
+        if (inputStream == null) {
+            inputStream = mHttpUrlConnection.getErrorStream();
+        }
         if (inputStream == null) {
             return null;
         }
@@ -57,7 +65,7 @@ public class DefaultHttpWebResponse extends HttpWebResponse {
         if ("deflate".equalsIgnoreCase(contentEncoding)) {
             mResponseStream = new InflaterInputStream(inputStream);
         }
-        if (mResponseStream == null){
+        if (mResponseStream == null) {
             mResponseStream = inputStream;
         }
         return mResponseStream;

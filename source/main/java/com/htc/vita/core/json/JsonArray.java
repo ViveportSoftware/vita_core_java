@@ -4,7 +4,9 @@ import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class JsonArray {
     public JsonArray append(boolean value) {
@@ -541,11 +543,32 @@ public abstract class JsonArray {
     }
 
     public List<String> toStringList() {
+        return toStringList(false);
+    }
+
+    public List<String> toStringList(boolean shouldKeepEmptyElement) {
         List<String> result = new ArrayList<String>();
         int jsonArraySize = size();
         for (int i = 0; i < jsonArraySize; i++) {
             String value = parseString(i);
-            if (StringUtils.isNullOrWhiteSpace(value)) {
+            if (StringUtils.isNullOrEmpty(value) && !shouldKeepEmptyElement) {
+                continue;
+            }
+            result.add(value);
+        }
+        return result;
+    }
+
+    public Set<String> toStringSet() {
+        return toStringSet(false);
+    }
+
+    public Set<String> toStringSet(boolean shouldKeepEmptyElement) {
+        Set<String> result = new HashSet<String>();
+        int jsonArraySize = size();
+        for (int i = 0; i < jsonArraySize; i++) {
+            String value = parseString(i);
+            if (StringUtils.isNullOrEmpty(value) && !shouldKeepEmptyElement) {
                 continue;
             }
             result.add(value);

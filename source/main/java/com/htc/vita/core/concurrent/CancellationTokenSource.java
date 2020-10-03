@@ -1,5 +1,7 @@
 package com.htc.vita.core.concurrent;
 
+import com.htc.vita.core.util.StringUtils;
+
 import java.io.Closeable;
 
 public class CancellationTokenSource implements Closeable {
@@ -45,7 +47,7 @@ public class CancellationTokenSource implements Closeable {
 
     private void throwIfClosed() {
         if (mIsClosed) {
-            throw new IllegalStateException(String.format(
+            throw new IllegalStateException(StringUtils.rootLocaleFormat(
                     "%s is already closed",
                     CancellationTokenSource.class.getSimpleName()
             ));

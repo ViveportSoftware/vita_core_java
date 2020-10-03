@@ -10,6 +10,9 @@ public class TypeRegistry {
     private static final Map<Class<?>, Class<?>> CONCRETE_CLASS_MAP = new HashMap<Class<?>, Class<?>>();
     private static final Map<String, Object> INSTANCE_MAP = new HashMap<String, Object>();
 
+    private TypeRegistry() {
+    }
+
     @SuppressWarnings("unchecked")
     private static <TBaseClass, TSubClass extends TBaseClass> TBaseClass doGetInstance(
             Class<TBaseClass> abstractClassType,
