@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class OAuth2AuthorizationCodeUserAgentTest {
+public class OAuth2AuthorizationCodeUserAgentFactoryTest {
     @Test
     public void default_0_getInstance() {
         OAuth2AuthorizationCodeUserAgentFactory oAuth2AuthorizationCodeUserAgentFactory = OAuth2AuthorizationCodeUserAgentFactory.getInstance();
