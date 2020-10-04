@@ -9,25 +9,37 @@ import java.io.IOException;
 public class OAuth2AuthorizationCodeUserAgentTest {
     @Test
     public void default_0_getInstance() {
-        OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = OAuth2AuthorizationCodeUserAgent.getInstance();
+        OAuth2AuthorizationCodeUserAgentFactory oAuth2AuthorizationCodeUserAgentFactory = OAuth2AuthorizationCodeUserAgentFactory.getInstance();
+        Assert.assertNotNull(oAuth2AuthorizationCodeUserAgentFactory);
+    }
+
+    @Test
+    public void default_1_getUserAgent() {
+        OAuth2AuthorizationCodeUserAgentFactory oAuth2AuthorizationCodeUserAgentFactory = OAuth2AuthorizationCodeUserAgentFactory.getInstance();
+        Assert.assertNotNull(oAuth2AuthorizationCodeUserAgentFactory);
+        OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = oAuth2AuthorizationCodeUserAgentFactory.getUserAgent();
         Assert.assertNotNull(oAuth2AuthorizationCodeUserAgent);
     }
 
     @Test
-    public void default_1_publicConstants() {
+    public void userAgent_0_publicConstants() {
         Assert.assertFalse(StringUtils.isNullOrWhiteSpace(OAuth2AuthorizationCodeUserAgent.OPTION_AUTHORIZATION_URL));
     }
 
     @Test
-    public void default_2_initialize() {
-        OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = OAuth2AuthorizationCodeUserAgent.getInstance();
+    public void userAgent_1_initialize() {
+        OAuth2AuthorizationCodeUserAgentFactory oAuth2AuthorizationCodeUserAgentFactory = OAuth2AuthorizationCodeUserAgentFactory.getInstance();
+        Assert.assertNotNull(oAuth2AuthorizationCodeUserAgentFactory);
+        OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = oAuth2AuthorizationCodeUserAgentFactory.getUserAgent();
         Assert.assertNotNull(oAuth2AuthorizationCodeUserAgent);
         Assert.assertNotNull(oAuth2AuthorizationCodeUserAgent.initialize());
     }
 
     @Test
-    public void default_3_launch() {
-        OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = OAuth2AuthorizationCodeUserAgent.getInstance();
+    public void userAgent_2_launch() {
+        OAuth2AuthorizationCodeUserAgentFactory oAuth2AuthorizationCodeUserAgentFactory = OAuth2AuthorizationCodeUserAgentFactory.getInstance();
+        Assert.assertNotNull(oAuth2AuthorizationCodeUserAgentFactory);
+        OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = oAuth2AuthorizationCodeUserAgentFactory.getUserAgent();
         Assert.assertNotNull(oAuth2AuthorizationCodeUserAgent);
         Assert.assertNotNull(oAuth2AuthorizationCodeUserAgent.initialize());
         OAuth2AuthorizationCodeUserAgent.LaunchResult launchResult = oAuth2AuthorizationCodeUserAgent.launch();
@@ -36,8 +48,10 @@ public class OAuth2AuthorizationCodeUserAgentTest {
     }
 
     @Test
-    public void default_4_close() throws IOException {
-        OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = OAuth2AuthorizationCodeUserAgent.getInstance();
+    public void userAgent_3_close() throws IOException {
+        OAuth2AuthorizationCodeUserAgentFactory oAuth2AuthorizationCodeUserAgentFactory = OAuth2AuthorizationCodeUserAgentFactory.getInstance();
+        Assert.assertNotNull(oAuth2AuthorizationCodeUserAgentFactory);
+        OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = oAuth2AuthorizationCodeUserAgentFactory.getUserAgent();
         Assert.assertNotNull(oAuth2AuthorizationCodeUserAgent);
         Assert.assertNotNull(oAuth2AuthorizationCodeUserAgent.initialize());
         OAuth2AuthorizationCodeUserAgent.LaunchResult launchResult = oAuth2AuthorizationCodeUserAgent.launch();

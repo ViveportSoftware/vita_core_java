@@ -2,7 +2,6 @@ package com.htc.vita.core.auth;
 
 import com.htc.vita.core.concurrent.CancellationToken;
 import com.htc.vita.core.log.Logger;
-import com.htc.vita.core.util.TypeRegistry;
 
 import java.io.Closeable;
 import java.util.HashMap;
@@ -12,31 +11,6 @@ public abstract class OAuth2AuthorizationCodeUserAgent implements Closeable {
     public static final String OBJECT_ANDROID_WEBVIEW_INSTANCE = "android_webview_instance";
     public static final String OPTION_AUTHORIZATION_URL = "authorization_uri";
     public static final String OPTION_ANDROID_JAVASCRIPT_ACTION_MAP_ON_URL_PREFIX_FINISHED = "android_javascript_action_map_on_url_prefix_finished";
-
-    static {
-        TypeRegistry.registerDefault(
-                OAuth2AuthorizationCodeUserAgent.class,
-                DummyOAuth2AuthorizationCodeUserAgent.class
-        );
-    }
-
-    public static <T extends OAuth2AuthorizationCodeUserAgent> void register(Class<T> clazz) {
-        TypeRegistry.register(
-                OAuth2AuthorizationCodeUserAgent.class,
-                clazz
-        );
-    }
-
-    public static OAuth2AuthorizationCodeUserAgent getInstance() {
-        return TypeRegistry.getInstance(OAuth2AuthorizationCodeUserAgent.class);
-    }
-
-    public static <T extends OAuth2AuthorizationCodeUserAgent> OAuth2AuthorizationCodeUserAgent getInstance(Class<T> clazz) {
-        return TypeRegistry.getInstance(
-                OAuth2AuthorizationCodeUserAgent.class,
-                clazz
-        );
-    }
 
     public OAuth2AuthorizationCodeUserAgent initialize() {
         return initialize(
