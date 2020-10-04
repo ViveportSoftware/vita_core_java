@@ -1,7 +1,10 @@
 package com.htc.vita.core.auth;
 
+import com.htc.vita.core.concurrent.CancellationToken;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
+
+import java.util.Map;
 
 public class DummyOAuth2AuthorizationCodeUserAgentFactory extends OAuth2AuthorizationCodeUserAgentFactory {
     public DummyOAuth2AuthorizationCodeUserAgentFactory() {
@@ -12,7 +15,12 @@ public class DummyOAuth2AuthorizationCodeUserAgentFactory extends OAuth2Authoriz
     }
 
     @Override
-    protected OAuth2AuthorizationCodeUserAgent onGetUserAgent() {
-        return new DummyOAuth2AuthorizationCodeUserAgent().initialize();
+    protected OAuth2AuthorizationCodeUserAgent onGetUserAgent(
+            Map<String, Object> options,
+            CancellationToken cancellationToken) {
+        return new DummyOAuth2AuthorizationCodeUserAgent().initialize(
+                options,
+                cancellationToken
+        );
     }
 }

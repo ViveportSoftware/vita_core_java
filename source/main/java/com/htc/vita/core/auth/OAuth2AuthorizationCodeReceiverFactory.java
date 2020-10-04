@@ -1,7 +1,10 @@
 package com.htc.vita.core.auth;
 
+import com.htc.vita.core.concurrent.CancellationToken;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.TypeRegistry;
+
+import java.util.Map;
 
 public abstract class OAuth2AuthorizationCodeReceiverFactory {
     static {
@@ -30,14 +33,29 @@ public abstract class OAuth2AuthorizationCodeReceiverFactory {
     }
 
     public OAuth2AuthorizationCodeReceiver getReceiver() {
+        return getReceiver(
+                null,
+                null
+        );
+    }
+
+    public OAuth2AuthorizationCodeReceiver getReceiver(
+            Map<String, String> options,
+            CancellationToken cancellationToken) {
         OAuth2AuthorizationCodeReceiver result = null;
         try {
-            result = onGetReceiver();
+            result = onGetReceiver(
+                    options,
+                    cancellationToken
+            );
         } catch (Exception e) {
             Logger.getInstance(OAuth2AuthorizationCodeReceiverFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    protected abstract OAuth2AuthorizationCodeReceiver onGetReceiver() throws Exception;
+    protected abstract OAuth2AuthorizationCodeReceiver onGetReceiver(
+            Map<String, String> options,
+            CancellationToken cancellationToken
+    ) throws Exception;
 }

@@ -32,7 +32,6 @@ public class OAuth2AuthorizationCodeReceiverFactoryTest {
         Assert.assertNotNull(oAuth2AuthorizationCodeReceiverFactory);
         OAuth2AuthorizationCodeReceiver oAuth2AuthorizationCodeReceiver = oAuth2AuthorizationCodeReceiverFactory.getReceiver();
         Assert.assertNotNull(oAuth2AuthorizationCodeReceiver);
-        Assert.assertNotNull(oAuth2AuthorizationCodeReceiver.initialize());
     }
 
     @Test
@@ -41,7 +40,6 @@ public class OAuth2AuthorizationCodeReceiverFactoryTest {
         Assert.assertNotNull(oAuth2AuthorizationCodeReceiverFactory);
         OAuth2AuthorizationCodeReceiver oAuth2AuthorizationCodeReceiver = oAuth2AuthorizationCodeReceiverFactory.getReceiver();
         Assert.assertNotNull(oAuth2AuthorizationCodeReceiver);
-        Assert.assertNotNull(oAuth2AuthorizationCodeReceiver.initialize());
         OAuth2AuthorizationCodeReceiver.ReceiveResult receiveResult = oAuth2AuthorizationCodeReceiver.receive();
         OAuth2AuthorizationCodeReceiver.ReceiveStatus receiveStatus = receiveResult.getStatus();
         Assert.assertEquals(OAuth2AuthorizationCodeReceiver.ReceiveStatus.NotImplemented, receiveStatus);
@@ -53,7 +51,6 @@ public class OAuth2AuthorizationCodeReceiverFactoryTest {
         Assert.assertNotNull(oAuth2AuthorizationCodeReceiverFactory);
         OAuth2AuthorizationCodeReceiver oAuth2AuthorizationCodeReceiver = oAuth2AuthorizationCodeReceiverFactory.getReceiver();
         Assert.assertNotNull(oAuth2AuthorizationCodeReceiver);
-        Assert.assertNotNull(oAuth2AuthorizationCodeReceiver.initialize());
         OAuth2AuthorizationCodeReceiver.ReceiveResult receiveResult = oAuth2AuthorizationCodeReceiver.receive();
         OAuth2AuthorizationCodeReceiver.ReceiveStatus receiveStatus = receiveResult.getStatus();
         Assert.assertEquals(OAuth2AuthorizationCodeReceiver.ReceiveStatus.NotImplemented, receiveStatus);

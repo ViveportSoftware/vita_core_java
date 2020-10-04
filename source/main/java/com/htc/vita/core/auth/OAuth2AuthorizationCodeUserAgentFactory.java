@@ -1,7 +1,10 @@
 package com.htc.vita.core.auth;
 
+import com.htc.vita.core.concurrent.CancellationToken;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.TypeRegistry;
+
+import java.util.Map;
 
 public abstract class OAuth2AuthorizationCodeUserAgentFactory {
     static {
@@ -30,14 +33,29 @@ public abstract class OAuth2AuthorizationCodeUserAgentFactory {
     }
 
     public OAuth2AuthorizationCodeUserAgent getUserAgent() {
+        return getUserAgent(
+                null,
+                null
+        );
+    }
+
+    public OAuth2AuthorizationCodeUserAgent getUserAgent(
+            Map<String, Object> options,
+            CancellationToken cancellationToken) {
         OAuth2AuthorizationCodeUserAgent result = null;
         try {
-            result = onGetUserAgent();
+            result = onGetUserAgent(
+                    options,
+                    cancellationToken
+            );
         } catch (Exception e) {
             Logger.getInstance(OAuth2AuthorizationCodeUserAgentFactory.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    protected abstract OAuth2AuthorizationCodeUserAgent onGetUserAgent() throws Exception;
+    protected abstract OAuth2AuthorizationCodeUserAgent onGetUserAgent(
+            Map<String, Object> options,
+            CancellationToken cancellationToken
+    ) throws Exception;
 }

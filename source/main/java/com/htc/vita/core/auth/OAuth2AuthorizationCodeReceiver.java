@@ -11,13 +11,6 @@ import java.util.Map;
 public abstract class OAuth2AuthorizationCodeReceiver implements Closeable {
     public static final String OPTION_REDIRECT_URI = "redirect_uri";
 
-    public OAuth2AuthorizationCodeReceiver initialize() {
-        return initialize(
-                null,
-                null
-        );
-    }
-
     public OAuth2AuthorizationCodeReceiver initialize(
             Map<String, String> options,
             CancellationToken cancellationToken) {
@@ -25,7 +18,6 @@ public abstract class OAuth2AuthorizationCodeReceiver implements Closeable {
         if (realOptions == null) {
             realOptions = new HashMap<String, String>();
         }
-
         CancellationToken realCancellationToken = cancellationToken;
         if (realCancellationToken == null) {
             realCancellationToken = CancellationToken.NONE;

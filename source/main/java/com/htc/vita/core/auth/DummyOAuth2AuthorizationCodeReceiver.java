@@ -1,8 +1,6 @@
 package com.htc.vita.core.auth;
 
 import com.htc.vita.core.concurrent.CancellationToken;
-import com.htc.vita.core.log.Logger;
-import com.htc.vita.core.util.StringUtils;
 
 import java.util.Map;
 

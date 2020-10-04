@@ -12,13 +12,6 @@ public abstract class OAuth2AuthorizationCodeUserAgent implements Closeable {
     public static final String OPTION_AUTHORIZATION_URL = "authorization_uri";
     public static final String OPTION_ANDROID_JAVASCRIPT_ACTION_MAP_ON_URL_PREFIX_FINISHED = "android_javascript_action_map_on_url_prefix_finished";
 
-    public OAuth2AuthorizationCodeUserAgent initialize() {
-        return initialize(
-                null,
-                null
-        );
-    }
-
     public OAuth2AuthorizationCodeUserAgent initialize(
             Map<String, Object> options,
             CancellationToken cancellationToken) {
