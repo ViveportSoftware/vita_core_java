@@ -22,14 +22,14 @@ public class OAuth2AuthorizationCodeUserAgentFactoryTest {
     }
 
     @Test
-    public void userAgent_0_publicConstants() {
+    public void oAuth2AuthorizationCodeUserAgent_0_publicConstants() {
         Assert.assertFalse(StringUtils.isNullOrWhiteSpace(OAuth2AuthorizationCodeUserAgent.OBJECT_ANDROID_WEBVIEW_INSTANCE));
         Assert.assertFalse(StringUtils.isNullOrWhiteSpace(OAuth2AuthorizationCodeUserAgent.OPTION_ANDROID_JAVASCRIPT_ACTION_MAP_ON_URL_PREFIX_FINISHED));
         Assert.assertFalse(StringUtils.isNullOrWhiteSpace(OAuth2AuthorizationCodeUserAgent.OPTION_AUTHORIZATION_URL));
     }
 
     @Test
-    public void userAgent_1_launch() {
+    public void oAuth2AuthorizationCodeUserAgent_1_launch() {
         OAuth2AuthorizationCodeUserAgentFactory oAuth2AuthorizationCodeUserAgentFactory = OAuth2AuthorizationCodeUserAgentFactory.getInstance();
         Assert.assertNotNull(oAuth2AuthorizationCodeUserAgentFactory);
         OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = oAuth2AuthorizationCodeUserAgentFactory.getUserAgent();
@@ -40,7 +40,7 @@ public class OAuth2AuthorizationCodeUserAgentFactoryTest {
     }
 
     @Test
-    public void userAgent_2_close() throws IOException {
+    public void oAuth2AuthorizationCodeUserAgent_2_close() throws IOException {
         OAuth2AuthorizationCodeUserAgentFactory oAuth2AuthorizationCodeUserAgentFactory = OAuth2AuthorizationCodeUserAgentFactory.getInstance();
         Assert.assertNotNull(oAuth2AuthorizationCodeUserAgentFactory);
         OAuth2AuthorizationCodeUserAgent oAuth2AuthorizationCodeUserAgent = oAuth2AuthorizationCodeUserAgentFactory.getUserAgent();

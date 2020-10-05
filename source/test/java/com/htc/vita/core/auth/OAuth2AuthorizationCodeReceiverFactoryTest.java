@@ -22,20 +22,12 @@ public class OAuth2AuthorizationCodeReceiverFactoryTest {
     }
 
     @Test
-    public void receiver_0_publicConstants() {
+    public void oAuth2AuthorizationCodeReceiver_0_publicConstants() {
         Assert.assertFalse(StringUtils.isNullOrWhiteSpace(OAuth2AuthorizationCodeReceiver.OPTION_REDIRECT_URI));
     }
 
     @Test
-    public void default_2_initialize() {
-        OAuth2AuthorizationCodeReceiverFactory oAuth2AuthorizationCodeReceiverFactory = OAuth2AuthorizationCodeReceiverFactory.getInstance();
-        Assert.assertNotNull(oAuth2AuthorizationCodeReceiverFactory);
-        OAuth2AuthorizationCodeReceiver oAuth2AuthorizationCodeReceiver = oAuth2AuthorizationCodeReceiverFactory.getReceiver();
-        Assert.assertNotNull(oAuth2AuthorizationCodeReceiver);
-    }
-
-    @Test
-    public void default_3_receive() {
+    public void oAuth2AuthorizationCodeReceiver_1_receive() {
         OAuth2AuthorizationCodeReceiverFactory oAuth2AuthorizationCodeReceiverFactory = OAuth2AuthorizationCodeReceiverFactory.getInstance();
         Assert.assertNotNull(oAuth2AuthorizationCodeReceiverFactory);
         OAuth2AuthorizationCodeReceiver oAuth2AuthorizationCodeReceiver = oAuth2AuthorizationCodeReceiverFactory.getReceiver();
@@ -46,7 +38,7 @@ public class OAuth2AuthorizationCodeReceiverFactoryTest {
     }
 
     @Test
-    public void default_4_close() throws IOException {
+    public void oAuth2AuthorizationCodeReceiver_2_close() throws IOException {
         OAuth2AuthorizationCodeReceiverFactory oAuth2AuthorizationCodeReceiverFactory = OAuth2AuthorizationCodeReceiverFactory.getInstance();
         Assert.assertNotNull(oAuth2AuthorizationCodeReceiverFactory);
         OAuth2AuthorizationCodeReceiver oAuth2AuthorizationCodeReceiver = oAuth2AuthorizationCodeReceiverFactory.getReceiver();
