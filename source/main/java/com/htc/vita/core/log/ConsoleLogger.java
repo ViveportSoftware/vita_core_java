@@ -3,7 +3,7 @@ package com.htc.vita.core.log;
 import java.util.Locale;
 
 public class ConsoleLogger extends Logger {
-    protected ConsoleLogger(String name) {
+    public ConsoleLogger(String name) {
         super(name);
     }
 

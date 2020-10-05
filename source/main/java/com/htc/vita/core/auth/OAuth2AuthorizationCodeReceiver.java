@@ -3,7 +3,6 @@ package com.htc.vita.core.auth;
 import com.htc.vita.core.concurrent.CancellationToken;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
-import com.htc.vita.core.util.TypeRegistry;
 
 import java.io.Closeable;
 import java.util.HashMap;
@@ -12,38 +11,6 @@ import java.util.Map;
 public abstract class OAuth2AuthorizationCodeReceiver implements Closeable {
     public static final String OPTION_REDIRECT_URI = "redirect_uri";
 
-    static {
-        TypeRegistry.registerDefault(
-                OAuth2AuthorizationCodeReceiver.class,
-                DummyOAuth2AuthorizationCodeReceiver.class
-        );
-    }
-
-    public static <T extends OAuth2AuthorizationCodeReceiver> void register(Class<T> clazz) {
-        TypeRegistry.register(
-                OAuth2AuthorizationCodeReceiver.class,
-                clazz
-        );
-    }
-
-    public static OAuth2AuthorizationCodeReceiver getInstance() {
-        return TypeRegistry.getInstance(OAuth2AuthorizationCodeReceiver.class);
-    }
-
-    public static <T extends OAuth2AuthorizationCodeReceiver> OAuth2AuthorizationCodeReceiver getInstance(Class<T> clazz) {
-        return TypeRegistry.getInstance(
-                OAuth2AuthorizationCodeReceiver.class,
-                clazz
-        );
-    }
-
-    public OAuth2AuthorizationCodeReceiver initialize() {
-        return initialize(
-                null,
-                null
-        );
-    }
-
     public OAuth2AuthorizationCodeReceiver initialize(
             Map<String, String> options,
             CancellationToken cancellationToken) {
@@ -51,7 +18,6 @@ public abstract class OAuth2AuthorizationCodeReceiver implements Closeable {
         if (realOptions == null) {
             realOptions = new HashMap<String, String>();
         }
-
         CancellationToken realCancellationToken = cancellationToken;
         if (realCancellationToken == null) {
             realCancellationToken = CancellationToken.NONE;
