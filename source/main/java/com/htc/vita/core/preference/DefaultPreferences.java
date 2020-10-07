@@ -13,7 +13,7 @@ public class DefaultPreferences extends Preferences {
     private final Object mLock = new Object();
     private final PreferenceStorage mPreferenceStorage;
 
-    protected DefaultPreferences(
+    public DefaultPreferences(
             String category,
             String label) {
         super(
