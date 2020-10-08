@@ -38,10 +38,10 @@ public class ActionTest {
         final boolean[] itemList = { false };
         Action action = new Action();
         Action.Handler handler = new Action.Handler() {
-            @Override
-            protected void onHandle() {
-                itemList[0] = true;
-            }
+                @Override
+                protected void onHandle() {
+                    itemList[0] = true;
+                }
         };
         action.add(handler);
         action.remove(handler);

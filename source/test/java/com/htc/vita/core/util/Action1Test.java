@@ -40,10 +40,10 @@ public class Action1Test {
         final String[] itemList = { null };
         Action1<String> action = new Action1<String>();
         Action1.Handler<String> handler = new Action1.Handler<String>() {
-            @Override
-            protected void onHandle(String s) {
-                itemList[0] = s;
-            }
+                @Override
+                protected void onHandle(String s) {
+                    itemList[0] = s;
+                }
         };
         action.add(handler);
         action.remove(handler);
