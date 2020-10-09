@@ -194,6 +194,28 @@ public class StringUtils {
         return data.toUpperCase(Locale.ROOT);
     }
 
+    public static String trimEnd(String data, char trimChar) {
+        if (data == null) {
+            return null;
+        }
+        if (data.length() <= 0) {
+            return data;
+        }
+        int dataLength = data.length();
+        int start = 0;
+        int end = dataLength;
+        for (int i = dataLength - 1; i >= 0; i--) {
+            if (data.charAt(i) != trimChar) {
+                break;
+            }
+            end = i;
+        }
+        return data.substring(
+                start,
+                end - start
+        );
+    }
+
     public static String urlDecodeByUtf8(String data) {
         if (data == null) {
             return null;
