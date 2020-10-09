@@ -6,6 +6,7 @@ import com.htc.vita.core.util.StringUtils;
 import java.io.*;
 import java.net.Proxy;
 import java.net.URL;
+import java.util.Map;
 
 public abstract class HttpWebRequest implements Closeable {
     private final URL mUrl;
@@ -85,6 +86,20 @@ public abstract class HttpWebRequest implements Closeable {
             Logger.getInstance(HttpWebRequest.class.getSimpleName()).error(e.toString());
         }
         return result;
+    }
+
+    public HttpWebRequest setCustomHeaders(Map<String, String> headers) {
+        if (headers == null) {
+            return this;
+        }
+
+        for (String key : headers.keySet()) {
+            if (key == null) {
+                continue;
+            }
+            setCustomHeader(key, headers.get(key));
+        }
+        return this;
     }
 
     public HttpWebRequest setMethod(HttpWebRequestMethod httpWebRequestMethod) {
