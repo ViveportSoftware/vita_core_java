@@ -296,6 +296,13 @@ public abstract class JsonObject {
         return null;
     }
 
+    public URI parseUriIfKeyExist(String key) {
+        if (!hasKey(key)) {
+            return null;
+        }
+        return parseUri(key);
+    }
+
     public URL parseUrl(String key) {
         String value = parseString(key);
         if (StringUtils.isNullOrWhiteSpace(value)) {
@@ -308,6 +315,13 @@ public abstract class JsonObject {
             Logger.getInstance(JsonObject.class.getSimpleName()).error(e.toString());
         }
         return null;
+    }
+
+    public URL parseUrlIfKeyExist(String key) {
+        if (!hasKey(key)) {
+            return null;
+        }
+        return parseUrl(key);
     }
 
     public JsonArray parseJsonArray(String key) {
