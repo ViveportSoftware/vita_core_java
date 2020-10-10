@@ -94,4 +94,17 @@ public class StringUtilsTest {
         Set<String> result = StringUtils.splitToSet(source, " ");
         Assert.assertTrue(result.size() == 3);
     }
+
+    @Test
+    public void default_9_trimEnd() {
+        String data = "ashdfgh";
+        String trimmedData = StringUtils.trimEnd(data, 'h');
+        Assert.assertEquals("ashdfg", trimmedData);
+        data = "ashdfghhh";
+        trimmedData = StringUtils.trimEnd(data, 'h');
+        Assert.assertEquals("ashdfg", trimmedData);
+        data = "ashdfg";
+        trimmedData = StringUtils.trimEnd(data, 'h');
+        Assert.assertEquals("ashdfg", trimmedData);
+    }
 }

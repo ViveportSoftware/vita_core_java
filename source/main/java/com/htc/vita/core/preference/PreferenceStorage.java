@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 public abstract class PreferenceStorage {
-    private String mCategory = "Vita";
-    private String mLabel = "default";
+    private static final String DEFAULT_CATEGORY = "Vita";
+    private static final String DEFAULT_LABEL = "default";
 
     static {
         TypeRegistry.registerDefault(
@@ -37,18 +37,24 @@ public abstract class PreferenceStorage {
         );
     }
 
-    public String getCategory() {
-        return mCategory;
-    }
+    public Map<String, String> load(
+            String category,
+            String label) {
+        String realCategory = category;
+        if (StringUtils.isNullOrWhiteSpace(realCategory)) {
+            realCategory = DEFAULT_CATEGORY;
+        }
+        String realLabel = label;
+        if (StringUtils.isNullOrWhiteSpace(realLabel)) {
+            realLabel = DEFAULT_LABEL;
+        }
 
-    public String getLabel() {
-        return mLabel;
-    }
-
-    public Map<String, String> load() {
         Map<String, String> result = null;
         try {
-            result = onLoad();
+            result = onLoad(
+                    realCategory,
+                    realLabel
+            );
         } catch (Exception e) {
             Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
         }
@@ -58,52 +64,98 @@ public abstract class PreferenceStorage {
         return result;
     }
 
-    public Future<Map<String, String>> loadAsync() {
+    public Future<Map<String, String>> loadAsync(
+            String category,
+            String label) {
+        String realCategory = category;
+        if (StringUtils.isNullOrWhiteSpace(realCategory)) {
+            realCategory = DEFAULT_CATEGORY;
+        }
+        String realLabel = label;
+        if (StringUtils.isNullOrWhiteSpace(realLabel)) {
+            realLabel = DEFAULT_LABEL;
+        }
+
         Future<Map<String, String>> result = null;
         try {
-            result = onLoadAsync();
+            result = onLoadAsync(
+                    realCategory,
+                    realLabel
+            );
         } catch (Exception e) {
             Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public boolean save(Map<String, String> data) {
+    public boolean save(
+            String category,
+            String label,
+            Map<String, String> data) {
+        String realCategory = category;
+        if (StringUtils.isNullOrWhiteSpace(realCategory)) {
+            realCategory = DEFAULT_CATEGORY;
+        }
+        String realLabel = label;
+        if (StringUtils.isNullOrWhiteSpace(realLabel)) {
+            realLabel = DEFAULT_LABEL;
+        }
+
         boolean result = false;
         try {
-            result = onSave(data);
+            result = onSave(
+                    realCategory,
+                    realLabel,
+                    data
+            );
         } catch (Exception e) {
             Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public Future<Boolean> saveAsync(Map<String, String> data) {
+    public Future<Boolean> saveAsync(
+            String category,
+            String label,
+            Map<String, String> data) {
+        String realCategory = category;
+        if (StringUtils.isNullOrWhiteSpace(realCategory)) {
+            realCategory = DEFAULT_CATEGORY;
+        }
+        String realLabel = label;
+        if (StringUtils.isNullOrWhiteSpace(realLabel)) {
+            realLabel = DEFAULT_LABEL;
+        }
+
         Future<Boolean> result = null;
         try {
-            result = onSaveAsync(data);
+            result = onSaveAsync(
+                    realCategory,
+                    realLabel,
+                    data
+            );
         } catch (Exception e) {
             Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
         }
         return result;
     }
 
-    public PreferenceStorage setCategory(String category) {
-        if (!StringUtils.isNullOrWhiteSpace(category)) {
-            mCategory = category;
-        }
-        return this;
-    }
-
-    public PreferenceStorage setLabel(String label) {
-        if (!StringUtils.isNullOrWhiteSpace(label)) {
-            mLabel = label;
-        }
-        return this;
-    }
-
-    protected abstract Map<String, String> onLoad() throws Exception;
-    protected abstract Future<Map<String, String>> onLoadAsync() throws Exception;
-    protected abstract boolean onSave(Map<String, String> data) throws Exception;
-    protected abstract Future<Boolean> onSaveAsync(Map<String, String> data) throws Exception;
+    protected abstract Map<String, String> onLoad(
+            String category,
+            String label
+    ) throws Exception;
+    protected abstract Future<Map<String, String>> onLoadAsync(
+            String category,
+            String label
+    ) throws Exception;
+    protected abstract boolean onSave(
+            String category,
+            String label,
+            Map<String, String> data
+    ) throws Exception;
+    protected abstract Future<Boolean> onSaveAsync(
+            String category,
+            String label,
+            Map<String, String> data
+    ) throws Exception;
 }

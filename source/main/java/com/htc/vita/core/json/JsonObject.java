@@ -3,6 +3,10 @@ package com.htc.vita.core.json;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -276,6 +280,48 @@ public abstract class JsonObject {
                 key,
                 defaultValue
         );
+    }
+
+    public URI parseUri(String key) {
+        String value = parseString(key);
+        if (StringUtils.isNullOrWhiteSpace(value)) {
+            return null;
+        }
+
+        try {
+            return new URI(value);
+        } catch (URISyntaxException e) {
+            Logger.getInstance(JsonObject.class.getSimpleName()).error(e.toString());
+        }
+        return null;
+    }
+
+    public URI parseUriIfKeyExist(String key) {
+        if (!hasKey(key)) {
+            return null;
+        }
+        return parseUri(key);
+    }
+
+    public URL parseUrl(String key) {
+        String value = parseString(key);
+        if (StringUtils.isNullOrWhiteSpace(value)) {
+            return null;
+        }
+
+        try {
+            return new URL(value);
+        } catch (MalformedURLException e) {
+            Logger.getInstance(JsonObject.class.getSimpleName()).error(e.toString());
+        }
+        return null;
+    }
+
+    public URL parseUrlIfKeyExist(String key) {
+        if (!hasKey(key)) {
+            return null;
+        }
+        return parseUrl(key);
     }
 
     public JsonArray parseJsonArray(String key) {
