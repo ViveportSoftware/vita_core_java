@@ -3,6 +3,8 @@ package com.htc.vita.core.runtime;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
+
 public class EventBusTest {
     @Test
     public void default_0_getInstance() {
@@ -38,7 +40,7 @@ public class EventBusTest {
         MyEventData myEventData = new MyEventData();
         Assert.assertNotNull(eventBus.trigger(MyEventData.class, myEventData));
 
-        Thread.sleep(1000);
+        TimeUnit.SECONDS.sleep(1);
 
         Assert.assertTrue(myEventListener0.isEventProcessed());
         Assert.assertTrue(myEventListener1.isEventProcessed());
@@ -57,7 +59,7 @@ public class EventBusTest {
         OtherEventData otherEventData = new OtherEventData();
         Assert.assertNotNull(eventBus.trigger(MyEventData.class, otherEventData));
 
-        Thread.sleep(1000);
+        TimeUnit.SECONDS.sleep(1);
 
         Assert.assertFalse(myEventListener0.isEventProcessed());
         Assert.assertFalse(myEventListener1.isEventProcessed());
@@ -76,7 +78,7 @@ public class EventBusTest {
         MySubEventData mySubEventData = new MySubEventData();
         Assert.assertNotNull(eventBus.trigger(MyEventData.class, mySubEventData));
 
-        Thread.sleep(1000);
+        TimeUnit.SECONDS.sleep(1);
 
         Assert.assertTrue(myEventListener0.isEventProcessed());
         Assert.assertTrue(myEventListener1.isEventProcessed());
@@ -97,7 +99,7 @@ public class EventBusTest {
         MyEventData myEventData = new MyEventData();
         Assert.assertNotNull(eventBus.trigger(MyEventData.class, myEventData));
 
-        Thread.sleep(1000);
+        TimeUnit.SECONDS.sleep(1);
 
         Assert.assertFalse(myEventListener0.isEventProcessed());
         Assert.assertFalse(myEventListener1.isEventProcessed());
