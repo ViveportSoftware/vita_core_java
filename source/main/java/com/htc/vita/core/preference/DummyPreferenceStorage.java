@@ -19,56 +19,85 @@ public class DummyPreferenceStorage extends PreferenceStorage {
         ));
     }
 
-    private Map<String, String> doLoad() {
+    private Map<String, String> doLoad(
+            String category,
+            String label) {
         synchronized (mLock) {
             Logger.getInstance(DummyPreferenceStorage.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                     "Try to load data on thread[%s] from category: \"%s\", label: \"%s\"",
                     Thread.currentThread().getId(),
-                    getCategory(),
-                    getLabel()
+                    category,
+                    label
             ));
             return null;
         }
     }
 
-    private boolean doSave(Map<String, String> data) {
+    private boolean doSave(
+            String category,
+            String label,
+            Map<String, String> data) {
         synchronized (mLock) {
             Logger.getInstance(DummyPreferenceStorage.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                     "Try to save data on thread[%s] to category: \"%s\", label: \"%s\"",
                     Thread.currentThread().getId(),
-                    getCategory(),
-                    getLabel()
+                    category,
+                    label
             ));
             return false;
         }
     }
 
     @Override
-    protected Map<String, String> onLoad() {
-        return doLoad();
+    protected Map<String, String> onLoad(
+            String category,
+            String label) {
+        return doLoad(
+                category,
+                label
+        );
     }
 
     @Override
-    protected Future<Map<String, String>> onLoadAsync() {
+    protected Future<Map<String, String>> onLoadAsync(
+            final String category,
+            final String label) {
         return TaskRunner.submit(new Callable<Map<String, String>>() {
                 @Override
                 public Map<String, String> call() {
-                    return doLoad();
+                    return doLoad(
+                            category,
+                            label
+                    );
                 }
         });
     }
 
     @Override
-    protected boolean onSave(Map<String, String> data) {
-        return doSave(data);
+    protected boolean onSave(
+            String category,
+            String label,
+            Map<String, String> data) {
+        return doSave(
+                category,
+                label,
+                data
+        );
     }
 
     @Override
-    protected Future<Boolean> onSaveAsync(final Map<String, String> data) {
+    protected Future<Boolean> onSaveAsync(
+            final String category,
+            final String label,
+            final Map<String, String> data) {
         return TaskRunner.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() {
-                    return doSave(Collections.unmodifiableMap(data));
+                    return doSave(
+                            category,
+                            label,
+                            Collections.unmodifiableMap(data)
+                    );
                 }
         });
     }

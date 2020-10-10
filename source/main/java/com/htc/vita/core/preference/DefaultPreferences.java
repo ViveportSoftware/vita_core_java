@@ -8,10 +8,10 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class DefaultPreferences extends Preferences {
-    private Map<String, String> mProperties = new HashMap<String, String>();
-
     private final Object mLock = new Object();
-    private final PreferenceStorage mPreferenceStorage;
+    private final PreferenceStorage mPreferenceStorage = PreferenceStorage.getInstance();
+
+    private Map<String, String> mProperties = new HashMap<String, String>();
 
     public DefaultPreferences(
             String category,
@@ -20,9 +20,6 @@ public class DefaultPreferences extends Preferences {
                 category,
                 label
         );
-        mPreferenceStorage = PreferenceStorage.getInstance()
-                .setCategory(category)
-                .setLabel(label);
     }
 
     private Map<String, String> getProperties() {
@@ -65,7 +62,10 @@ public class DefaultPreferences extends Preferences {
     @Override
     protected Preferences onInitialize() {
         synchronized (mLock) {
-            mProperties = mPreferenceStorage.load();
+            mProperties = mPreferenceStorage.load(
+                    getCategory(),
+                    getLabel()
+            );
         }
         return this;
     }
@@ -77,7 +77,10 @@ public class DefaultPreferences extends Preferences {
                 public Preferences call() {
                     synchronized (mLock) {
                         try {
-                            mProperties = mPreferenceStorage.loadAsync().get();
+                            mProperties = mPreferenceStorage.loadAsync(
+                                    getCategory(),
+                                    getLabel()
+                            ).get();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -311,7 +314,11 @@ public class DefaultPreferences extends Preferences {
             if (properties == null) {
                 return false;
             }
-            return mPreferenceStorage.save(properties);
+            return mPreferenceStorage.save(
+                    getCategory(),
+                    getLabel(),
+                    properties
+            );
         }
     }
 
@@ -327,7 +334,11 @@ public class DefaultPreferences extends Preferences {
                         }
                         boolean result = false;
                         try {
-                            result = mPreferenceStorage.saveAsync(properties).get();
+                            result = mPreferenceStorage.saveAsync(
+                                    getCategory(),
+                                    getLabel(),
+                                    properties
+                            ).get();
                         } catch (Exception e) {
                             Logger.getInstance(DefaultPreferences.class.getSimpleName()).error(e.toString());
                         }
