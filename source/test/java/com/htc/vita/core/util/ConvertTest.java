@@ -13,12 +13,12 @@ public class ConvertTest {
     }
 
     @Test
-    public void default_2_toHexString() throws Exception {
+    public void default_2_toHexString() {
         Assert.assertEquals("74657374", Convert.toHexString(StringUtils.toBytesByUtf8("test")));
     }
 
     @Test
-    public void default_3_fromHexString() throws Exception {
+    public void default_3_fromHexString() {
         String oldData = "test";
         byte[] oldDataInBytes = StringUtils.toBytesByUtf8(oldData);
         String oldDataInHexString = Convert.toHexString(oldDataInBytes);
@@ -28,12 +28,12 @@ public class ConvertTest {
     }
 
     @Test
-    public void default_4_toBase64String() throws Exception {
+    public void default_4_toBase64String() {
         Assert.assertEquals("dGVzdA==", Convert.toBase64String(StringUtils.toBytesByUtf8("test")));
     }
 
     @Test
-    public void default_5_fromBase64String() throws Exception {
+    public void default_5_fromBase64String() {
         String oldData = "test";
         byte[] oldDataInBytes = StringUtils.toBytesByUtf8(oldData);
         String oldDataInBase64String = Convert.toBase64String(oldDataInBytes);

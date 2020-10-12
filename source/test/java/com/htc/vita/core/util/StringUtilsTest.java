@@ -85,14 +85,14 @@ public class StringUtilsTest {
     public void default_7_splitToList() {
         String source = "1 2 3 1 2 3";
         List<String> result = StringUtils.splitToList(source, " ");
-        Assert.assertTrue(result.size() == 6);
+        Assert.assertEquals(6, result.size());
     }
 
     @Test
     public void default_8_splitToSet() {
         String source = "1 2 3 1 2 3";
         Set<String> result = StringUtils.splitToSet(source, " ");
-        Assert.assertTrue(result.size() == 3);
+        Assert.assertEquals(3, result.size());
     }
 
     @Test

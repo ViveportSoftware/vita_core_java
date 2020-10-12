@@ -66,7 +66,7 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
                     headerValue
             );
         }
-        mHttpUrlConnection.setRequestMethod(mHttpWebRequestMethod.value());
+        mHttpUrlConnection.setRequestMethod(mHttpWebRequestMethod.toString());
 
         // TODO update method mapping
         if (mHttpWebRequestMethod == HttpWebRequestMethod.Post) {

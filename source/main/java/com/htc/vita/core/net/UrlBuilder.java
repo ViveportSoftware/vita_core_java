@@ -38,7 +38,7 @@ public class UrlBuilder {
 
     public URL build() throws MalformedURLException {
         StringBuilder builder = new StringBuilder();
-        builder.append(mUrlScheme.value()).append("://");
+        builder.append(mUrlScheme.toString()).append("://");
         if (!StringUtils.isNullOrWhiteSpace(mAuthority)) {
             builder.append(mAuthority);
             if (mPort >= 0) {
