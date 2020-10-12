@@ -5,8 +5,6 @@ import com.htc.vita.core.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Locale;
-
 public class WebUserAgentFactoryTest {
     @Test
     public void default_0_getInstance() {

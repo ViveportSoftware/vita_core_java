@@ -73,6 +73,22 @@ public abstract class JsonArray {
         return result;
     }
 
+    public JsonArray append(URI value) {
+        String realValue = null;
+        if (value != null) {
+            realValue = value.toString();
+        }
+        return append(realValue);
+    }
+
+    public JsonArray append(URL value) {
+        String realValue = null;
+        if (value != null) {
+            realValue = value.toString();
+        }
+        return append(realValue);
+    }
+
     public JsonArray append(JsonArray value) {
         JsonArray result = this;
         try {
@@ -105,6 +121,20 @@ public abstract class JsonArray {
     }
 
     public JsonArray appendIfNotNull(String value) {
+        if (value == null) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNull(URI value) {
+        if (value == null) {
+            return this;
+        }
+        return append(value);
+    }
+
+    public JsonArray appendIfNotNull(URL value) {
         if (value == null) {
             return this;
         }
@@ -249,6 +279,32 @@ public abstract class JsonArray {
 
     public JsonArray insert(
             int index,
+            URI value) {
+        String realValue = null;
+        if (value != null) {
+            realValue = value.toString();
+        }
+        return insert(
+                index,
+                realValue
+        );
+    }
+
+    public JsonArray insert(
+            int index,
+            URL value) {
+        String realValue = null;
+        if (value != null) {
+            realValue = value.toString();
+        }
+        return insert(
+                index,
+                realValue
+        );
+    }
+
+    public JsonArray insert(
+            int index,
             JsonArray value) {
         JsonArray result = this;
         try {
@@ -280,6 +336,30 @@ public abstract class JsonArray {
     public JsonArray insertIfNotNull(
             int index,
             String value) {
+        if (value == null) {
+            return this;
+        }
+        return insert(
+                index,
+                value
+        );
+    }
+
+    public JsonArray insertIfNotNull(
+            int index,
+            URI value) {
+        if (value == null) {
+            return this;
+        }
+        return insert(
+                index,
+                value
+        );
+    }
+
+    public JsonArray insertIfNotNull(
+            int index,
+            URL value) {
         if (value == null) {
             return this;
         }

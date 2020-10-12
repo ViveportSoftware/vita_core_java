@@ -24,8 +24,8 @@ public class DefaultAes extends Aes {
 
         Cipher cipher = Cipher.getInstance(StringUtils.rootLocaleFormat(
                 "AES/%s/%s",
-                getCipherMode().value(),
-                getPaddingMode().value()
+                getCipherMode().toString(),
+                getPaddingMode().toString()
         ));
         cipher.init(
                 cipherMode,

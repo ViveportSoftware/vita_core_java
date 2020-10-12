@@ -13,3 +13,4 @@ Package-time dependencies: none
 Run-time dependencies:
 
 * Java SE 6
+* Android API level 14

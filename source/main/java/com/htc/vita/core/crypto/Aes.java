@@ -42,7 +42,7 @@ public abstract class Aes {
         mCipherMode = cipherMode;
         Logger.getInstance(Aes.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                 "Set cipher mode to %s",
-                cipherMode.value()
+                cipherMode.toString()
         ));
         return this;
     }
@@ -55,7 +55,7 @@ public abstract class Aes {
         mPaddingMode = paddingMode;
         Logger.getInstance(Aes.class.getSimpleName()).info(StringUtils.rootLocaleFormat(
                 "Set padding mode to %s",
-                paddingMode.value()
+                paddingMode.toString()
         ));
         return this;
     }

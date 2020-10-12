@@ -10,7 +10,8 @@ public enum UrlScheme {
         mValue = value;
     }
 
-    public String value() {
+    @Override
+    public String toString() {
         return mValue;
     }
 }
