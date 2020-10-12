@@ -3,6 +3,10 @@ package com.htc.vita.core.json;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -183,7 +187,7 @@ public class JsonFactoryTest {
     }
 
     @Test
-    public void jsonArray_09_append() {
+    public void jsonArray_09_append() throws URISyntaxException, MalformedURLException {
         JsonFactory jsonFactory = JsonFactory.getInstance();
         Assert.assertNotNull(jsonFactory);
         JsonArray jsonArray = jsonFactory.createJsonArray();
@@ -194,6 +198,8 @@ public class JsonFactoryTest {
         Assert.assertNotNull(jsonArray.append(0));
         Assert.assertNotNull(jsonArray.append(0L));
         Assert.assertNotNull(jsonArray.append("test"));
+        Assert.assertNotNull(jsonArray.append(new URI("https://localhost/")));
+        Assert.assertNotNull(jsonArray.append(new URL("https://localhost/")));
         JsonArray jsonArray2 = jsonFactory.createJsonArray();
         Assert.assertNotNull(jsonArray.append(jsonArray2));
         JsonObject jsonObject2 = jsonFactory.createJsonObject();
@@ -201,7 +207,7 @@ public class JsonFactoryTest {
     }
 
     @Test
-    public void jsonArray_10_insert() {
+    public void jsonArray_10_insert() throws MalformedURLException, URISyntaxException {
         JsonFactory jsonFactory = JsonFactory.getInstance();
         Assert.assertNotNull(jsonFactory);
         JsonArray jsonArray = jsonFactory.createJsonArray();
@@ -212,6 +218,8 @@ public class JsonFactoryTest {
         Assert.assertNotNull(jsonArray.insert(0,0));
         Assert.assertNotNull(jsonArray.insert(0,0L));
         Assert.assertNotNull(jsonArray.insert(0,"test"));
+        Assert.assertNotNull(jsonArray.insert(0, new URI("https://localhost/")));
+        Assert.assertNotNull(jsonArray.insert(0, new URL("https://localhost/")));
         JsonArray jsonArray2 = jsonFactory.createJsonArray();
         Assert.assertNotNull(jsonArray.insert(0, jsonArray2));
         JsonObject jsonObject2 = jsonFactory.createJsonObject();
@@ -367,7 +375,7 @@ public class JsonFactoryTest {
     }
 
     @Test
-    public void jsonObject_09_put() {
+    public void jsonObject_09_put() throws MalformedURLException, URISyntaxException {
         JsonFactory jsonFactory = JsonFactory.getInstance();
         Assert.assertNotNull(jsonFactory);
         JsonObject jsonObject = jsonFactory.createJsonObject();
@@ -378,6 +386,8 @@ public class JsonFactoryTest {
         Assert.assertNotNull(jsonObject.put("test", 0));
         Assert.assertNotNull(jsonObject.put("test", 0L));
         Assert.assertNotNull(jsonObject.put("test", "test"));
+        Assert.assertNotNull(jsonObject.put("test", new URI("https://localhost/")));
+        Assert.assertNotNull(jsonObject.put("test", new URL("https://localhost/")));
         JsonArray jsonArray2 = jsonFactory.createJsonArray();
         Assert.assertNotNull(jsonObject.put("test", jsonArray2));
         JsonObject jsonObject2 = jsonFactory.createJsonObject();

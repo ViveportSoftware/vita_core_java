@@ -451,6 +451,32 @@ public abstract class JsonObject {
 
     public JsonObject put(
             String key,
+            URI value) {
+        String realValue = null;
+        if (value != null) {
+            realValue = value.toString();
+        }
+        return put(
+                key,
+                realValue
+        );
+    }
+
+    public JsonObject put(
+            String key,
+            URL value) {
+        String realValue = null;
+        if (value != null) {
+            realValue = value.toString();
+        }
+        return put(
+                key,
+                realValue
+        );
+    }
+
+    public JsonObject put(
+            String key,
             JsonArray value) {
         JsonObject result = this;
         try {
@@ -500,6 +526,30 @@ public abstract class JsonObject {
     public JsonObject putIfNotNull(
             String key,
             String value) {
+        if (value == null) {
+            return this;
+        }
+        return put(
+                key,
+                value
+        );
+    }
+
+    public JsonObject putIfNotNull(
+            String key,
+            URI value) {
+        if (value == null) {
+            return this;
+        }
+        return put(
+                key,
+                value
+        );
+    }
+
+    public JsonObject putIfNotNull(
+            String key,
+            URL value) {
         if (value == null) {
             return this;
         }
