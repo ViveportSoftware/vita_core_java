@@ -23,8 +23,7 @@ public class ConsoleLogger extends Logger {
             String tag,
             String message,
             Exception exception) {
-        if (exception == null)
-        {
+        if (exception == null) {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][debug][%s] %s%n",
@@ -32,9 +31,7 @@ public class ConsoleLogger extends Logger {
                     tag,
                     message
             );
-        }
-        else
-        {
+        } else {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][debug][%s] %s, %s%n",
@@ -62,8 +59,7 @@ public class ConsoleLogger extends Logger {
             String tag,
             String message,
             Exception exception) {
-        if (exception == null)
-        {
+        if (exception == null) {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][error][%s] %s%n",
@@ -71,9 +67,7 @@ public class ConsoleLogger extends Logger {
                     tag,
                     message
             );
-        }
-        else
-        {
+        } else {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][error][%s] %s, %s%n",
@@ -101,8 +95,7 @@ public class ConsoleLogger extends Logger {
             String tag,
             String message,
             Exception exception) {
-        if (exception == null)
-        {
+        if (exception == null) {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][fatal][%s] %s%n",
@@ -110,9 +103,7 @@ public class ConsoleLogger extends Logger {
                     tag,
                     message
             );
-        }
-        else
-        {
+        } else {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][fatal][%s] %s, %s%n",
@@ -140,8 +131,7 @@ public class ConsoleLogger extends Logger {
             String tag,
             String message,
             Exception exception) {
-        if (exception == null)
-        {
+        if (exception == null) {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][info][%s] %s%n",
@@ -149,9 +139,7 @@ public class ConsoleLogger extends Logger {
                     tag,
                     message
             );
-        }
-        else
-        {
+        } else {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][info][%s] %s, %s%n",
@@ -184,8 +172,7 @@ public class ConsoleLogger extends Logger {
             String tag,
             String message,
             Exception exception) {
-        if (exception == null)
-        {
+        if (exception == null) {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][trace][%s] %s%n",
@@ -193,9 +180,7 @@ public class ConsoleLogger extends Logger {
                     tag,
                     message
             );
-        }
-        else
-        {
+        } else {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][trace][%s] %s, %s%n",
@@ -223,8 +208,7 @@ public class ConsoleLogger extends Logger {
             String tag,
             String message,
             Exception exception) {
-        if (exception == null)
-        {
+        if (exception == null) {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][warn][%s] %s%n",
@@ -232,9 +216,7 @@ public class ConsoleLogger extends Logger {
                     tag,
                     message
             );
-        }
-        else
-        {
+        } else {
             System.out.printf(
                     Locale.ROOT,
                     "[%s][warn][%s] %s, %s%n",

@@ -206,8 +206,7 @@ public abstract class OAuth2AuthorizationCodeClient {
         UnsupportedUserAgent
     }
 
-    public enum IntrospectTokenStatus
-    {
+    public enum IntrospectTokenStatus {
         Unknown,
         Ok,
         NetworkError,

@@ -59,11 +59,9 @@ public class Convert {
         }
 
         boolean result = defaultValue;
-        try
-        {
+        try {
             result = Boolean.parseBoolean(data);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.getInstance(Convert.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                     "Can not parse \"%s\" to boolean",
                     data
@@ -87,11 +85,9 @@ public class Convert {
         }
 
         double result = defaultValue;
-        try
-        {
+        try {
             result = Double.parseDouble(data);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.getInstance(Convert.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                     "Can not parse \"%s\" to double",
                     data
@@ -130,11 +126,9 @@ public class Convert {
         }
 
         int result = defaultValue;
-        try
-        {
+        try {
             result = Integer.parseInt(data);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.getInstance(Convert.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                     "Can not parse \"%s\" to int/int32",
                     data
@@ -158,11 +152,9 @@ public class Convert {
         }
 
         long result = defaultValue;
-        try
-        {
+        try {
             result = Long.parseLong(data);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.getInstance(Convert.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                     "Can not parse \"%s\" to long/int64",
                     data

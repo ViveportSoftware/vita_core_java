@@ -18,8 +18,7 @@ public class TypeRegistry {
             Class<TBaseClass> abstractClassType,
             Class<TSubClass> subClassType) {
         Class<?> concreteClassType = CONCRETE_CLASS_MAP.get(abstractClassType);
-        if (subClassType != null)
-        {
+        if (subClassType != null) {
             concreteClassType = subClassType;
         }
 
@@ -78,8 +77,7 @@ public class TypeRegistry {
     public static <TBaseClass, TSubClass extends TBaseClass> void register(
             Class<TBaseClass> baseClass,
             Class<TSubClass> subClass) {
-        if (!CONCRETE_CLASS_MAP.containsKey(baseClass))
-        {
+        if (!CONCRETE_CLASS_MAP.containsKey(baseClass)) {
             CONCRETE_CLASS_MAP.put(
                     baseClass,
                     subClass
@@ -92,8 +90,7 @@ public class TypeRegistry {
             return;
         }
 
-        if (subClass != CONCRETE_CLASS_MAP.get(baseClass))
-        {
+        if (subClass != CONCRETE_CLASS_MAP.get(baseClass)) {
             CONCRETE_CLASS_MAP.put(
                     baseClass,
                     subClass
@@ -111,8 +108,7 @@ public class TypeRegistry {
             Class<TSubClass> subClass) {
         if (CONCRETE_CLASS_MAP.containsKey(baseClass)) {
             Class<?> oldSubClass = CONCRETE_CLASS_MAP.get(baseClass);
-            if (oldSubClass != subClass)
-            {
+            if (oldSubClass != subClass) {
                 Logger.getInstance(TypeRegistry.class.getSimpleName()).error(StringUtils.rootLocaleFormat(
                         "%s had been registered to %s. Registering to %s will be ignored.",
                         baseClass.getName(),

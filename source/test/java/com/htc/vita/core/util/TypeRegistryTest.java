@@ -39,15 +39,12 @@ public class TypeRegistryTest {
         Assert.assertTrue(obj instanceof SubClass2);
     }
 
-    public static abstract class BaseClass
-    {
+    public static abstract class BaseClass {
     }
 
-    public static class SubClass1 extends BaseClass
-    {
+    public static class SubClass1 extends BaseClass {
     }
 
-    public static class SubClass2 extends BaseClass
-    {
+    public static class SubClass2 extends BaseClass {
     }
 }

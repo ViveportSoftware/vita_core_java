@@ -35,15 +35,12 @@ public abstract class Logger {
 
     public static Logger getInstance(String name) {
         Logger instance;
-        try
-        {
+        try {
             instance = doGetInstance(
                     sDefaultClass,
                     name
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.getInstance(name)] %s%n",
@@ -63,8 +60,7 @@ public abstract class Logger {
             Class<T> clazz,
             Class<?> type) {
         String name = "";
-        if (type != null)
-        {
+        if (type != null) {
             name = type.getName();
         }
         return getInstance(
@@ -84,15 +80,12 @@ public abstract class Logger {
             Class<T> clazz,
             String name) {
         Logger instance;
-        try
-        {
+        try {
             instance = doGetInstance(
                     clazz,
                     name
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.getInstance(clazz, name))] %s%n",
@@ -112,8 +105,7 @@ public abstract class Logger {
             Class<T> type,
             String name)
                     throws IllegalArgumentException {
-        if (type == null || name == null)
-        {
+        if (type == null || name == null) {
             throw new IllegalArgumentException(
                     String.format(
                             Locale.ROOT,
@@ -130,12 +122,10 @@ public abstract class Logger {
                 name
         );
         Logger instance = null;
-        if (INSTANCE_MAP.containsKey(key))
-        {
+        if (INSTANCE_MAP.containsKey(key)) {
             instance = INSTANCE_MAP.get(key);
         }
-        if (instance == null)
-        {
+        if (instance == null) {
             System.err.printf(
                     Locale.ROOT,
                     "Initializing %s...%n",
@@ -152,8 +142,7 @@ public abstract class Logger {
                 );
             }
         }
-        if (instance == null)
-        {
+        if (instance == null) {
             System.err.printf(
                     Locale.ROOT,
                     "Initializing %s[%s]...%n",
@@ -162,10 +151,8 @@ public abstract class Logger {
             );
             instance = new ConsoleLogger(name);
         }
-        synchronized (INSTANCE_MAP)
-        {
-            if (!INSTANCE_MAP.containsKey(key))
-            {
+        synchronized (INSTANCE_MAP) {
+            if (!INSTANCE_MAP.containsKey(key)) {
                 INSTANCE_MAP.put(
                         key,
                         instance
@@ -176,8 +163,7 @@ public abstract class Logger {
     }
 
     protected Logger(String name) {
-        if (!StringUtils.isNullOrWhiteSpace(name))
-        {
+        if (!StringUtils.isNullOrWhiteSpace(name)) {
             mName = name;
         }
     }
@@ -192,15 +178,12 @@ public abstract class Logger {
     public void debug(
             String tag,
             String message) {
-        try
-        {
+        try {
             onDebug(
                     tag,
                     message
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.debug(tag, message)] %s%n",
@@ -223,16 +206,13 @@ public abstract class Logger {
             String tag,
             String message,
             Exception exception) {
-        try
-        {
+        try {
             onDebug(
                     tag,
                     message,
                     exception
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.debug(tag, message, exception)] %s%n",
@@ -251,15 +231,12 @@ public abstract class Logger {
     public void error(
             String tag,
             String message) {
-        try
-        {
+        try {
             onError(
                     tag,
                     message
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.error(tag, message)] %s%n",
@@ -282,16 +259,13 @@ public abstract class Logger {
             String tag,
             String message,
             Exception exception) {
-        try
-        {
+        try {
             onError(
                     tag,
                     message,
                     exception
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.error(tag, message, exception)] %s%n",
@@ -310,15 +284,12 @@ public abstract class Logger {
     public void fatal(
             String tag,
             String message) {
-        try
-        {
+        try {
             onFatal(
                     tag,
                     message
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.fatal(tag, message)] %s%n",
@@ -341,16 +312,13 @@ public abstract class Logger {
             String tag,
             String message,
             Exception exception) {
-        try
-        {
+        try {
             onFatal(
                     tag,
                     message,
                     exception
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.fatal(tag, message, exception)] %s%n",
@@ -404,15 +372,12 @@ public abstract class Logger {
     public void info(
             String tag,
             String message) {
-        try
-        {
+        try {
             onInfo(
                     tag,
                     message
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.info(tag, message)] %s%n",
@@ -435,16 +400,13 @@ public abstract class Logger {
             String tag,
             String message,
             Exception exception) {
-        try
-        {
+        try {
             onInfo(
                     tag,
                     message,
                     exception
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.info(tag, message, exception)] %s%n",
@@ -465,12 +427,9 @@ public abstract class Logger {
     }
 
     public void shutdown() {
-        try
-        {
+        try {
             onShutdown();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.shutdown] %s%n",
@@ -489,15 +448,12 @@ public abstract class Logger {
     public void trace(
             String tag,
             String message) {
-        try
-        {
+        try {
             onTrace(
                     tag,
                     message
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.trace(tag, message)] %s%n",
@@ -520,16 +476,13 @@ public abstract class Logger {
             String tag,
             String message,
             Exception exception) {
-        try
-        {
+        try {
             onTrace(
                     tag,
                     message,
                     exception
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.trace(tag, message, exception)] %s%n",
@@ -548,15 +501,12 @@ public abstract class Logger {
     public void warn(
             String tag,
             String message) {
-        try
-        {
+        try {
             onWarn(
                     tag,
                     message
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.warn(tag, message)] %s%n",
@@ -579,16 +529,13 @@ public abstract class Logger {
             String tag,
             String message,
             Exception exception) {
-        try
-        {
+        try {
             onWarn(
                     tag,
                     message,
                     exception
             );
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.printf(
                     Locale.ROOT,
                     "[Fatal][Logger.warn(tag, message, exception)] %s%n",

@@ -420,8 +420,7 @@ public abstract class JsonObject {
 
     public JsonObject put(
             String key,
-            long value)
-    {
+            long value) {
         JsonObject result = this;
         try {
             result = onPutLong(
@@ -598,12 +597,10 @@ public abstract class JsonObject {
     public JsonObject putIfNotNullAndNotEmpty(
             String key,
             JsonArray value) {
-        if (value == null)
-        {
+        if (value == null) {
             return this;
         }
-        if (value.size() <= 0)
-        {
+        if (value.size() <= 0) {
             return this;
         }
         return put(
@@ -614,14 +611,11 @@ public abstract class JsonObject {
 
     public JsonObject putIfNotNullAndNotEmpty(
             String key,
-            JsonObject value)
-    {
-        if (value == null)
-        {
+            JsonObject value) {
+        if (value == null) {
             return this;
         }
-        if (value.allKeys().size() <= 0)
-        {
+        if (value.allKeys().size() <= 0) {
             return this;
         }
         return put(
