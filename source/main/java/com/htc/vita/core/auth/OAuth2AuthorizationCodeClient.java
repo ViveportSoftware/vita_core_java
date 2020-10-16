@@ -195,6 +195,7 @@ public abstract class OAuth2AuthorizationCodeClient {
         Unknown,
         Ok,
         NetworkError,
+        ServerBusy,
         ServerError,
         CancelledAuthorization,
         InvalidAuthorizationCode,
@@ -206,11 +207,11 @@ public abstract class OAuth2AuthorizationCodeClient {
         UnsupportedUserAgent
     }
 
-    public enum IntrospectTokenStatus
-    {
+    public enum IntrospectTokenStatus {
         Unknown,
         Ok,
         NetworkError,
+        ServerBusy,
         ServerError,
         CancelledTokenIntrospection,
         ChangedCredential,
@@ -226,6 +227,7 @@ public abstract class OAuth2AuthorizationCodeClient {
         Unknown,
         Ok,
         NetworkError,
+        ServerBusy,
         ServerError,
         CancelledTokenRefresh,
         InvalidConfig,

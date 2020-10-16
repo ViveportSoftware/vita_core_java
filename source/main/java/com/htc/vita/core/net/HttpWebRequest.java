@@ -27,6 +27,14 @@ public abstract class HttpWebRequest implements Closeable {
         return mUrl;
     }
 
+    public HttpWebRequest setAccept(Mime accept) {
+        if (accept == null) {
+            return this;
+        }
+
+        return setAccept(accept.toString());
+    }
+
     public HttpWebRequest setAccept(String accept) {
         if (StringUtils.isNullOrWhiteSpace(accept)) {
             return this;
@@ -53,6 +61,14 @@ public abstract class HttpWebRequest implements Closeable {
             Logger.getInstance(HttpWebRequest.class.getSimpleName()).error(e.toString());
         }
         return result;
+    }
+
+    public HttpWebRequest setContentType(Mime contentType) {
+        if (contentType == null) {
+            return this;
+        }
+
+        return setContentType(contentType.toString());
     }
 
     public HttpWebRequest setContentType(String contentType) {

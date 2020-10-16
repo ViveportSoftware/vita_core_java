@@ -163,25 +163,20 @@ public abstract class JsonArray {
     }
 
     public JsonArray appendIfNotNullAndNotEmpty(JsonArray value) {
-        if (value == null)
-        {
+        if (value == null) {
             return this;
         }
-        if (value.size() <= 0)
-        {
+        if (value.size() <= 0) {
             return this;
         }
         return append(value);
     }
 
-    public JsonArray appendIfNotNullAndNotEmpty(JsonObject value)
-    {
-        if (value == null)
-        {
+    public JsonArray appendIfNotNullAndNotEmpty(JsonObject value) {
+        if (value == null) {
             return this;
         }
-        if (value.allKeys().size() <= 0)
-        {
+        if (value.allKeys().size() <= 0) {
             return this;
         }
         return append(value);
@@ -395,10 +390,8 @@ public abstract class JsonArray {
 
     public JsonArray insertIfNotNullAndNotWhiteSpace(
             int index,
-            String value)
-    {
-        if (StringUtils.isNullOrWhiteSpace(value))
-        {
+            String value) {
+        if (StringUtils.isNullOrWhiteSpace(value)) {
             return this;
         }
         return insert(
@@ -409,14 +402,11 @@ public abstract class JsonArray {
 
     public JsonArray insertIfNotNullAndNotEmpty(
             int index,
-            JsonArray value)
-    {
-        if (value == null)
-        {
+            JsonArray value) {
+        if (value == null) {
             return this;
         }
-        if (value.size() <= 0)
-        {
+        if (value.size() <= 0) {
             return this;
         }
         return insert(
@@ -427,14 +417,11 @@ public abstract class JsonArray {
 
     public JsonArray insertIfNotNullAndNotEmpty(
             int index,
-            JsonObject value)
-    {
-        if (value == null)
-        {
+            JsonObject value) {
+        if (value == null) {
             return this;
         }
-        if (value.allKeys().size() <= 0)
-        {
+        if (value.allKeys().size() <= 0) {
             return this;
         }
         return insert(

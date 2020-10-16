@@ -74,8 +74,7 @@ public abstract class Aes {
         }
 
         int encryptedDataLength = input.length - SALT_SIZE_128BIT_IN_BYTE;
-        if (encryptedDataLength <= 0)
-        {
+        if (encryptedDataLength <= 0) {
             Logger.getInstance(Aes.class.getSimpleName()).error("input cipher text is malformed");
             return null;
         }

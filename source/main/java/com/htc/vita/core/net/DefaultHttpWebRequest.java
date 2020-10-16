@@ -37,8 +37,7 @@ public class DefaultHttpWebRequest extends HttpWebRequest {
         URLConnection urlConnection;
         if (mProxy == null) {
             urlConnection = url.openConnection();
-        }
-        else {
+        } else {
             urlConnection = url.openConnection(mProxy);
         }
 

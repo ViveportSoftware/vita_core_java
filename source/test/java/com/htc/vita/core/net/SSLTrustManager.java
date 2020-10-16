@@ -23,23 +23,20 @@ public class SSLTrustManager {
                                     @Override
                                     public void checkClientTrusted(
                                             java.security.cert.X509Certificate[] certs,
-                                            String authType)
-                                    {
+                                            String authType) {
                                     }
 
                                     @Override
                                     public void checkServerTrusted(
                                             java.security.cert.X509Certificate[] certs,
-                                            String authType)
-                                    {
+                                            String authType) {
                                     }
                             }
                     },
                     new java.security.SecureRandom()
             );
             HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Logger.getInstance(SSLTrustManager.class.getSimpleName()).error(e.toString());
         }
     }

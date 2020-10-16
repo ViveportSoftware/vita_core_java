@@ -67,8 +67,8 @@ public class DefaultWebProxyFactory extends WebProxyFactory {
                 Long value = pair.getValue();
                 if (value != null) {
                     long lastTimeInMilli = value;
-                    if (currentTimeInMilli - lastTimeInMilli > 0L && currentTimeInMilli - lastTimeInMilli < CACHE_PERIOD_IN_MILLI)
-                    {
+                    if (currentTimeInMilli - lastTimeInMilli > 0L
+                            && currentTimeInMilli - lastTimeInMilli < CACHE_PERIOD_IN_MILLI) {
                         return webProxyStatus;
                     }
                 }

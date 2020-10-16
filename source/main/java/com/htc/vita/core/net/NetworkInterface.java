@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NetworkInterface {
-    public static Map<InetAddress, InetAddress> getLocalIPv4AddressesWithBroadcastAddress()
-    {
+    public static Map<InetAddress, InetAddress> getLocalIPv4AddressesWithBroadcastAddress() {
         Map<InetAddress, InetAddress> result = new HashMap<InetAddress, InetAddress>();
         try {
             Enumeration<java.net.NetworkInterface> networkInterfaces = java.net.NetworkInterface.getNetworkInterfaces();
@@ -48,8 +47,7 @@ public class NetworkInterface {
         return result;
     }
 
-    public static boolean isNetworkAvailable()
-    {
+    public static boolean isNetworkAvailable() {
         try {
             Enumeration<java.net.NetworkInterface> networkInterfaces = java.net.NetworkInterface.getNetworkInterfaces();
             while (networkInterfaces.hasMoreElements()) {
