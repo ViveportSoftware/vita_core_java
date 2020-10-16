@@ -17,9 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class WebRequestFactoryTest {
-
     static {
-        // SSLTrustManager.trustAll();
+        SSLTrustManager.trustAll();
     }
 
     @Test
