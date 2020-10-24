@@ -3,6 +3,8 @@ package com.htc.vita.core.config;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Set;
+
 public class ConfigTest {
     @Test
     public void dummy_0_getInstance() {
@@ -57,5 +59,14 @@ public class ConfigTest {
         Config config = Config.getInstance();
         Assert.assertNotNull(config);
         Assert.assertEquals(0L, config.getLong("test"));
+    }
+
+    @Test
+    public void dummy_8_allKeys() {
+        Config config = Config.getInstance();
+        Assert.assertNotNull(config);
+        Set<String> allKeys = config.allKeys();
+        Assert.assertNotNull(allKeys);
+        Assert.assertEquals(0, allKeys.size());
     }
 }

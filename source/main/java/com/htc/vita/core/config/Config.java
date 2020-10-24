@@ -5,6 +5,9 @@ import com.htc.vita.core.util.Convert;
 import com.htc.vita.core.util.StringUtils;
 import com.htc.vita.core.util.TypeRegistry;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public abstract class Config {
     static {
         TypeRegistry.registerDefault(
@@ -29,6 +32,19 @@ public abstract class Config {
                 Config.class,
                 clazz
         );
+    }
+
+    public Set<String> allKeys() {
+        Set<String> result = null;
+        try {
+            result = onAllKeys();
+        } catch (Exception e) {
+            Logger.getInstance(Config.class.getSimpleName()).error(e.toString());
+        }
+        if (result == null) {
+            result = new HashSet<String>();
+        }
+        return result;
     }
 
     public boolean hasKey(String key) {
@@ -151,6 +167,7 @@ public abstract class Config {
         );
     }
 
+    protected abstract Set<String> onAllKeys() throws Exception;
     protected abstract boolean onHasKey(String key) throws Exception;
     protected abstract String onGet(String key) throws Exception;
 }
