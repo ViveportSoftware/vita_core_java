@@ -19,12 +19,12 @@ public class DummyConfig extends Config {
     }
 
     @Override
-    protected boolean onHasKey(String key) {
-        return false;
+    protected String onGet(String key) {
+        return null;
     }
 
     @Override
-    protected String onGet(String key) {
-        return null;
+    protected boolean onHasKey(String key) {
+        return false;
     }
 }

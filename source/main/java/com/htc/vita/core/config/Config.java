@@ -47,20 +47,6 @@ public abstract class Config {
         return result;
     }
 
-    public boolean hasKey(String key) {
-        if (StringUtils.isNullOrWhiteSpace(key)) {
-            return false;
-        }
-
-        boolean result = false;
-        try {
-            result = onHasKey(key);
-        } catch (Exception e) {
-            Logger.getInstance(Config.class.getSimpleName()).error(e.toString());
-        }
-        return result;
-    }
-
     public String get(String key) {
         return get(
                 key,
@@ -167,7 +153,21 @@ public abstract class Config {
         );
     }
 
+    public boolean hasKey(String key) {
+        if (StringUtils.isNullOrWhiteSpace(key)) {
+            return false;
+        }
+
+        boolean result = false;
+        try {
+            result = onHasKey(key);
+        } catch (Exception e) {
+            Logger.getInstance(Config.class.getSimpleName()).error(e.toString());
+        }
+        return result;
+    }
+
     protected abstract Set<String> onAllKeys() throws Exception;
-    protected abstract boolean onHasKey(String key) throws Exception;
     protected abstract String onGet(String key) throws Exception;
+    protected abstract boolean onHasKey(String key) throws Exception;
 }
