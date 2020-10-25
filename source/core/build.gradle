@@ -35,6 +35,10 @@ if ('release' == ext.buildType) {
     ext.revision = '.' + ext.buildNumber
 }
 
+ext.projectUrl = 'https://github.com/ViveportSoftware/vita_core_java'
+ext.projectLicenseName = 'The MIT License (MIT)'
+ext.projectLicenseUrl = 'https://github.com/ViveportSoftware/vita_core_java/blob/master/LICENSE.md'
+
 group 'com.htc.vita'
 version '0.1' + ext.revision
 
@@ -71,11 +75,13 @@ dependencies {
 jar {
     manifest {
         attributes(
-            'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
-            'Build-Version'  : version,
-            'Created-By'     : "Gradle ${gradle.gradleVersion}",
-            'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
-            'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
+            'Build-Jdk'                          : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+            'Build-OS'                           : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
+            'Build-Timestamp'                    : new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+            'Build-Version'                      : version,
+            'Bundle-License'                     : project.ext.projectLicenseUrl,
+            'Bundle-RequiredExecutionEnvironment': 'JavaSE-1.6',
+            'Created-By'                         : "Gradle ${gradle.gradleVersion}"
         )
     }
 }
@@ -103,12 +109,12 @@ publishing {
             pom {
                 licenses {
                     license {
-                        name = 'The MIT License (MIT)'
-                        url = 'https://github.com/ViveportSoftware/vita_core_java/blob/master/LICENSE.md'
+                        name = project.ext.projectLicenseName
+                        url = project.ext.projectLicenseUrl
                     }
                 }
                 scm {
-                    url = 'https://github.com/ViveportSoftware/vita_core_java'
+                    url = project.ext.projectUrl
                 }
             }
         }
