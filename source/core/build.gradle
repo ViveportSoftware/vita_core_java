@@ -90,7 +90,7 @@ test {
 
 // from plugin 'com.github.kt3k.coveralls'
 coveralls {
-    jacocoReportPath "${project.rootDir.getPath()}/temp/reports/jacoco/test/jacocoTestReport.xml"
+    jacocoReportPath "${project.rootDir.getPath()}/temp/${project.name}/reports/jacoco/test/jacocoTestReport.xml"
 }
 
 // from plugin 'maven-publish'
