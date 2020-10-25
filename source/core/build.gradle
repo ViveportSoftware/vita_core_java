@@ -1,0 +1,148 @@
+plugins {
+    id 'jacoco'
+    id 'java'
+    id 'maven-publish'
+    id 'com.github.kt3k.coveralls' version '2.10.2'
+}
+
+ext.buildType = System.getenv('BUILD_TYPE')
+if (ext.buildType == null) {
+    ext.buildType = 'debug'
+}
+
+ext.buildNumber = System.getenv('BUILD_NUMBER')
+if (ext.buildNumber == null) {
+    ext.buildNumber = '9999'
+}
+
+ext.buildMavenServerUrl = System.getenv('BUILD_MAVEN_SERVER_URL')
+if (ext.buildMavenServerUrl == null) {
+    ext.buildMavenServerUrl = 'NOTSET'
+}
+
+ext.buildMavenCredentialUsername = System.getenv('BUILD_MAVEN_CREDENTIAL_USERNAME')
+if (ext.buildMavenCredentialUsername == null) {
+    ext.buildMavenCredentialUsername = 'NOTSET'
+}
+
+ext.buildMavenCredentialPassword = System.getenv('BUILD_MAVEN_CREDENTIAL_PASSWORD')
+if (ext.buildMavenCredentialPassword == null) {
+    ext.buildMavenCredentialPassword = 'NOTSET'
+}
+
+ext.revision = '-SNAPSHOT'
+if ('release' == ext.buildType) {
+    ext.revision = '.' + ext.buildNumber
+}
+
+group 'com.htc.vita'
+version '0.1' + ext.revision
+
+project.buildDir = "${rootProject.buildDir.getPath()}/${project.name}"
+
+sourceSets {
+    main {
+        java.srcDirs = ['source/main/java']
+        resources.srcDirs = ['source/main/resources']
+    }
+
+    test {
+        java.srcDirs = ['source/test/java']
+        resources.srcDirs = ['source/test/resources']
+    }
+}
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+            'Build-Version'  : version,
+            'Created-By'     : "Gradle ${gradle.gradleVersion}",
+            'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+            'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
+        )
+    }
+}
+
+publish {
+    dependsOn assemble
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+// from plugin 'com.github.kt3k.coveralls'
+coveralls {
+    jacocoReportPath "${project.rootDir.getPath()}/temp/reports/jacoco/test/jacocoTestReport.xml"
+}
+
+// from plugin 'maven-publish'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = project.name
+            from components.java
+
+            pom {
+                licenses {
+                    license {
+                        name = 'The MIT License (MIT)'
+                        url = 'https://github.com/ViveportSoftware/vita_core_java/blob/master/LICENSE.md'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/ViveportSoftware/vita_core_java'
+                }
+            }
+        }
+    }
+    repositories {
+        if ('NOTSET' != project.ext.buildMavenServerUrl
+                && 'NOTSET' != project.ext.buildMavenCredentialUsername
+                && 'NOTSET' != project.ext.buildMavenCredentialPassword) {
+            maven {
+                credentials {
+                    username project.ext.buildMavenCredentialUsername
+                    password project.ext.buildMavenCredentialPassword
+                }
+                url project.ext.buildMavenServerUrl
+            }
+        }
+    }
+}
+
+// from plugin 'jacoco'
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.destination file("${project.rootDir.getPath()}/dist/jacoco/${project.name}")
+    }
+}
+
+task clearJar(type: Delete) {
+    delete "${project.rootDir.getPath()}/dist/jar"
+}
+
+task copyJar(type: Copy) {
+    from configurations.runtime.artifacts.files
+    into("${project.rootDir.getPath()}/dist/jar")
+}
+
+task dist(type: Copy, dependsOn: [build, clearJar, copyJar])
