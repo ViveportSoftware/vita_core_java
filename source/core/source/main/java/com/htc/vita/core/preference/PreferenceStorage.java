@@ -1,5 +1,6 @@
 package com.htc.vita.core.preference;
 
+import com.htc.vita.core.concurrent.CompletedFuture;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 import com.htc.vita.core.util.TypeRegistry;
@@ -84,6 +85,9 @@ public abstract class PreferenceStorage {
             );
         } catch (Exception e) {
             Logger.getInstance(PreferenceStorage.class.getSimpleName()).error(e.toString());
+        }
+        if (result == null) {
+            result = new CompletedFuture<Map<String, String>>(new HashMap<String, String>());
         }
         return result;
     }

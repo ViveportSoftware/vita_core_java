@@ -1,5 +1,6 @@
 package com.htc.vita.core.preference;
 
+import com.htc.vita.core.concurrent.CompletedFuture;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 
@@ -64,6 +65,9 @@ public abstract class Preferences {
             result = onSaveAsync();
         } catch (Exception e) {
             Logger.getInstance(Preferences.class.getSimpleName()).error(e.toString());
+        }
+        if (result == null) {
+            result = new CompletedFuture<Boolean>(false);
         }
         return result;
     }

@@ -1,5 +1,7 @@
 package com.htc.vita.core.internal;
 
+import com.htc.vita.core.concurrent.CompletedFuture;
+import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.TypeRegistry;
 
 import java.util.concurrent.Callable;
@@ -32,13 +34,26 @@ public abstract class TaskRunnerImpl {
     }
 
     public void execute(Runnable command) {
-        onExecute(command);
+        try {
+            onExecute(command);
+        } catch (Exception e) {
+            Logger.getInstance(TaskRunnerImpl.class.getSimpleName()).error(e.toString());
+        }
     }
 
     public <T> Future<T> submit(Callable<T> task) {
-        return onSubmit(task);
+        Future<T> result = null;
+        try {
+            result = onSubmit(task);
+        } catch (Exception e) {
+            Logger.getInstance(TaskRunnerImpl.class.getSimpleName()).error(e.toString());
+        }
+        if (result == null) {
+            result = new CompletedFuture<T>(null);
+        }
+        return result;
     }
 
-    protected abstract void onExecute(Runnable command);
-    protected abstract <T> Future<T> onSubmit(Callable<T> task);
+    protected abstract void onExecute(Runnable command) throws Exception;
+    protected abstract <T> Future<T> onSubmit(Callable<T> task) throws Exception;
 }
