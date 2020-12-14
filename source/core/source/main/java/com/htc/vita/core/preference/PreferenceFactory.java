@@ -1,5 +1,6 @@
 package com.htc.vita.core.preference;
 
+import com.htc.vita.core.concurrent.CompletedFuture;
 import com.htc.vita.core.log.Logger;
 import com.htc.vita.core.util.StringUtils;
 import com.htc.vita.core.util.TypeRegistry;
@@ -66,6 +67,9 @@ public abstract class PreferenceFactory {
             result = onLoadPreferencesAsync(preferenceLabel);
         } catch (Exception e) {
             Logger.getInstance(PreferenceFactory.class.getSimpleName()).error(e.toString());
+        }
+        if (result == null) {
+            result = new CompletedFuture<Preferences>(null);
         }
         return result;
     }
