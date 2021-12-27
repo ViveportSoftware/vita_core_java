@@ -28,6 +28,7 @@ public class DefaultHttpWebResponse extends HttpWebResponse {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void finalize() throws Throwable {
         close();
